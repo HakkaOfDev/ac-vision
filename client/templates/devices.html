@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}AC-Vision | Devices{% endblock %}
+{% block mainTitle %}Devices{% endblock %}
+{% block content %}
+<div class="flex flex-col bg-white rounded mt-4 shadow-lg p-4">
+  <table class="w-full table-auto border-separate text-center">
+    <tr>
+      <th>ONU</th>
+      <th>Status</th>
+      <th>Port</th>
+      <th>Name</th>
+      <th>Serial Number</th>
+      <th>Profile</th>
+      <th>RxPower</th>
+      <th>Distance</th>
+      <th>Uptime</th>
+    </tr>
+    <tr class="text-green-300">
+      <td>1</td>
+      <td class="rounded-full border-2 border-green-300">Connected</td>
+      <td>GPON 1</td>
+      <td>ONU 1</td>
+      <td>DASN65769018e</td>
+      <td>TSIP</td>
+      <td>- 14,5 dBm</td>
+      <td>0m</td>
+      <td>72 hours, 15 minuts, 34 seconds</td>
+    </tr>
+    <tr class="text-red-300">
+      <td>1</td>
+      <td class="rounded-full border-2 border-red-300">Disconnected</td>
+      <td>GPON 1</td>
+      <td>ONU 1</td>
+      <td>DASN65769018e</td>
+      <td>TSIP</td>
+      <td>-------</td>
+      <td>0m</td>
+      <td>-------</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}
+
