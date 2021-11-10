@@ -1,7 +1,11 @@
+import time
+
 import requests
-from flask import Flask, render_template
+import urllib3
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 api_token = "a60d1c57-576e-43ba-b05f-ec116ec20e85"
 id_ubiquiti = "c4a201ea-ffba-4c25-8d71-161c06917464"
@@ -14,20 +18,77 @@ def index():
 
 @app.route('/workflow')
 def workflow():
+    return render_template('workflow.html')
+
+
+@app.route('/devices')
+def devices():
+    onus_ubiquiti = getOnusDetails()
+    return render_template('devices.html', onus_ubiquiti=onus_ubiquiti)
+
+
+@app.route('/api/onus')
+def onus():
+    onusList = getOnusDetails()
+    return jsonify(onusList)
+
+
+@app.route('/api/olts')
+def olts():
+    olt = getOltDetails()
+    return jsonify(olt)
+
+
+def getOltDetails():
+    response = requests.get('https://unms/nms/api/v2.1/devices/olts/' + id_ubiquiti,
+                            headers={'Accept': 'application/json',
+                                     'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
+    olt = response.json()
+    json = {
+        "id": id_ubiquiti,
+        "ip": olt["ipAddress"],
+        "status": olt["overview"]["status"],
+        "uptime": formatUptime(olt["overview"]["uptime"]),
+        "temperature": olt["overview"]["temperature"],
+        "mac": olt["identification"]["mac"],
+        "displayName": olt["identification"]["displayName"],
+        "site": {
+            "id": olt["identification"]["site"]["id"],
+            "name": olt["identification"]["site"]["name"],
+            "status": olt["identification"]["site"]["status"],
+        },
+        "interfaces": []
+    }
+    for int in olt["interfaces"]:
+        json["interfaces"].append(
+            {
+                "position": int["identification"]["position"],
+                "type": int["identification"]["type"],
+                "displayName": int["identification"]["displayName"],
+                "mac": int["identification"]["mac"],
+                "description": int["identification"]["description"],
+                "status": int["status"]["status"],
+                "speed": int["status"]["description"],
+            }
+        )
+    return json
+
+
+def getOnusDetails():
     response = requests.get('https://unms/nms/api/v2.1/devices/onus?parentId=' + id_ubiquiti,
                             headers={'Accept': 'application/json',
                                      'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
-    onus = []
+    onusList = []
     for onu in response.json():
-        onus.append(
+        onusList.append(
             {
                 "id": onu["onu"]["id"],
                 "port": onu["onu"]["port"],
                 "profile": onu["onu"]["profile"],
-                "rxPower": onu["onu"]["receivePower"],
+                "rxPower": round(onu["onu"]["receivePower"], 2),
                 "ip": onu["ipAddress"],
                 "status": onu["overview"]["status"],
-                "uptime": onu["overview"]["uptime"],
+                "uptime": formatUptime(onu["overview"]["uptime"]),
                 "distance": onu["overview"]["distance"],
                 "mac": onu["identification"]["mac"],
                 "displayName": onu["identification"]["displayName"],
@@ -40,96 +101,11 @@ def workflow():
                 }
             }
         )
-
-    nodes = []
-    edges = []
-
-    # FAI
-    nodes.append(
-        {
-            "id": 0,
-            "label": "FAI",
-            "shape": "image",
-            "image": "https://www.wifi-france.com/images/stories/virtuemart/product/ER-12_Top_Angle_14df3455-0ce0-47ff-a689-9f32a9e3e1c3_grande.png",
-            "font": {
-                "strokeWidth": 3
-            }
-        }
-    )
-
-    # OLTs
-    nodes.append(
-        {
-            "id": 1,
-            "label": "OLT Dasan",
-            "shape": "image",
-            "image": "https://www.wifi-france.com/images/stories/virtuemart/product/ER-12_Top_Angle_14df3455-0ce0-47ff-a689-9f32a9e3e1c3_grande.png",
-            "font": {
-                "strokeWidth": 3
-            }
-        }
-    )
-
-    nodes.append(
-        {
-            "id": 2,
-            "label": "OLT Ubiquiti",
-            "shape": "image",
-            "image": "https://www.wifi-france.com/images/stories/virtuemart/product/ER-12_Top_Angle_14df3455-0ce0-47ff-a689-9f32a9e3e1c3_grande.png",
-            "font": {
-                "strokeWidth": 3
-            }
-        }
-    )
-
-    # Link FAI OLTs
-    edges.append(
-        {
-            "from": 0,
-            "to": 1,
-            "color": "rgba(110, 231, 183, 1)",
-            "length": 25,
-        }
-    )
-
-    edges.append(
-        {
-            "from": 0,
-            "to": 2,
-            "color": "rgba(110, 231, 183, 1)",
-            "length": 25,
-        }
-    )
-
-    # ONUs
-    i = 10
-    for node in onus:
-        nodes.append({
-            "id": i,
-            "label": node["displayName"],
-            "shape": "image",
-            "image": "https://www.wifi-france.com/images/stories/virtuemart/product/ER-12_Top_Angle_14df3455-0ce0-47ff-a689-9f32a9e3e1c3_grande.png",
-            "font": {
-                "strokeWidth": 3
-            }
-        })
-        edges.append({
-            "from": 2,
-            "to": i,
-            "color": ("rgba(252, 165, 165, 1)", "rgba(110, 231, 183, 1)")[node["status"] == "active"],
-            "length": 350,
-            "label": str(node["rxPower"]),
-            "title": "Status: <span class='text-red-300'>" + node["status"] + "</span>\\nRxPower: <span class='text-red-300'>" + str(node["rxPower"]) + "</span>"
-        }
-        )
-        i += 1
-    print(edges)
-    return render_template('workflow.html', nodes=nodes, edges=edges)
+    return onusList
 
 
-@app.route('/devices')
-def devices():
-    return render_template('devices.html')
+def formatUptime(sec):
+    return ("None", time.strftime("%wD, %Hh, %Mm, %Ss", time.gmtime(sec)))[sec is not None]
 
 
 if __name__ == '__main__':

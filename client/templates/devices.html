@@ -2,42 +2,40 @@
 {% block title %}AC-Vision | Devices{% endblock %}
 {% block mainTitle %}Devices{% endblock %}
 {% block content %}
-<div class="flex flex-col bg-white rounded mt-4 shadow-lg p-4">
-  <table class="w-full table-auto border-separate text-center">
-    <tr>
-      <th>ONU</th>
-      <th>Status</th>
-      <th>Port</th>
-      <th>Name</th>
-      <th>Serial Number</th>
-      <th>Profile</th>
-      <th>RxPower</th>
-      <th>Distance</th>
-      <th>Uptime</th>
-    </tr>
-    <tr class="text-green-300">
-      <td>1</td>
-      <td class="rounded-full border-2 border-green-300">Connected</td>
-      <td>GPON 1</td>
-      <td>ONU 1</td>
-      <td>DASN65769018e</td>
-      <td>TSIP</td>
-      <td>- 14,5 dBm</td>
-      <td>0m</td>
-      <td>72 hours, 15 minuts, 34 seconds</td>
-    </tr>
-    <tr class="text-red-300">
-      <td>1</td>
-      <td class="rounded-full border-2 border-red-300">Disconnected</td>
-      <td>GPON 1</td>
-      <td>ONU 1</td>
-      <td>DASN65769018e</td>
-      <td>TSIP</td>
-      <td>-------</td>
-      <td>0m</td>
-      <td>-------</td>
-    </tr>
-  </table>
-</div>
+    <div class="flex flex-col bg-white rounded mt-4 shadow-lg p-4">
+        <table class="w-full table-auto text-center divide-y">
+            <tr class="bg-gray-50">
+                <th class="py-2 px-4">Name</th>
+                <th class="py-2 px-4">Status</th>
+                <th class="py-2 px-4">Port</th>
+                <th class="py-2 px-4">Serial Number</th>
+                <th class="py-2 px-4">Profile</th>
+                <th class="py-2 px-4">RxPower</th>
+                <th class="py-2 px-4">Distance</th>
+                <th class="py-2 px-4">Uptime</th>
+            </tr>
+            {% for onu in onus_ubiquiti %}
+                <tr class="text-gray-800 space-y-3">
+                    <td>{{ onu.displayName }}</td>
+                    <td class="whitespace-nowrap">
+                        <span class="rounded-full px-2 py-1 border-2 border-{{ ('red','green')[onu.status == "active"] }}-500 text-{{ ('red','green')[onu.status == "active"] }}-500">{{ ('Disconnected','Connected')[onu.status == "active"] }}</span>
+                    </td>
+                    <td>GPON {{ onu.port }}</td>
+                    <td>{{ onu.serialNumber }}</td>
+                    <td>{{ onu.profile }}</td>
+                    <td class="flex flex-row items-center w-full space-x-1">
+                        <div class="overflow-hidden w-1/4 inline-block h-1 flex rounded bg-{{ (("yellow","red")[onu.rxPower<-25],"green")[onu.rxPower>-15] }}-300">
+                            <div
+                                    class="{{ (("w-1/2","w-1/4")[onu.rxPower<-20],"w-3/4")[onu.rxPower>-10] }} shadow-none whitespace-nowrap bg-{{ (("yellow","red")[onu.rxPower<-25],"green")[onu.rxPower>-15] }}-600"
+                            ></div>
+                        </div>
+                        <span>{{ onu.rxPower }} dBm</span>
+                    </td>
+                    <td>{{ onu.distance }}m</td>
+                    <td>{{ onu.uptime }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
 

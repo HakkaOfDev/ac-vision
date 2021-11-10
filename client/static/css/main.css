@@ -8,3 +8,14 @@
 .h-workflow {
     height: 70vh;
 }
+
+.vis-tooltip {
+    position: absolute;
+    border-radius: 0 !important;
+    border-width: 0 !important;
+    padding: 0 !important;
+    visibility: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+}
