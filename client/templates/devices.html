@@ -3,14 +3,17 @@
 {% block mainTitle %}Devices{% endblock %}
 {% block content %}
     <div class="w-full h-20 flex flex-row p-0 items-center justify-center my-4 space-x-2">
-        <div id="dasan" class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
+        <div id="dasan"
+             class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
             <img src="{{ url_for('static', filename='img/models/olt-dasan.png') }}" class="" alt>
         </div>
-        <div id="ubiquiti" class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
-             <img src="{{ url_for('static', filename='img/models/olt-ubiquiti.png') }}" class="" alt>
+        <div id="ubiquiti"
+             class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
+            <img src="{{ url_for('static', filename='img/models/olt-ubiquiti.png') }}" class="" alt>
         </div>
     </div>
-    <div id="ubiquiti_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
+    <div id="ubiquiti_content"
+         class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
         <table class="w-full table-auto text-center divide-y">
             <tr class="bg-gray-50">
                 <th class="py-2 px-4">Name</th>
@@ -45,7 +48,8 @@
             {% endfor %}
         </table>
     </div>
-    <div id="dasan_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
+    <div id="dasan_content"
+         class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
         <table class="w-full table-auto text-center divide-y">
             <tr class="bg-gray-50">
                 <th class="py-2 px-4">Name</th>
