@@ -65,7 +65,7 @@ function draw() {
             }
         }
     )
-    fetch('/api/olts').then((response) => {
+    fetch('http://127.0.0.1:8000/api/v1.0/ressources/ubiquiti/olt').then((response) => {
         return response.json()
     }).then((olt) => {
         nodes.push(
@@ -113,7 +113,7 @@ function draw() {
 
     // ONUS
     let i = 10;
-    fetch('/api/onus').then((response) => {
+    fetch('http://127.0.0.1:8000/api/v1.0/ressources/ubiquiti/onus').then((response) => {
         return response.json()
     }).then((onus) => {
         onus.forEach((onu) => {
