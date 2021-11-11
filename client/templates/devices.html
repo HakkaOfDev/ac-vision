@@ -10,7 +10,21 @@
              <img src="{{ url_for('static', filename='img/models/olt-ubiquiti.png') }}" class="" alt>
         </div>
     </div>
-    <div id="ubiquiti_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
+    <div id="dasan_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4">
+        <table class="w-full table-auto text-center divide-y">
+            <tr class="bg-gray-50">
+                <th class="py-2 px-4">Name</th>
+                <th class="py-2 px-4">Status</th>
+                <th class="py-2 px-4">Port</th>
+                <th class="py-2 px-4">Serial Number</th>
+                <th class="py-2 px-4">Profile</th>
+                <th class="py-2 px-4">RxPower</th>
+                <th class="py-2 px-4">Distance</th>
+                <th class="py-2 px-4">Uptime</th>
+            </tr>
+        </table>
+    </div>
+    <div id="ubiquiti_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4">
         <table class="w-full table-auto text-center divide-y">
             <tr class="bg-gray-50">
                 <th class="py-2 px-4">Name</th>
@@ -43,20 +57,6 @@
                     <td>{{ onu.uptime }}</td>
                 </tr>
             {% endfor %}
-        </table>
-    </div>
-    <div id="dasan_content" class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
-        <table class="w-full table-auto text-center divide-y">
-            <tr class="bg-gray-50">
-                <th class="py-2 px-4">Name</th>
-                <th class="py-2 px-4">Status</th>
-                <th class="py-2 px-4">Port</th>
-                <th class="py-2 px-4">Serial Number</th>
-                <th class="py-2 px-4">Profile</th>
-                <th class="py-2 px-4">RxPower</th>
-                <th class="py-2 px-4">Distance</th>
-                <th class="py-2 px-4">Uptime</th>
-            </tr>
         </table>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename='js/devices.js') }}"></script>

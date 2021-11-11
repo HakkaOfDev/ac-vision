@@ -165,5 +165,5 @@ function draw() {
 
 window.addEventListener('load', () => {
     draw();
-    setInterval(draw, 600000);
+    setInterval(draw, 60000);
 });

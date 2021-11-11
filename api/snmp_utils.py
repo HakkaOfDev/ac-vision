@@ -88,9 +88,11 @@ class SNMP_UTILS:
             else:
                 for varBind in varBinds:
                     if n == 0:
-                        results[str(varBind[0].__str__).split("payload [")[1][:-4]] = str(varBind[1].__str__).split("payload [")[1][:-3]
+                        results[str(varBind[0].__str__).split("payload [")[1][:-4]] = \
+                            str(varBind[1].__str__).split("payload [")[1][:-3]
                     elif n != i:
-                        results[str(varBind[0].__str__).split("payload [")[1][:-4]] = str(varBind[1].__str__).split("payload [")[1][:-3]
+                        results[str(varBind[0].__str__).split("payload [")[1][:-4]] = \
+                            str(varBind[1].__str__).split("payload [")[1][:-3]
                         i += 1
                     else:
                         return results
@@ -99,6 +101,6 @@ class SNMP_UTILS:
 
 if __name__ == "__main__":
     snmp = SNMP_UTILS("10.59.10.20")
-    for k,v in snmp.walk(snmp.OIDS.OLT.ONU.MAC_ADDRESS, 8).items():
-        #print(k,v)
+    for k, v in snmp.walk(snmp.OIDS.OLT.ONU.MAC_ADDRESS, 8).items():
+        # print(k,v)
         pass
