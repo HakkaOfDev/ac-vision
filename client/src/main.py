@@ -13,19 +13,19 @@ id_ubiquiti = "c4a201ea-ffba-4c25-8d71-161c06917464"
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('templates/index.html')
 
 
 @app.route('/workflow')
 def workflow():
-    return render_template('workflow.html')
+    return render_template('templates/workflow.html')
 
 
 @app.route('/devices')
 def devices():
     onus_ubiquiti = getOnusDetails()
     olt_ubiquiti = getOltDetails()
-    return render_template('devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)
+    return render_template('templates/devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)
 
 
 @app.route('/api/onus')
