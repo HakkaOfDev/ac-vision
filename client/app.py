@@ -24,7 +24,8 @@ def workflow():
 @app.route('/devices')
 def devices():
     onus_ubiquiti = getOnusDetails()
-    return render_template('devices.html', onus_ubiquiti=onus_ubiquiti)
+    olt_ubiquiti = getOltDetails()
+    return render_template('devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)
 
 
 @app.route('/api/onus')
