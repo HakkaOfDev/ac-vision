@@ -74,16 +74,25 @@
     </div>
     <div id="dasan_content"
          class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
-        <table class="w-full table-auto text-center divide-y">
+        <span class="w-20 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">OLT</span>
+        <table class="table-auto text-center divide-y mb-4 overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
             <tr class="bg-gray-50">
                 <th class="py-2 px-4">Name</th>
                 <th class="py-2 px-4">Status</th>
-                <th class="py-2 px-4">Port</th>
-                <th class="py-2 px-4">Serial Number</th>
-                <th class="py-2 px-4">Profile</th>
-                <th class="py-2 px-4">RxPower</th>
-                <th class="py-2 px-4">Distance</th>
+                <th class="py-2 px-4">@MAC</th>
+                <th class="py-2 px-4">IP</th>
+                <th class="py-2 px-4">Temperature</th>
                 <th class="py-2 px-4">Uptime</th>
+            </tr>
+            <tr class="text-gray-800">
+                <td class="py-1.5">{{ olt_ubiquiti.displayName }}</td>
+                <td class="whitespace-nowrap">
+                    <span class="rounded-full text-xs px-2 py-1 border-2 border-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500 uppercase text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ ('Disconnected','Connected')[olt_ubiquiti.status == "active"] }}</span>
+                </td>
+                <td>{{ olt_ubiquiti.mac }}</td>
+                <td>{{ olt_ubiquiti.ip }}</td>
+                <td>{{ olt_ubiquiti.temperature }}°</td>
+                <td class="text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ olt_ubiquiti.uptime }}</td>
             </tr>
         </table>
     </div>

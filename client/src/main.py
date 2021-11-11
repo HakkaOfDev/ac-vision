@@ -1,46 +1,34 @@
-import time
+from datetime import timedelta
 
 import requests
 import urllib3
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify
 
-app = Flask(__name__)
+from client.src.routes.main_routes import main_routes
+from client.src.routes.user_routes import user_routes
+
+app = Flask(__name__, template_folder="templates")
+app.register_blueprint(main_routes)
+app.register_blueprint(user_routes)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 api_token = "a60d1c57-576e-43ba-b05f-ec116ec20e85"
 id_ubiquiti = "c4a201ea-ffba-4c25-8d71-161c06917464"
 
 
-@app.route('/')
-def index():
-    return render_template('templates/index.html')
-
-
-@app.route('/workflow')
-def workflow():
-    return render_template('templates/workflow.html')
-
-
-@app.route('/devices')
-def devices():
-    onus_ubiquiti = getOnusDetails()
-    olt_ubiquiti = getOltDetails()
-    return render_template('templates/devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)
-
-
 @app.route('/api/onus')
 def onus():
-    onusList = getOnusDetails()
+    onusList = getUbiquitiOnusDetails()
     return jsonify(onusList)
 
 
 @app.route('/api/olts')
 def olts():
-    olt = getOltDetails()
-    return jsonify(olt)
+    olt_ubiquiti = getUbiquitiOltDetails()
+    return jsonify(olt_ubiquiti)
 
 
-def getOltDetails():
+def getUbiquitiOltDetails():
     response = requests.get('https://unms/nms/api/v2.1/devices/olts/' + id_ubiquiti,
                             headers={'Accept': 'application/json',
                                      'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
@@ -75,7 +63,7 @@ def getOltDetails():
     return json
 
 
-def getOnusDetails():
+def getUbiquitiOnusDetails():
     response = requests.get('https://unms/nms/api/v2.1/devices/onus?parentId=' + id_ubiquiti,
                             headers={'Accept': 'application/json',
                                      'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
@@ -105,8 +93,11 @@ def getOnusDetails():
     return onusList
 
 
-def formatUptime(sec):
-    return ("None", time.strftime("%wD, %Hh, %Mm, %Ss", time.gmtime(sec)))[sec is not None]
+def formatUptime(s):
+    if s is not None:
+        x = str(timedelta(seconds=s)).split(':')
+        s = f"{x[0]}h, {x[1]}m, {x[2]}s"
+        return s
 
 
 if __name__ == '__main__':
