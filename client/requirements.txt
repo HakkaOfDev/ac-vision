@@ -28,3 +28,6 @@ charset-normalizer==2.0.7
 certifi==2021.10.8
 asgiref==3.4.1
 anyio==3.3.4
+psycopg2-binary==2.9.1
+python-multipart==0.0.5
+PyYAML==6.0
