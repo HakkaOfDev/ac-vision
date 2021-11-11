@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 import requests
-import urllib3
 from flask import Flask, jsonify
 
 from client.src.routes.main_routes import main_routes
@@ -10,10 +9,6 @@ from client.src.routes.user_routes import user_routes
 app = Flask(__name__, template_folder="templates")
 app.register_blueprint(main_routes)
 app.register_blueprint(user_routes)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-api_token = "a60d1c57-576e-43ba-b05f-ec116ec20e85"
-id_ubiquiti = "c4a201ea-ffba-4c25-8d71-161c06917464"
 
 
 @app.route('/api/onus')
