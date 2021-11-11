@@ -25,7 +25,7 @@ class SNMP_UTILS:
         return self.walk(oid + "." + str(id), 1)
 
     def defineOIDsList(self):
-        with open('./OIDS.json', ) as file:
+        with open('OIDS.json', ) as file:
             self.OIDS = json.loads(file.read().replace('\n', ''), object_hook=lambda d: SimpleNamespace(**d))
 
     def bulk(self, *oids_list):
@@ -89,21 +89,13 @@ class SNMP_UTILS:
                 for varBind in varBinds:
                     if n == 0:
                         results[str(varBind[0].__str__).split("payload [")[1][:-4]] = \
-<<<<<<< HEAD
                             str(varBind[1].__str__).split("payload [")[1][:-3]
                     elif n != i:
                         results[str(varBind[0].__str__).split("payload [")[1][:-4]] = \
                             str(varBind[1].__str__).split("payload [")[1][:-3]
-=======
-                        str(varBind[1].__str__).split("payload [")[1][:-3]
-                    elif n != i:
-                        results[str(varBind[0].__str__).split("payload [")[1][:-4]] = \
-                        str(varBind[1].__str__).split("payload [")[1][:-3]
->>>>>>> dev
                         i += 1
                     else:
                         return results
-        return results
 
 
 if __name__ == "__main__":
