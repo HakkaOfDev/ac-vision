@@ -1,12 +1,9 @@
 from fastapi import APIRouter, Depends
-import yaml
 import requests
+
+from ..tools.config.config_loader import config
 from ..tools.time_utils import formatUptime
 from ..dependencies import get_token_header
-
-config = None
-with open("components/tools/config.yml", "r") as file:
-    config = yaml.safe_load(file)
 
 router = APIRouter(prefix="/api/v1.0/ressources/ubiquiti",
                    tags=["ubiquiti"],

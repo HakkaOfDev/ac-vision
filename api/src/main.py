@@ -18,10 +18,9 @@ models.Base.metadata.create_all(bind=engine)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 origins = [
-    "http://localhost",
-    "http://localhost:5000",
-    "http://127.0.0.1:5000",
-    "http://127.0.0.1:5000",
+    "http://ac-vision",
+    "http://ac-vision:5000",
+    "https://ac-vision:5000",
 ]
 
 app.add_middleware(
@@ -32,5 +31,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port="8000")
+#if __name__ == "__main__":
+    #uvicorn.run(app, host="127.0.0.1", port="8000")

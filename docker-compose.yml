@@ -2,27 +2,41 @@ version: '1.0'
 services:
   api:
     build: ./api
+    container_name: api
+    links:
+      - database
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api:/app
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+    networks:
+      prod:
+  client:
+    build: ./client
+    container_name: client
     ports:
       - 5000:5000
     volumes:
-      - ./api:./api/app
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
-  client:
-    build: ./client
-    ports:
-      - 3000:3000
-    volumes:
-      - ./client:./client/app
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 3000
+      - ./client:/app
+    command: python3 src/main.py
+    networks:
+      prod:
   database:
     image: postgres
-    expose:
-      - 5432
+    restart: always
+    container_name: database
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_USER=ac-admin
       - POSTGRES_PASSWORD=ac-pass
-      - POSTGRES_DB=ac-database
+      - POSTGRES_DB=ac-db
     volumes:
-      - ac_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      prod:
+networks:
+  prod:
 volumes:
-  ac_data:
+  pgdata:

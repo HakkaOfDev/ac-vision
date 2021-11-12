@@ -59,13 +59,13 @@ function draw() {
             id: 1,
             label: "OLT Dasan",
             shape: "image",
-            image: "https://www.wifi-france.com/images/stories/virtuemart/product/ER-12_Top_Angle_14df3455-0ce0-47ff-a689-9f32a9e3e1c3_grande.png",
+            image: "/static/img/models/olt-dasan.png",
             font: {
                 strokeWidth: 3
             }
         }
     )
-    fetch('http://127.0.0.1:8000/api/v1.0/ressources/ubiquiti/olt').then((response) => {
+    fetch('http://ac-vision:8000/api/v1.0/ressources/ubiquiti/olt').then((response) => {
         return response.json()
     }).then((olt) => {
         nodes.push(
@@ -113,7 +113,7 @@ function draw() {
 
     // ONUS
     let i = 10;
-    fetch('http://127.0.0.1:8000/api/v1.0/ressources/ubiquiti/onus').then((response) => {
+    fetch('http://ac-vision:8000/api/v1.0/ressources/ubiquiti/onus').then((response) => {
         return response.json()
     }).then((onus) => {
         onus.forEach((onu) => {

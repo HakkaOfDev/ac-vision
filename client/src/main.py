@@ -1,4 +1,3 @@
-import uvicorn
 from flask import Flask
 
 from routes.main_routes import main_routes
@@ -9,4 +8,4 @@ app.register_blueprint(main_routes)
 app.register_blueprint(user_routes)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
