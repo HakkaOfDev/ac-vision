@@ -11,4 +11,4 @@ id_ubiquiti: c4a201ea-ffba-4c25-8d71-161c06917464
 DB_NAME: ac-db
 DB_USER: ac-admin
 DB_PASSWORD: ac-pass
-DB_HOST: 10.59.50.232
+DB_HOST: database

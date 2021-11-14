@@ -24,52 +24,11 @@
                 <th class="py-2 px-4">Temperature</th>
                 <th class="py-2 px-4">Uptime</th>
             </tr>
-            <tr class="text-gray-800">
-                <td class="py-1.5">{{ olt_ubiquiti.displayName }}</td>
-                <td class="whitespace-nowrap">
-                    <span class="rounded-full text-xs px-2 py-1 border-2 border-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500 uppercase text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ ('Disconnected','Connected')[olt_ubiquiti.status == "active"] }}</span>
-                </td>
-                <td>{{ olt_ubiquiti.mac }}</td>
-                <td>{{ olt_ubiquiti.ip }}</td>
-                <td>{{ olt_ubiquiti.temperature }}°</td>
-                <td class="text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ olt_ubiquiti.uptime }}</td>
+            <tr id="ubiquiti_olt" class="text-gray-800">
             </tr>
         </table>
         <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">Ubiquiti ONUs</span>
-        <table class="table-auto text-center divide-y overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
-            <tr class="bg-gray-50">
-                <th class="py-2 px-4">Name</th>
-                <th class="py-2 px-4">Status</th>
-                <th class="py-2 px-4">Port</th>
-                <th class="py-2 px-4">Serial Number</th>
-                <th class="py-2 px-4">@MAC</th>
-                <th class="py-2 px-4">IP</th>
-                <th class="py-2 px-4">RxPower</th>
-                <th class="py-2 px-4">Distance</th>
-                <th class="py-2 px-4">Uptime</th>
-            </tr>
-            {% for onu in onus_ubiquiti %}
-                <tr class="text-gray-800 text-sm">
-                    <td>{{ onu.displayName }}</td>
-                    <td class="whitespace-nowrap">
-                        <span class="rounded-full text-xs px-2 py-1 border-2 border-{{ ('red','green')[onu.status == "active"] }}-500 uppercase text-{{ ('red','green')[onu.status == "active"] }}-500">{{ ('Disconnected','Connected')[onu.status == "active"] }}</span>
-                    </td>
-                    <td>GPON {{ onu.port }}</td>
-                    <td>{{ onu.serialNumber }}</td>
-                    <td>{{ onu.mac }}</td>
-                    <td>{{ onu.ip }}</td>
-                    <td class="flex flex-row items-center justify-center space-x-1 py-1.5">
-                        <div class="overflow-hidden w-1/4 inline-block h-1 flex rounded bg-{{ (("yellow","red")[onu.rxPower<-25],"green")[onu.rxPower>-15] }}-300">
-                            <div
-                                    class="{{ (("w-1/2","w-1/4")[onu.rxPower<-20],"w-3/4")[onu.rxPower>-10] }} shadow-none whitespace-nowrap bg-{{ (("yellow","red")[onu.rxPower<-25],"green")[onu.rxPower>-15] }}-600"
-                            ></div>
-                        </div>
-                        <span>{{ onu.rxPower }} dBm</span>
-                    </td>
-                    <td>{{ onu.distance }}m</td>
-                    <td class="text-{{ ('red','green')[onu.status == "active"] }}-500">{{ onu.uptime }}</td>
-                </tr>
-            {% endfor %}
+        <table id="ubiquiti_onus" class="table-auto text-center divide-y overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
         </table>
     </div>
     <div id="dasan_content"
@@ -84,18 +43,11 @@
                 <th class="py-2 px-4">Temperature</th>
                 <th class="py-2 px-4">Uptime</th>
             </tr>
-            <tr class="text-gray-800">
-                <td class="py-1.5">{{ olt_ubiquiti.displayName }}</td>
-                <td class="whitespace-nowrap">
-                    <span class="rounded-full text-xs px-2 py-1 border-2 border-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500 uppercase text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ ('Disconnected','Connected')[olt_ubiquiti.status == "active"] }}</span>
-                </td>
-                <td>{{ olt_ubiquiti.mac }}</td>
-                <td>{{ olt_ubiquiti.ip }}</td>
-                <td>{{ olt_ubiquiti.temperature }}°</td>
-                <td class="text-{{ ('red','green')[olt_ubiquiti.status == "active"] }}-500">{{ olt_ubiquiti.uptime }}</td>
+            <tr id="dasan_olt" class="text-gray-800">
             </tr>
         </table>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/devices.js') }}"></script>
 {% endblock %}
 

@@ -15,6 +15,6 @@ def workflow():
 
 @main_routes.route('/devices')
 def devices():
-    onus_ubiquiti = requests.get("http://ac-vision:8000/api/v1.0/ressources/ubiquiti/onus").json()
-    olt_ubiquiti = requests.get("http://ac-vision:8000/api/v1.0/ressources/ubiquiti/olt").json()
+    onus_ubiquiti = requests.get("http://api:8000/api/v1.0/ressources/ubiquiti/onus").json()
+    olt_ubiquiti = requests.get("http://api:8000/api/v1.0/ressources/ubiquiti/olt").json()
     return render_template('devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)

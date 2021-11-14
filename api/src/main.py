@@ -8,7 +8,10 @@ from components.dependencies import *
 from components.routers import users, ubiquiti
 from components.sql_app.database import engine
 
-app = FastAPI()
+app = FastAPI(
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
+)
 
 app.include_router(router)
 app.include_router(users.router)
@@ -19,11 +22,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 origins = [
     "http://ac-vision",
-    "http://ac-vision:5000",
-    "https://ac-vision:5000",
-    "http://ac-vision.chalons.univ-reims.fr:5000",
-    "http://ac-vision.chalons.univ-reims.fr",
-    "https://ac-vision.chalons.univ-reims.fr",
+    "http://ac-vision.chalons.univ-reims.fr"
 ]
 
 app.add_middleware(
