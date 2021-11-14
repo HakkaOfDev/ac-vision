@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 import requests
 
-from ..tools.config.config_loader import config
 from ..tools.time_utils import formatUptime
 from ..dependencies import get_current_user
 
@@ -11,10 +10,11 @@ router = APIRouter(prefix="/api/v1.0/ressources/ubiquiti",
                    responses={404: {"description": "Not found"}}
                    )
 
+id_olt="c4a201ea-ffba-4c25-8d71-161c06917464"
 
 @router.get("/olt")
 async def olt():
-    response = requests.get('https://unms/nms/api/v2.1/devices/olts/' + config['id_ubiquiti'],
+    response = requests.get('https://unms/nms/api/v2.1/devices/olts/' + id_olt,
                             headers={'Accept': 'application/json',
                                      'x-auth-token': config['api_token']}, verify=False)
     olt = response.json()
@@ -49,7 +49,7 @@ async def olt():
 
 @router.get("/onus")
 async def onus():
-    response = requests.get('https://unms/nms/api/v2.1/devices/onus?parentId=' + config['id_ubiquiti'],
+    response = requests.get('https://unms/nms/api/v2.1/devices/onus?parentId=' + id_olt,
                             headers={'Accept': 'application/json',
                                      'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
     onusList = []
@@ -67,7 +67,7 @@ async def onus():
                 "mac": onu["identification"]["mac"],
                 "displayName": onu["identification"]["displayName"],
                 "serialNumber": onu["identification"]["serialNumber"],
-                "parent": config['id_ubiquiti'],
+                "parent": id_olt,
                 "site": {
                     "id": onu["identification"]["site"]["id"],
                     "name": onu["identification"]["site"]["name"],

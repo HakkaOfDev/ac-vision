@@ -3,6 +3,13 @@ services:
   api:
     build: ./api
     container_name: api
+    environment:
+      - API_UNMS_TOKEN=${API_UNMS_TOKEN}
+      - VERSION=${VERSION}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
     volumes:
       - ./api:/app
     command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
@@ -19,9 +26,9 @@ services:
     restart: always
     container_name: database
     environment:
-      - POSTGRES_USER=ac-admin
-      - POSTGRES_PASSWORD=ac-pass
-      - POSTGRES_DB=ac-db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - pgdata:/var/lib/postgresql/data
   proxy:
