@@ -7,7 +7,7 @@ class ConfigLoader:
         self.loadConfigs()
 
     def loadConfigs(self):
-        with open("/app/src/components/tools/config/config.yml", "r") as file:
+        with open("components/tools/config/config.yml", "r") as file:
             self.config = yaml.safe_load(file)
 
 
