@@ -7,6 +7,15 @@ from .database import SessionLocal
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
+def authenticate_user(db: Session, login: str, password: str):
+    user = get_user_by_login(db, login)
+    if not user:
+        return False
+    if not pwd_context.verify(password, user.password):
+        return False
+    return user
+
+
 def get_user(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.id == user_id).first()
 
@@ -29,7 +38,8 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = hash_password(user.password)
-    db_user = models.Users(first_name=user.first_name, last_name=user.last_name, login=user.login, email=user.email,
+    login = user.last_name[0].lower() + user.first_name.lower()
+    db_user = models.Users(first_name=user.first_name, last_name=user.last_name, login=login, email=user.email,
                            password=hashed_password, role=user.role)
     db.add(db_user)
     db.commit()

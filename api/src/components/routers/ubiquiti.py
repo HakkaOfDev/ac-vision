@@ -3,11 +3,12 @@ import requests
 
 from ..tools.config.config_loader import config
 from ..tools.time_utils import formatUptime
-from ..dependencies import get_token_header
+from ..dependencies import get_current_user
 
 router = APIRouter(prefix="/api/v1.0/ressources/ubiquiti",
                    tags=["ubiquiti"],
-                   responses={404: {"description": "Not found"}},
+                   dependencies=[Depends(get_current_user)],
+                   responses={404: {"description": "Not found"}}
                    )
 
 

@@ -1,18 +1,20 @@
 import urllib3
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, applications
 from fastapi.middleware.cors import CORSMiddleware
 
 from components.sql_app import models
-from components.dependencies import *
-from components.routers import users, ubiquiti
+from components.dependencies import router
+from components.routers import users, ubiquiti, dasan
 from components.sql_app.database import engine
+
 
 app = FastAPI()
 
 app.include_router(router)
 app.include_router(users.router)
 app.include_router(ubiquiti.router)
+app.include_router(dasan.router)
 
 models.Base.metadata.create_all(bind=engine)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
