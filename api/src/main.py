@@ -23,6 +23,9 @@ origins = [
     "http://ac-vision",
     "http://ac-vision:5000",
     "https://ac-vision:5000",
+    "http://ac-vision.chalons.univ-reims.fr:5000",
+    "http://ac-vision.chalons.univ-reims.fr",
+    "https://ac-vision.chalons.univ-reims.fr",
 ]
 
 app.add_middleware(

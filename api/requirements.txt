@@ -31,3 +31,5 @@ anyio==3.3.4
 psycopg2-binary==2.9.1
 python-multipart==0.0.5
 PyYAML==6.0
+python-jose==3.3.0
+gunicorn==20.1.0
