@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 import requests
-
+from os import getenv
 from ..tools.time_utils import formatUptime
 from ..dependencies import get_current_user
 
@@ -16,10 +16,10 @@ id_olt="c4a201ea-ffba-4c25-8d71-161c06917464"
 async def olt():
     response = requests.get('https://unms/nms/api/v2.1/devices/olts/' + id_olt,
                             headers={'Accept': 'application/json',
-                                     'x-auth-token': config['api_token']}, verify=False)
+                                     'x-auth-token': getenv("API_UNMS_TOKEN")}, verify=False)
     olt = response.json()
     json = {
-        "id": config['id_ubiquiti'],
+        "id": id_olt,
         "ip": olt["ipAddress"],
         "status": olt["overview"]["status"],
         "uptime": formatUptime(olt["overview"]["uptime"]),
@@ -51,7 +51,7 @@ async def olt():
 async def onus():
     response = requests.get('https://unms/nms/api/v2.1/devices/onus?parentId=' + id_olt,
                             headers={'Accept': 'application/json',
-                                     'x-auth-token': 'a60d1c57-576e-43ba-b05f-ec116ec20e85'}, verify=False)
+                                     'x-auth-token': getenv("API_UNMS_TOKEN")}, verify=False)
     onusList = []
     for onu in response.json():
         onusList.append(

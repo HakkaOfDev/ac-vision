@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
 from fastapi import HTTPException, APIRouter, Depends, Header, status
+from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
@@ -12,11 +13,11 @@ SECRET_KEY = "75f2a00ea3cedc3268f7a1e1b3106198b564dfb495273acba052161ce58db4de"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MIN = 1200
 
-router = APIRouter(prefix="/api/v1.0/ressources/logins",
-                   tags=["logins"], )
+router = APIRouter(prefix="/api/v1.0/ressources/login",
+                   tags=["login"], )
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1.0/ressources/logins/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1.0/ressources/login/token")
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -75,4 +76,16 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": user.login}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    content = {"message": "Vous êtes bien connecté, Bienvenue !"}
+    response = JSONResponse(content=content)
+    response.set_cookie(
+        "Authorization",
+        value=f"Bearer {access_token}",
+        httponly=True,
+        max_age=1800,
+        expires=1800,
+        samesite="Lax",
+        secure=False,
+    )
+
+    return response
