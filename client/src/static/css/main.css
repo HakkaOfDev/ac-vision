@@ -19,3 +19,8 @@
     pointer-events: none;
     z-index: 5;
 }
+
+.login-container {
+    background: url('/static/img/background.jpg') center no-repeat;
+    background-size: cover;
+}

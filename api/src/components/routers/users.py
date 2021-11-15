@@ -2,6 +2,7 @@ from fastapi import HTTPException, APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..dependencies import get_current_user
 from ..sql_app import fonction, schemas
+from ..sql_app.models import Users
 
 router = APIRouter(prefix="/api/v1.0/ressources/users",
                    tags=["users"],
@@ -15,6 +16,10 @@ async def get_user(skip: int = 0, limit: int = 100, db: Session = Depends(foncti
     users = fonction.get_users(db, skip=skip, limit=limit)
     return users
 
+
+@router.get("/me")
+async def read_users_me(current_user: Users = Depends(get_current_user)):
+    return current_user
 
 @router.post("/")
 async def create_user(user: schemas.UserCreate, db: Session = Depends(fonction.get_db)):

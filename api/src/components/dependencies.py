@@ -69,23 +69,12 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect username or password, please try again.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)
     access_token = create_access_token(
         data={"sub": user.login}, expires_delta=access_token_expires
     )
-    content = {"message": "Vous êtes bien connecté, Bienvenue !"}
-    response = JSONResponse(content=content)
-    response.set_cookie(
-        "Authorization",
-        value=f"Bearer {access_token}",
-        httponly=True,
-        max_age=1800,
-        expires=1800,
-        samesite="Lax",
-        secure=False,
-    )
-
-    return response
+    content = {"message": "You're now logged in, welcome back ! Waiting for redirecting...", "acces_token": access_token}
+    return content

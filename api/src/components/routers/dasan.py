@@ -43,13 +43,17 @@ async def onus():
     for i in range(8):
         onus.append({
             "rxPower": (int(rxPower[i])/10),
+            "port": 1,
             "mac": convert_mac(mac_address[i], True),
             "distance": distance[i],
             "profile": profile[i],
             "displayName": name[i],
             "status": ("active", "disconnected")[status[i] == 2],
             "uptime": formatUptime(int(uptime[i])),
-            "ip": ip[i][37:]
+            "ip": ip[i][37:],
+            "site": {
+                "name": "IUT CHALONS"
+            }
         })
     return onus
 

@@ -1,20 +1,49 @@
-import requests
-from flask import Blueprint, render_template
+import json
+from functools import wraps
+
+from flask import Blueprint, render_template, request
 
 main_routes = Blueprint("main_routes", __name__, template_folder="../templates")
 
+
+def authenticate(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        auth = request.cookies.get("user")
+        if auth is None or auth == "null":
+            return render_template('login.html')
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @main_routes.route('/')
+def login():
+    cookies = request.cookies
+    user = cookies.get("user")
+    if user is None or user == "null":
+        return render_template('login.html')
+    return render_template('index.html', user=json.loads(str(user)))
+
+
+@main_routes.route('/dashboard')
+@authenticate
 def dashboard():
-    return render_template('index.html')
+    cookies = request.cookies
+    user = cookies.get("user")
+    return render_template('index.html', user=json.loads(str(user)))
 
 
 @main_routes.route('/workflow')
+@authenticate
 def workflow():
-    return render_template('workflow.html')
+    cookies = request.cookies
+    user = cookies.get("user")
+    return render_template('workflow.html', user=json.loads(str(user)))
 
 
 @main_routes.route('/devices')
+@authenticate
 def devices():
-    onus_ubiquiti = requests.get("http://api:8000/api/v1.0/ressources/ubiquiti/onus").json()
-    olt_ubiquiti = requests.get("http://api:8000/api/v1.0/ressources/ubiquiti/olt").json()
-    return render_template('devices.html', onus_ubiquiti=onus_ubiquiti, olt_ubiquiti=olt_ubiquiti)
+    cookies = request.cookies
+    user = cookies.get("user")
+    return render_template('devices.html', user=json.loads(str(user)))
