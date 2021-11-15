@@ -47,6 +47,12 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
+def delete_user(db: Session, login: str):
+    login = get_user_by_login(db, login)
+    db.delete(login)
+    db.commit()
+
+
 def get_db():
     db = SessionLocal()
     try:

@@ -76,5 +76,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": user.login}, expires_delta=access_token_expires
     )
-    content = {"message": "You're now logged in, welcome back ! Waiting for redirecting...", "acces_token": access_token}
+    content = {"message": "You're now logged in, welcome back ! Waiting for redirecting...", "access_token": access_token}
     return content
