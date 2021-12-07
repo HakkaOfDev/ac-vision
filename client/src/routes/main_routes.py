@@ -10,18 +10,16 @@ def authenticate(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         auth = request.cookies.get("user")
-        if auth is None or auth == "null":
+        if auth is None or auth == "null" or auth == "undefined":
             return render_template('login.html')
         return f(*args, **kwargs)
     return wrapper
 
 
 @main_routes.route('/')
-def login():
+def main():
     cookies = request.cookies
     user = cookies.get("user")
-    if user is None or user == "null":
-        return render_template('login.html')
     return render_template('index.html', user=json.loads(str(user)))
 
 

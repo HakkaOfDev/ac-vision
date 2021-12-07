@@ -1,4 +1,5 @@
 import sys
+import time
 
 from pysnmp import hlapi
 from pysnmp.entity.engine import SnmpEngine
@@ -26,7 +27,7 @@ PATH_TO_LIST = {
             "profile": "1.3.6.1.4.1.6296.101.23.3.1.1.8",
             "name": "1.3.6.1.4.1.6296.101.23.3.1.1.4",
             "status": "1.3.6.1.4.1.6296.101.23.3.1.1.2",
-            "uptime": "1.3.6.1.4.1.6296.101.23.3.1.1.61"
+            "uptime": "1.3.6.1.4.1.6296.101.23.3.1.1.23"
         }
     }
 }
@@ -44,7 +45,6 @@ class SnmpUtils:
         self.port = port
         self.community = community
         self.defineOIDsList()
-
 
     def isConnected(self):
         try:

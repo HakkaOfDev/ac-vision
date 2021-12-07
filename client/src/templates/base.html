@@ -10,19 +10,18 @@
     {% block addons %}{% endblock %}
 </head>
 <body>
-<div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+<div class="min-h-screen bg-gray-100 text-gray-800">
     <aside
-            class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-blue-900"
+            class="fixed h-screen w-64 z-40 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-blue-900"
     >
-        <div class="sidebar-header flex items-center justify-center py-4">
+        <div class="flex items-center justify-center py-4">
             <div class="inline-flex">
                 <a href="#" class="inline-flex flex-row items-center">
-                    <img class="w-20 h-10 text-red-400" src="{{ url_for('static', filename='img/logo2.png') }}" alt/>
-                    <span class="leading-10 text-gray-100 text-2xl font-bold ml-1 uppercase">Vision</span>
+                    <img class="h-16 text-red-400" src="{{ url_for('static', filename='img/logo_blanc.png') }}" alt/>
                 </a>
             </div>
         </div>
-        <div class="sidebar-content px-4 py-6">
+        <div class="px-4 py-6">
             <ul class="flex flex-col w-full">
                 <li class="my-px">
                     <a
@@ -98,9 +97,9 @@
             </ul>
         </div>
     </aside>
-    <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-        <header class="header bg-white shadow py-4 px-4">
-            <div class="header-content flex items-center flex-row">
+    <main class="block ml-64 transition-all duration-150 ease-in">
+        <header class="sticky z-10 top-0 bg-white shadow py-4 px-4">
+            <div class="flex items-center flex-row">
                 <form action="#">
                     <div class="hidden md:flex relative">
                         <div
@@ -132,10 +131,10 @@
                 </div>
             </div>
         </header>
-        <main class="main-content flex flex-col flex-grow p-4">
+        <div class="relative flex flex-col flex-grow p-4 overflow-y-scroll">
             <h1 class="font-bold text-2xl text-gray-700">{% block mainTitle %}{% endblock %}</h1>
             {% block content %}{% endblock %}
-        </main>
+        </div>
         <footer class="footer px-4 py-6">
             <div class="footer-content">
                 <p class="text-sm text-gray-600 text-center">© AC-Vision 2021. All rights reserved. by <a
@@ -155,7 +154,7 @@
         event.preventDefault();
         $.cookie('user', null)
         new Toasty({
-            duration: 3000, transition: "fade", progressBar: true, autoClose: true, onHide: () => {
+            duration: 1500, transition: "fade", progressBar: true, autoClose: true, onHide: () => {
                 $(location).attr("href", "/");
             }
         }).success("You've been disconnected. Waiting for redirecting...")

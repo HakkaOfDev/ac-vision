@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends
-import requests
 from os import getenv
-from ..tools.time_utils import formatUptime
+
+import requests
+from fastapi import APIRouter, Depends
+
 from ..dependencies import get_current_user
+from ..tools.time_utils import formatUptime
 
 router = APIRouter(prefix="/api/v1.0/ressources/ubiquiti",
                    tags=["ubiquiti"],
@@ -10,7 +12,8 @@ router = APIRouter(prefix="/api/v1.0/ressources/ubiquiti",
                    responses={404: {"description": "Not found"}}
                    )
 
-id_olt="c4a201ea-ffba-4c25-8d71-161c06917464"
+id_olt = "c4a201ea-ffba-4c25-8d71-161c06917464"
+
 
 @router.get("/olt")
 async def olt():
@@ -20,11 +23,11 @@ async def olt():
     olt = response.json()
     json = {
         "id": id_olt,
-        "ip": olt["ipAddress"],
+        "ipAddress": olt["ipAddress"],
         "status": olt["overview"]["status"],
         "uptime": formatUptime(olt["overview"]["uptime"]),
         "temperature": olt["overview"]["temperature"],
-        "mac": olt["identification"]["mac"],
+        "macAddress": olt["identification"]["mac"],
         "displayName": olt["identification"]["displayName"],
         "site": {
             "id": olt["identification"]["site"]["id"],
@@ -39,13 +42,14 @@ async def olt():
                 "position": int["identification"]["position"],
                 "type": int["identification"]["type"],
                 "displayName": int["identification"]["displayName"],
-                "mac": int["identification"]["mac"],
+                "macAddress": int["identification"]["mac"],
                 "description": int["identification"]["description"],
                 "status": int["status"]["status"],
                 "speed": int["status"]["description"],
             }
         )
     return json
+
 
 @router.get("/onus")
 async def onus():
@@ -57,14 +61,14 @@ async def onus():
         onusList.append(
             {
                 "id": onu["onu"]["id"],
-                "port": onu["onu"]["port"],
+                "gponPort": onu["onu"]["port"],
                 "profile": onu["onu"]["profile"],
                 "rxPower": round(onu["onu"]["receivePower"], 2),
-                "ip": onu["ipAddress"],
+                "ipAddress": onu["ipAddress"],
                 "status": onu["overview"]["status"],
                 "uptime": formatUptime(onu["overview"]["uptime"]),
                 "distance": onu["overview"]["distance"],
-                "mac": onu["identification"]["mac"],
+                "macAddress": onu["identification"]["mac"],
                 "displayName": onu["identification"]["displayName"],
                 "serialNumber": onu["identification"]["serialNumber"],
                 "parent": id_olt,
@@ -76,5 +80,3 @@ async def onus():
             }
         )
     return onusList
-
-

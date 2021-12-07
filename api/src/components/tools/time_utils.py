@@ -1,7 +1,8 @@
-from datetime import timedelta
+import datetime
 
-def formatUptime(s):
-    if s is not None:
-        x = str(timedelta(seconds=s)).split(':')
-        s = f"{x[0]}h, {x[1]}m, {x[2]}s"
-        return s
+
+def formatUptime(time, dasan=False):
+    if time is not None:
+        x = str(datetime.timedelta(seconds=(time, (time / 100))[dasan])).split(':')
+        time = f"{str(datetime.timedelta(seconds=(time, (time / 100))[dasan])).split(' ')[0]}d {x[0][:2]}h {x[1]}m {round(float(x[2]), 0)}s"
+    return time

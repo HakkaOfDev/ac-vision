@@ -2,56 +2,117 @@
 {% block title %}AC-Vision | Devices{% endblock %}
 {% block mainTitle %}Devices{% endblock %}
 {% block content %}
-    <div class="w-full h-20 flex flex-row p-0 items-center justify-center my-4 space-x-2">
-        <div id="dasan"
+    <div class="h-20 flex items-center justify-center my-4 space-x-2">
+        <div id="dasan-handler"
              class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
             <img src="{{ url_for('static', filename='img/models/olt-dasan.png') }}" class="" alt>
         </div>
-        <div id="ubiquiti"
+        <div id="ubiquiti-handler"
              class="bg-blue-900 h-28 w-28 p-2 flex justify-center items-center hover:bg-blue-500 transition duration-150 ease-in-out cursor-pointer">
             <img src="{{ url_for('static', filename='img/models/olt-ubiquiti.png') }}" class="" alt>
         </div>
     </div>
-    <div id="ubiquiti_content"
-         class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
-        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">UBIQUITI OLT</span>
-        <table class="table-auto text-center divide-y mb-4 overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
-            <tr class="bg-gray-50">
-                <th class="py-2 px-4">Name</th>
-                <th class="py-2 px-4">Status</th>
-                <th class="py-2 px-4">@MAC</th>
-                <th class="py-2 px-4">IP</th>
-                <th class="py-2 px-4">Temperature</th>
-                <th class="py-2 px-4">Uptime</th>
-            </tr>
-            <tr id="ubiquiti_olt" class="text-gray-800">
-            </tr>
-        </table>
-        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">UBIQUITI ONUs</span>
-        <table id="ubiquiti_onus"
-               class="table-auto text-center divide-y overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
-        </table>
+    <div id="ubiquiti-container"
+         class="w-full h-auto hidden flex-col rounded shadow-lg transition ease-in-out duration-150 mt-4 overflow-x-auto overflow-y-hidden">
+        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">UBIQUITI</span>
+        <div class="flex flex-col w-fit-content border-blue-500 border-2 border-solid border-opacity-10">
+            <div class="flex items-center text-gray-500 font-semibold text-sm border-b border-gray-500 border-solid space-x-4">
+                <div class="point"></div>
+                <div class="type">
+                    <span>TYPE</span>
+                </div>
+                <div class="display-name">
+                    <span>NAME</span>
+                </div>
+                <div class="mac-address">
+                    <span>MAC ADDRESS</span>
+                </div>
+                <div class="ip-address">
+                    <span>IP ADDRESS</span>
+                </div>
+                <div class="distance">
+                    <span>DISTANCE</span>
+                </div>
+                <div class="signal">
+                    <span>SIGNAL</span>
+                </div>
+                <div class="uptime">
+                    <span>UPTIME</span>
+                </div>
+                <div class="site">
+                    <span>SITE</span>
+                </div>
+                <div class="status">
+                    <span>STATUS</span>
+                </div>
+                <div class="gpon-port">
+                    <span>GPON PORT</span>
+                </div>
+                <div class="serial-number">
+                    <span>SERIAL NUMBER</span>
+                </div>
+                <div class="temperature">
+                    <span>TEMPERATURE</span>
+                </div>
+                <div class="profile">
+                    <span>PROFILE</span>
+                </div>
+            </div>
+            <div id="ubiquiti-devices" class="flex flex-col"></div>
+        </div>
     </div>
-    <div id="dasan_content"
-         class="hidden flex-col bg-white rounded mt-4 shadow-lg p-4 transition ease-in-out duration-150">
-        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">DASAN OLT</span>
-        <table class="table-auto text-center divide-y mb-4 overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
-            <tr class="bg-gray-50">
-                <th class="py-2 px-4">Name</th>
-                <th class="py-2 px-4">Status</th>
-                <th class="py-2 px-4">@MAC</th>
-                <th class="py-2 px-4">IP</th>
-                <th class="py-2 px-4">Temperature</th>
-                <th class="py-2 px-4">Uptime</th>
-            </tr>
-            <tr id="dasan_olt" class="text-gray-800">
-            </tr>
-        </table>
-        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">DASAN ONUs</span>
-        <table id="dasan_onus"
-               class="table-auto text-center divide-y overflow-auto border-blue-500 border-2 border-solid border-opacity-10">
-        </table>
+    <div id="dasan-container"
+         class="w-full h-auto hidden flex-col rounded shadow-lg transition ease-in-out duration-150 mt-4 overflow-x-auto overflow-y-hidden">
+        <span class="w-32 text-center text-sm px-2 font-medium bg-blue-500 bg-opacity-10 text-blue-800 py-0.5 m-0">DASAN</span>
+        <div class="flex flex-col w-fit-content border-blue-500 border-2 border-solid border-opacity-10">
+            <div class="flex items-center text-gray-500 font-semibold text-sm border-b border-gray-500 border-solid space-x-4">
+                <div class="point"></div>
+                <div class="type">
+                    <span>TYPE</span>
+                </div>
+                <div class="display-name">
+                    <span>NAME</span>
+                </div>
+                <div class="mac-address">
+                    <span>MAC ADDRESS</span>
+                </div>
+                <div class="ip-address">
+                    <span>IP ADDRESS</span>
+                </div>
+                <div class="distance">
+                    <span>DISTANCE</span>
+                </div>
+                <div class="signal">
+                    <span>SIGNAL</span>
+                </div>
+                <div class="uptime">
+                    <span>UPTIME</span>
+                </div>
+                <div class="site">
+                    <span>SITE</span>
+                </div>
+                <div class="status">
+                    <span>STATUS</span>
+                </div>
+                <div class="gpon-port">
+                    <span>GPON PORT</span>
+                </div>
+                <div class="serial-number">
+                    <span>SERIAL NUMBER</span>
+                </div>
+                <div class="temperature">
+                    <span>TEMPERATURE</span>
+                </div>
+                <div class="profile">
+                    <span>PROFILE</span>
+                </div>
+            </div>
+            <div id="dasan-devices" class="flex flex-col"></div>
+        </div>
     </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/cookie.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/objects.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/devices.js') }}"></script>
 {% endblock %}
 

@@ -15,11 +15,11 @@ router = APIRouter(prefix="/api/v1.0/ressources/dasan",
 async def olt():
     dasan = snmp_utils.SnmpUtils("10.59.10.20")
     olt = {
-        "ip": "10.59.10.20",
+        "ipAddress": "10.59.10.20",
         "status": ("disconnected", "active")[dasan.isConnected()],
-        "uptime": formatUptime(int(dasan.get(dasan.oids["system"]["uptime"]))),
+        "uptime": formatUptime(int(dasan.get(dasan.oids["system"]["uptime"])), True),
         "temperature": dasan.get(dasan.oids["system"]["temperature"]),
-        "mac": convert_mac(str(dasan.get(dasan.oids["system"]["mac_address"]))),
+        "macAddress": convert_mac(str(dasan.get(dasan.oids["system"]["mac_address"]))),
         "displayName": dasan.get(dasan.oids["system"]["name"]),
         "site": {
             "name": "IUT CHALONS"
@@ -30,7 +30,6 @@ async def olt():
 @router.get("/onus")
 async def onus():
     dasan = snmp_utils.SnmpUtils("10.59.10.20")
-
     onus = []
     rxPower = list(dasan.bulk(dasan.oids["olt_dasan"]["onu"]["rx_power"]).values())
     mac_address = list(dasan.bulk(dasan.oids["olt_dasan"]["onu"]["mac_address"]).values())
@@ -43,14 +42,15 @@ async def onus():
     for i in range(8):
         onus.append({
             "rxPower": (int(rxPower[i])/10),
-            "port": 1,
-            "mac": convert_mac(mac_address[i], True),
+            "gponPort": 1,
+            "macAddress": convert_mac(mac_address[i], True),
             "distance": distance[i],
             "profile": profile[i],
-            "displayName": name[i],
+            "displayName": "None",
+            "serialNumber": name[i],
             "status": ("active", "disconnected")[status[i] == 2],
-            "uptime": formatUptime(int(uptime[i])),
-            "ip": ip[i][37:],
+            "uptime": formatUptime(int(uptime[i]), False),
+            "ipAddress": ip[i][37:],
             "site": {
                 "name": "IUT CHALONS"
             }
