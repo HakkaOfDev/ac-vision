@@ -78,7 +78,8 @@ class Workflow {
         this.edges.add(edge)
     }
 
-    async updateData(authToken) {
+    updateData() {
+        let authToken = JSON.parse($.cookie('user')).access_token
         // RT-STACK
         $.ajax({
             type: "GET", url: "http://ac-vision/api/v1.0/ressources/rt-stack", dataType: 'json', headers:
@@ -157,14 +158,13 @@ class Workflow {
                     }])
             }
         });
-
+        let i = 4;
         // UBIQUITI ONUS
         $.ajax({
             type: "GET", url: "http://ac-vision/api/v1.0/ressources/ubiquiti/onus", dataType: 'json', headers:
                 {
                     'Authorization': 'Bearer ' + authToken
                 }, success: (onus) => {
-                let i = 10;
                 onus.forEach((onu) => {
                     this.nodes.update([{
                         id: i,
@@ -177,13 +177,14 @@ class Workflow {
                         title: subContainer(onu.displayName, onu.serialNumber, onu.gponPort, onu.macAddress, onu.ipAddress, onu.uptime, onu.distance, onu.site.name)
                     }])
                     this.edges.update([
-                    {
-                        from: i,
-                        to: 3,
-                        color: onu.status === "active" ? "rgba(16, 185, 129, 1)" : "rgba(239, 68, 68, 1)",
-                        length: 25,
-                        title: linkContainer(onu.status)
-                    }])
+                        {
+                            from: 3,
+                            to: i,
+                            color: onu.status === "active" ? "rgba(16, 185, 129, 1)" : "rgba(239, 68, 68, 1)",
+                            length: 25,
+                            title: linkContainer(onu.status)
+                        }])
+                    i++;
                 })
             }
         });
@@ -194,7 +195,6 @@ class Workflow {
                 {
                     'Authorization': 'Bearer ' + authToken
                 }, success: (onus) => {
-                let i = 30;
                 onus.forEach((onu) => {
                     this.nodes.update([{
                         id: i,
@@ -207,13 +207,14 @@ class Workflow {
                         title: subContainer(onu.displayName, onu.serialNumber, onu.gponPort, onu.macAddress, onu.ipAddress, onu.uptime, onu.distance, onu.site.name)
                     }])
                     this.edges.update([
-                    {
-                        from: i,
-                        to: 2,
-                        color: onu.status === "active" ? "rgba(16, 185, 129, 1)" : "rgba(239, 68, 68, 1)",
-                        length: 25,
-                        title: linkContainer(onu.status)
-                    }])
+                        {
+                            from: 2,
+                            to: i,
+                            color: onu.status === "active" ? "rgba(16, 185, 129, 1)" : "rgba(239, 68, 68, 1)",
+                            length: 25,
+                            title: linkContainer(onu.status)
+                        }])
+                    i++;
                 })
             }
         });
@@ -242,5 +243,6 @@ window.addEventListener('load', () => {
     let workflow = new Workflow(container)
     workflow.create()
     workflow.addCloud()
-    setInterval(workflow.updateData(JSON.parse($.cookie('user')).access_token), 10000);
+    workflow.updateData()
+    setInterval(workflow.updateData, 10000);
 });

@@ -17,6 +17,7 @@ def authenticate(f):
 
 
 @main_routes.route('/')
+@authenticate
 def main():
     cookies = request.cookies
     user = cookies.get("user")

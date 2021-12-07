@@ -22,6 +22,7 @@ h11==0.12.0
 fastapi==0.70.0
 click==8.0.3
 charset-normalizer==2.0.7
+snmp-cmds==1.0
 certifi==2021.10.8
 asgiref==3.4.1
 anyio==3.3.4

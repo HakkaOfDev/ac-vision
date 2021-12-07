@@ -24,8 +24,9 @@ async def olt():
         "site": {
             "name": "IUT CHALONS"
         }
-            }
+    }
     return olt
+
 
 @router.get("/onus")
 async def onus():
@@ -41,12 +42,12 @@ async def onus():
     ip = list(dasan.bulk(dasan.oids["olt_dasan"]["onu"]["mac_address"]).keys())
     for i in range(8):
         onus.append({
-            "rxPower": (int(rxPower[i])/10),
+            "rxPower": (int(rxPower[i]) / 10),
             "gponPort": 1,
             "macAddress": convert_mac(mac_address[i], True),
             "distance": distance[i],
             "profile": profile[i],
-            "displayName": "None",
+            "displayName": (name[i], "")[name[i] is None],
             "serialNumber": name[i],
             "status": ("active", "disconnected")[status[i] == 2],
             "uptime": formatUptime(int(uptime[i]), False),
@@ -60,7 +61,7 @@ async def onus():
 
 def convert_mac(mac, change=False):
     if change:
-        mac = hex(int(mac, 16)-1)[2:]
+        mac = hex(int(mac, 16) - 1)[2:]
     else:
         mac = mac[2:]
-    return mac[:2] + ":" + ":".join([mac[i] + mac[i+1] for i in range(2, 12, 2)])
+    return mac[:2] + ":" + ":".join([mac[i] + mac[i + 1] for i in range(2, 12, 2)])
