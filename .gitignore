@@ -1,4 +1,4 @@
-mibs/
+api/mibs/
 venv/
 .idea/
 client/.idea/

@@ -1,8 +1,24 @@
-import datetime
+intervals = (
+    ('d', 86400),  # 60 * 60 * 24
+    ('h', 3600),  # 60 * 60
+    ('m', 60),
+    ('s', 1),
+)
 
 
-def formatUptime(time, dasan=False):
-    if time is not None:
-        x = str(datetime.timedelta(seconds=(time, (time / 100))[dasan])).split(':')
-        time = f"{str(datetime.timedelta(seconds=(time, (time / 100))[dasan])).split(' ')[0]}d {x[0][:2]}h {x[1]}m {round(float(x[2]), 0)}s"
-    return time
+def format_uptime(seconds, granularity=2):
+    result = []
+
+    for name, count in intervals:
+        value = seconds // count
+        if value:
+            seconds -= value * count
+            if value == 1:
+                name = name.rstrip('s')
+            result.append(f"{value}{name}")
+    return ' '.join(result[:granularity])
+
+
+def format_dasan_olt_uptime(time):
+    x = time.split(':')
+    return f'{x[0]}d {x[1]}h {x[2]}m {x[3][:2]}s'
