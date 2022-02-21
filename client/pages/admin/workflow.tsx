@@ -73,9 +73,9 @@ const WorkflowPage = () => {
         className: onu.status,
         data: {
           label: (
-            <>
-              <OnuItem {...onu} />
-            </>
+              <>
+                <OnuItem {...onu} />
+              </>
           ),
         },
         style: {
@@ -93,9 +93,9 @@ const WorkflowPage = () => {
         className: olt.status,
         data: {
           label: (
-            <>
-              <OltItem {...olt} />
-            </>
+              <>
+                <OltItem {...olt} />
+              </>
           ),
         },
         style: {
@@ -125,7 +125,23 @@ const WorkflowPage = () => {
     setUser(userItem);
   }, []);
 
+  /* we need to create a websocket connection to the server.
+  * It will connect to the server, and wait until it gets a message
+  * then it treats the message */
+
+  useEffect(() => {
+    // create a websocket connection to the server
+    const ws = new WebSocket('ws://api:6969');
+    // listen for messages
+    ws.onmessage = (message) => {
+      updateNetwork();
+      console.log('Updated')
+    };
+  }, []);
+
+
   return (
+<<<<<<< HEAD
     <PageLayout title='Workflow' description='See the map.'>
       <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
         <Heading>Workflow</Heading>
@@ -162,7 +178,43 @@ const WorkflowPage = () => {
         <Button onClick={updateNetwork}>Update</Button>
       </VStack>
     </PageLayout>
+=======
+      <PageLayout title='Workflow' description='See the map.'>
+        <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
+          <Heading>Workflow</Heading>
+          <ReactFlow
+              elements={elements}
+              onLoad={updateNetwork}
+              snapToGrid={true}
+              snapGrid={[20, 20]}
+              defaultZoom={0.7}
+              minZoom={0.1}
+              maxZoom={3}
+              connectionLineType={ConnectionLineType.SmoothStep}
+          >
+            <MiniMap
+                nodeStrokeColor={(n: Node) => {
+                  if (n.className === 'active') {
+                    return 'darkgreen';
+                  } else {
+                    return 'darkred';
+                  }
+                }}
+                nodeColor={(n: Node) => {
+                  if (n.className === 'active') {
+                    return 'green';
+                  } else {
+                    return 'red';
+                  }
+                }}
+                nodeStrokeWidth={3}
+            />
+            <Controls />
+            <Background color='#aaa' gap={16} />
+          </ReactFlow>
+          <Button onClick={updateNetwork}>Update</Button>
+        </VStack>
+      </PageLayout>
+>>>>>>> dev
   );
 };
-
-export default WorkflowPage;
