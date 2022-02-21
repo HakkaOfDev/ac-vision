@@ -13,6 +13,7 @@ import ReactFlow, {
   Edge,
   Elements,
   isNode,
+  MiniMap,
   Node,
   Position,
 } from 'react-flow-renderer';
@@ -69,6 +70,7 @@ const WorkflowPage = () => {
         id: `${onu.id}`,
         type: 'output',
         connectable: false,
+        className: onu.status,
         data: {
           label: (
             <>
@@ -88,12 +90,16 @@ const WorkflowPage = () => {
         id: `${olt.id}`,
         type: 'input',
         connectable: false,
+        className: olt.status,
         data: {
           label: (
             <>
               <OltItem {...olt} />
             </>
           ),
+        },
+        style: {
+          border: olt.status === 'active' ? '1px solid green' : '1px solid red',
         },
         position: { x: 200, y: 0 },
       } as Node);
@@ -112,8 +118,6 @@ const WorkflowPage = () => {
     });
 
     setElements(getLayoutedElements(elementsArray));
-    console.log('Elements updated');
-    console.log(elements);
   };
 
   useEffect(() => {
@@ -135,6 +139,23 @@ const WorkflowPage = () => {
           maxZoom={3}
           connectionLineType={ConnectionLineType.SmoothStep}
         >
+          <MiniMap
+            nodeStrokeColor={(n: Node) => {
+              if (n.className === 'active') {
+                return 'darkgreen';
+              } else {
+                return 'darkred';
+              }
+            }}
+            nodeColor={(n: Node) => {
+              if (n.className === 'active') {
+                return 'green';
+              } else {
+                return 'red';
+              }
+            }}
+            nodeStrokeWidth={3}
+          />
           <Controls />
           <Background color='#aaa' gap={16} />
         </ReactFlow>
