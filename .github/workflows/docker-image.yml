@@ -1,0 +1,15 @@
+name: Docker deploy preprod
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ac-vision
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - run: docker-compose down
+    - run: docker-compose up -d --build
