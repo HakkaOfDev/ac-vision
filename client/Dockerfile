@@ -1,13 +1,18 @@
-FROM python:3.9-buster
+FROM node:alpine
 
-RUN mkdir app
+RUN mkdir -p /app
+ENV PORT 3000
+
 WORKDIR /app
 
-ENV PATH="${PATH}:/root/.local/bin"
-ENV PYTHONPATH="/app/src"
+COPY package.json /app
 
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN yarn config set network-timeout 1000000 -g
+RUN yarn install
 
-COPY src/ .
+COPY . /app
+
+RUN yarn build
+
+EXPOSE 3000
+CMD [ "yarn", "start" ]

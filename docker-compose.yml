@@ -19,11 +19,6 @@ services:
   client:
     build: ./client
     container_name: client
-    volumes:
-      - ./client:/app
-    environment:
-      - FLASK_ENV=production
-    command: gunicorn --bind=0.0.0.0:5000 src.main:app
   database:
     image: postgres:14.1
     restart: always

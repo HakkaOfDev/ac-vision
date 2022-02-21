@@ -101,5 +101,5 @@ class SnmpUtils:
         if not errorIndication and not errorStatus:
             for snmpDataTableRow in snmpDataTable:
                 for name, val in snmpDataTableRow:
-                    results[str(name)] = str(snmpDataTableRow[0]).split(" = ")[1]
+                    results[str(name)] = str(snmpDataTableRow[0]).split(" = ")[-1]
         return results

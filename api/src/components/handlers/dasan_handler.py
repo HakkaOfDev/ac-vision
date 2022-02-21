@@ -18,9 +18,7 @@ class DasanWorkflow:
             "temperature": olt.get(OIDS.SYSTEM_TEMPERATURE.value),
             "macAddress": olt.get(OIDS.SYSTEM_MAC.value).replace(' ', ':')[1:-2].upper(),
             "displayName": olt.get(OIDS.SYSTEM_NAME.value)[1:-1],
-            "site": {
-                "name": "IUT CHALONS"
-            }
+            "site": "IUT CHALONS"
         }
 
     def get_onus(self):
@@ -44,9 +42,7 @@ class DasanWorkflow:
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
                         onu.get('sleGponOnuLinkUpTime') is None],
                     "ipAddress": '',
-                    "site": {
-                        "name": "IUT CHALONS"
-                    }
+                    "site": "IUT CHALONS"
                 }
                 for ip, mac in ips.items():
                     formatted_mac = '0x' + onu.get('sleGponOnuHwAddress').replace(' ', '').lower()

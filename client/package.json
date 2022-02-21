@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "postbuild": "next-sitemap",
+    "start": "next start",
+    "lint": "next lint",
+    "prettier": "npx prettier {src,pages,data,internationalization}/* --write",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "latest",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@fontsource/josefin-sans": "^4.5.1",
+    "@react-icons/all-files": "^4.1.0",
+    "dagre": "^0.8.5",
+    "framer-motion": "^5.5.5",
+    "gray-matter": "^4.0.3",
+    "interweave": "^12.9.0",
+    "next": "latest",
+    "next-seo": "^4.28.1",
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-flow-renderer": "^9.7.4",
+    "react-i18next": "^11.15.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.8",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "eslint": "8.7.0",
+    "eslint-config-next": "^0.2.4",
+    "next-sitemap": "^1.6.245",
+    "prettier": "2.5.1",
+    "typescript": "4.5.4"
+  }
+}
