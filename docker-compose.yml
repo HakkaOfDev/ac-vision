@@ -14,7 +14,7 @@ services:
       - DB_HOST=${DB_HOST}
     volumes:
       - ./api:/app
-    links:
+    depends_on:
       - database
       - redis
     command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
@@ -48,7 +48,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    links:
+    depends_on:
       - database
       - api
       - client
