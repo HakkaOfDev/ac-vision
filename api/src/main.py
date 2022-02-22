@@ -2,7 +2,7 @@ import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from components.tools.log_listener import listener
-from components.tools.log_listener import sio as app_ws
+from components.tools.log_listener import server
 from components.redis.cache_updates import run_cache
 from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
@@ -44,7 +44,7 @@ def run_api():
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 def run_ws():
-    uvicorn.run(app_ws, host="0.0.0.0", port=6969)
+    server.run_forever()
 
 if __name__ == "__main__":
     #uvicorn.run(app, host="0.0.0.0", port="8000")

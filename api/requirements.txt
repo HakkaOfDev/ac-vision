@@ -36,3 +36,4 @@ timeloop==1.0.2
 python-socketio==5.5.2
 bidict==0.21.4
 python-engineio==4.3.1
+websocket-server==0.6.4

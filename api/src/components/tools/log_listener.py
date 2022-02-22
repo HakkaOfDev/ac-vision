@@ -1,14 +1,16 @@
 #from ast import match_case
 import socket
-import socketio
+from websocket_server import WebsocketServer
 import re
 
 from components.redis.cache_updates import update_cache
 import time
 
+def register_new_client(client, server):
+    print("New client added !")
 
-sio = socketio.AsyncServer(async_mode='asgi')
-app = socketio.ASGIApp(sio)
+server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
+server.set_fn_new_client(register_new_client)
 
 
 @sio.event
@@ -33,4 +35,4 @@ def listener():
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            sio.emit(onu_info)
+            send_message_to_all(onu_info)
