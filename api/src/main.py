@@ -40,18 +40,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def run_api():
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-def run_ws():
-    server.run_forever()
 
 if __name__ == "__main__":
-    #uvicorn.run(app, host="0.0.0.0", port="8000")
-    api_process = Process(target=run_api)
-    ws_process = Process(target=run_ws)
-    api_process.start()
-    ws_process.start()
+    uvicorn.run(app, host="0.0.0.0", port="8000")
+    server.run_forever(threaded=True)
 
     threading.Thread(target=listener).start()
     print('listener on')
