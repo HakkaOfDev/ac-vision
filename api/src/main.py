@@ -40,14 +40,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-threading.Thread(target=listener).start()
-print('listener on')
-run_cache()
+def run_api():
+    uvicorn.run(app, host="0.0.0.0", port="8000")
+
+def run_ws():
+    uvicorn.run(app_ws, host="0.0.0.0", port="6969")
 
 if __name__ == "__main__":
     #uvicorn.run(app, host="0.0.0.0", port="8000")
+    api_process = Process(target=run_api)
+    ws_process = Process(target=run_ws)
+    api_process.start()
+    ws_process.start()
 
-    configs = [Config(app, host="0.0.0.0", port="8000"), Config(app_ws, host="0.0.0.0", port="6969")]
-    coros = [Server(c).serve() for c in configs]
-
-    asyncio.gather(*coros)
+    threading.Thread(target=listener).start()
+    print('listener on')
+    run_cache()
