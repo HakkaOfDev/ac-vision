@@ -3,7 +3,6 @@ import socket
 import socketio
 import re
 
-import uvicorn
 from components.redis.cache_updates import update_cache
 import time
 

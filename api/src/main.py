@@ -8,6 +8,7 @@ from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
 from components.sql_app import models
 from components.sql_app.database import engine
+import uvicorn
 import threading
 
 app = FastAPI(
