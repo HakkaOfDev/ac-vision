@@ -27,8 +27,8 @@ const WorkflowPage = () => {
     const dagreGraph = new dagre.graphlib.Graph();
     dagreGraph.setDefaultEdgeLabel(() => ({}));
     dagreGraph.setGraph({ rankdir: 'TB' });
-    const width = 150;
-    const height = 100;
+    const width = 200;
+    const height = 150;
 
     elem.forEach((el) => {
       if (isNode(el)) {
@@ -63,15 +63,22 @@ const WorkflowPage = () => {
         Authorization: 'Bearer ' + user?.token,
       },
     });
-    if (req.status !== 200) {
+    if (req.status === 401) {
       toast({
         title: 'An error occured',
         description:
-          'Your session has expired or the cache is not updated. Try to restart your session by logout/login.',
+          'Your session has expired. Try to restart your session by logout/login.',
         status: 'error',
         duration: 2000,
       });
-    } else {
+    } else if (req.status === 404) {
+      toast({
+        title: 'An error occured',
+        description: 'The cache is not updating, please wait few seconds.',
+        status: 'error',
+        duration: 2000,
+      });
+    } else if (req.status === 200) {
       const map: Map = await req.json();
       const elementsArray: Elements = [];
 
@@ -130,6 +137,13 @@ const WorkflowPage = () => {
       });
 
       setElements(getLayoutedElements(elementsArray));
+    } else {
+      toast({
+        title: 'An error occured',
+        description: 'Please contact an administrator.',
+        status: 'error',
+        duration: 2000,
+      });
     }
   };
 
