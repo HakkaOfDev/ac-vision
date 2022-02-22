@@ -49,7 +49,7 @@ const WorkflowPage = () => {
         el.targetPosition = Position.Top;
         el.sourcePosition = Position.Bottom;
         el.position = {
-          x: nodeWithPosition.x - width / 2 + Math.random() / 1000,
+          x: nodeWithPosition.x - width / 2 + 250,
           y: nodeWithPosition.y - height / 2,
         };
       }
@@ -97,7 +97,7 @@ const WorkflowPage = () => {
           },
           style: {
             border:
-              onu.status === 'active' ? '1px solid green' : '1px solid red',
+              onu.status === 'active' ? '2px solid green' : '2px solid red',
           },
           position: { x: 0, y: 0 },
         } as Node);
@@ -118,7 +118,7 @@ const WorkflowPage = () => {
           },
           style: {
             border:
-              olt.status === 'active' ? '1px solid green' : '1px solid red',
+              olt.status === 'active' ? '2px solid green' : '2px solid red',
           },
           position: { x: 200, y: 0 },
         } as Node);
