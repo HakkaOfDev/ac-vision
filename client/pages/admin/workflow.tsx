@@ -49,7 +49,7 @@ const WorkflowPage = () => {
         el.targetPosition = Position.Top;
         el.sourcePosition = Position.Bottom;
         el.position = {
-          x: nodeWithPosition.x - width / 2 + Math.random() / 1000,
+          x: nodeWithPosition.x - width / 2,
           y: nodeWithPosition.y - height / 2,
         };
       }
