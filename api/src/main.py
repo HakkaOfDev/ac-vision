@@ -41,10 +41,10 @@ app.add_middleware(
 )
 
 def run_api():
-    uvicorn.run(app, host="0.0.0.0", port="8000")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 def run_ws():
-    uvicorn.run(app_ws, host="0.0.0.0", port="6969")
+    uvicorn.run(app_ws, host="0.0.0.0", port=6969)
 
 if __name__ == "__main__":
     #uvicorn.run(app, host="0.0.0.0", port="8000")
