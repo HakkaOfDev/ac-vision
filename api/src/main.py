@@ -9,7 +9,7 @@ from components.routers import users_router, ubiquiti_router, dasan_router, rtst
 from components.sql_app import models
 from components.sql_app.database import engine
 from uvicorn import Server, Config
-import asyncio
+from multiprocessing import Process
 import threading
 
 app = FastAPI(
