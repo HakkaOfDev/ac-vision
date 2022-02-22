@@ -63,6 +63,6 @@ class MapWorkflow:
         self.append_onus()
 
     def get(self):
-        if self.map['olts'] or self.map['onus'] or self.map['edges']:
+        if len(self.map['olts'])==0:
             return None
         return self.map
