@@ -49,7 +49,7 @@ const WorkflowPage = () => {
         el.targetPosition = Position.Top;
         el.sourcePosition = Position.Bottom;
         el.position = {
-          x: nodeWithPosition.x - width / 2 + 50,
+          x: nodeWithPosition.x - width / 2 + Math.random() / 1000,
           y: nodeWithPosition.y - height / 2,
         };
       }
@@ -147,6 +147,11 @@ const WorkflowPage = () => {
     }
   };
 
+  const onLoad = (reactFlowInstance) => {
+    updateNetwork();
+    reactFlowInstance.fitView();
+  };
+
   useEffect(() => {
     const userItem: User = JSON.parse(localStorage.getItem('user'));
     setUser(userItem);
@@ -167,12 +172,12 @@ const WorkflowPage = () => {
         <Heading>Workflow</Heading>
         <ReactFlow
           elements={elements}
-          onLoad={updateNetwork}
+          onLoad={onLoad}
           snapToGrid={true}
           snapGrid={[20, 20]}
-          defaultZoom={0.7}
-          minZoom={0.1}
-          maxZoom={3}
+          defaultZoom={0.8}
+          minZoom={0.5}
+          maxZoom={2}
           connectionLineType={ConnectionLineType.SmoothStep}
         >
           <MiniMap
