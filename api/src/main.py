@@ -38,6 +38,7 @@ app.add_middleware(
 )
 
 threading.Thread(target=listener).start()
+print('listener on')
 run_cache()
 
 # if __name__ == "__main__":

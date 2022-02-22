@@ -31,6 +31,7 @@ def listener():
         matches = re.search(REGEX, data)
         if matches:
             update_cache()
+            print('cache updated')
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
