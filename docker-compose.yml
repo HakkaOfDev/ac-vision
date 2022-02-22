@@ -3,8 +3,6 @@ services:
   api:
     build: ./api
     container_name: api
-    env_file:
-      - /home/user/ac-vision/.env
     environment:
       - API_UNMS_TOKEN=${API_UNMS_TOKEN}
       - VERSION=${VERSION}
@@ -17,9 +15,6 @@ services:
     depends_on:
       - database
       - redis
-    command: 
-      - uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
-      - uvicorn src.main:app_ws --reload --host 0.0.0.0 --port 6969
   client:
     build: ./client
     container_name: client
@@ -27,8 +22,6 @@ services:
     image: postgres:14.1
     restart: always
     container_name: database
-    env_file:
-      - /home/user/ac-vision/.env
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
