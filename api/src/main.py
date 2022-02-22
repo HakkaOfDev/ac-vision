@@ -8,6 +8,8 @@ from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
 from components.sql_app import models
 from components.sql_app.database import engine
+from uvicorn import Server, Config
+import asyncio
 import threading
 
 app = FastAPI(
@@ -42,5 +44,10 @@ threading.Thread(target=listener).start()
 print('listener on')
 run_cache()
 
-# if __name__ == "__main__":
-# uvicorn.run(app, host="127.0.0.1", port="8000")
+if __name__ == "__main__":
+    #uvicorn.run(app, host="0.0.0.0", port="8000")
+
+    configs = [Config(app, host="0.0.0.0", port="8000"), Config(app_ws, host="0.0.0.0", port="6969")]
+    coros = [Server(c).serve() for c in configs]
+
+    asyncio.gather(*coros)
