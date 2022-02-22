@@ -10,6 +10,7 @@ import time
 
 sio = socketio.AsyncServer(async_mode='asgi')
 app = socketio.ASGIApp(sio)
+uvicorn.run(app, host="0.0.0.0", port="6969")
 
 
 @sio.event
@@ -20,7 +21,6 @@ async def connect(sid, environ):
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
 def listener():
-    uvicorn.run(app, host="0.0.0.0", port="6969")
     port = 514
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(("", port))
