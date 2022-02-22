@@ -1,3 +1,5 @@
+from http.client import HTTPException
+from telnetlib import STATUS
 from fastapi import APIRouter, Depends
 
 from ..dependencies import get_current_user
@@ -14,4 +16,6 @@ router = APIRouter(prefix="/api/v1.0/ressources/map",
 async def map():
     map_workflow = MapWorkflow()
     map_workflow.build()
+    if map_workflow.get() is None:
+        raise HTTPException(status_code=404, detail='An error occured, please contact an administrator.')
     return map_workflow.get()

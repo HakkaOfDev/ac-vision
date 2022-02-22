@@ -4,9 +4,6 @@ from ..redis.redis_client import rclient
 class MapWorkflow:
 
     def __init__(self):
-        # olts (nodes)
-        # onus (nodes)
-        # edges
         self.map = {
             "olts": [],
             "onus": [],
@@ -15,9 +12,10 @@ class MapWorkflow:
 
     def append_olts(self):
         olt_dasan = rclient.json().get('olt-dasan')
-        olt_dasan['id'] = 1
-        olt_dasan['model'] = 'olt-dasan'
-        self.map['olts'].append(olt_dasan)
+        if olt_dasan is not None:
+            olt_dasan['id'] = 1
+            olt_dasan['model'] = 'olt-dasan'
+            self.map['olts'].append(olt_dasan)
 
     def append_olt_ubiquiti(self):
         olt_ubiquiti = rclient.json().get('olt-ubiquiti')
@@ -32,18 +30,19 @@ class MapWorkflow:
 
     def append_onus(self):
         onus_dasan = rclient.json().get('onus-dasan')
-        onu_id = 10
-        for onu in onus_dasan:
-            onu['id'] = onu_id
-            onu['model'] = 'onu-dasan'
-            self.map['onus'].append(onu)
-            self.map['edges'].append({
-                'id': onu_id,
-                'from': 1,
-                'to': onu_id,
-                'status': onu['status']
-            })
-            onu_id += 1
+        if onus_dasan is not None:
+            onu_id = 10
+            for onu in onus_dasan:
+                onu['id'] = onu_id
+                onu['model'] = 'onu-dasan'
+                self.map['onus'].append(onu)
+                self.map['edges'].append({
+                    'id': onu_id,
+                    'from': 1,
+                    'to': onu_id,
+                    'status': onu['status']
+                })
+                onu_id += 1
 
     def append_onus_ubiquiti(self):
         onus_ubiquiti = rclient.json().get('onus-ubiquiti')
@@ -64,4 +63,6 @@ class MapWorkflow:
         self.append_onus()
 
     def get(self):
+        if self.map['olts'] or self.map['onus'] or self.map['edges']:
+            return None
         return self.map
