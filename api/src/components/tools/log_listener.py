@@ -10,7 +10,6 @@ import time
 
 sio = socketio.AsyncServer(async_mode='asgi')
 app = socketio.ASGIApp(sio)
-uvicorn.run(app, host="0.0.0.0", port="6969")
 
 
 @sio.event

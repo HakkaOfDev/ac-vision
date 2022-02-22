@@ -1,7 +1,7 @@
 import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from components.tools.log_listener import listener
+from components.tools.log_listener import listener, app
 from components.redis.cache_updates import run_cache
 from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
@@ -38,6 +38,7 @@ app.add_middleware(
 )
 
 threading.Thread(target=listener).start()
+uvicorn.run(app, host="0.0.0.0", port="6969")
 print('listener on')
 run_cache()
 
