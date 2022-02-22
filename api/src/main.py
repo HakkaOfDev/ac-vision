@@ -8,7 +8,6 @@ from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
 from components.sql_app import models
 from components.sql_app.database import engine
-import uvicorn
 import threading
 
 app = FastAPI(
@@ -40,7 +39,6 @@ app.add_middleware(
 )
 
 threading.Thread(target=listener).start()
-uvicorn.run(app_ws, host="0.0.0.0", port="6969")
 print('listener on')
 run_cache()
 

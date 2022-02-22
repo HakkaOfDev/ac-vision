@@ -17,7 +17,7 @@ services:
     depends_on:
       - database
       - redis
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000 && uvicorn src.main:app_ws --reload --host 0.0.0.0 --port 6969
   client:
     build: ./client
     container_name: client
