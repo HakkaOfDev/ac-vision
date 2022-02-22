@@ -131,7 +131,7 @@ const WorkflowPage = () => {
 
   useEffect(() => {
     // create a websocket connection to the server
-    const ws = new WebSocket('ws://api:6969');
+    const ws = new WebSocket('ws://ac-vision/ws');
     // listen for messages
     ws.onmessage = (message) => {
       updateNetwork();
