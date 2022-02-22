@@ -42,8 +42,8 @@ app.add_middleware(
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
     server.run_forever(threaded=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
     threading.Thread(target=listener).start()
     print('listener on')
