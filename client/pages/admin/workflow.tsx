@@ -5,6 +5,7 @@ import { Map } from '@/types/Map';
 import { User } from '@/types/User';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
@@ -22,6 +23,7 @@ const WorkflowPage = () => {
   const [user, setUser] = useState<User>();
   const [elements, setElements] = useState<Elements>([]);
   const toast = useToast();
+  const router = useRouter();
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -49,7 +51,7 @@ const WorkflowPage = () => {
         el.targetPosition = Position.Top;
         el.sourcePosition = Position.Bottom;
         el.position = {
-          x: nodeWithPosition.x - width / 2,
+          x: nodeWithPosition.x - width / 2 - 100,
           y: nodeWithPosition.y - height / 2,
         };
       }
@@ -66,10 +68,13 @@ const WorkflowPage = () => {
     if (req.status === 401) {
       toast({
         title: 'An error occured',
-        description:
-          'Your session has expired. Try to restart your session by logout/login.',
+        description: 'Your session has expired.',
         status: 'error',
-        duration: 2000,
+        duration: 1500,
+        onCloseComplete: () => {
+          localStorage.removeItem('user');
+          router.push('/');
+        },
       });
     } else if (req.status === 404) {
       toast({
