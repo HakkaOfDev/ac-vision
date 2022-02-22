@@ -12,5 +12,6 @@ jobs:
       with:
         fetch-depth: 0
     - run: cp /home/user/ac-vision/.env ./.env
+    - run: chown -R user:user * #We need to set the permissions to access filesfrom docker
     - run: docker-compose down
     - run: docker-compose up -d --build
