@@ -3,7 +3,7 @@ import OnuItem from '@/components/devices/onu';
 import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
 import { User } from '@/types/User';
-import { Button, Heading, VStack } from '@chakra-ui/react';
+import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
 import { useEffect, useState } from 'react';
 import ReactFlow, {
@@ -21,6 +21,7 @@ import ReactFlow, {
 const WorkflowPage = () => {
   const [user, setUser] = useState<User>();
   const [elements, setElements] = useState<Elements>([]);
+  const toast = useToast();
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -62,62 +63,74 @@ const WorkflowPage = () => {
         Authorization: 'Bearer ' + user?.token,
       },
     });
-    const map: Map = await req.json();
-    const elementsArray: Elements = [];
+    if (req.status !== 200) {
+      toast({
+        title: 'An error occured',
+        description:
+          'Your session has expired or the cache is not updated. Try to restart your session by logout/login.',
+        status: 'error',
+        duration: 2000,
+      });
+    } else {
+      const map: Map = await req.json();
+      const elementsArray: Elements = [];
 
-    map.onus.forEach((onu) => {
-      elementsArray.push({
-        id: `${onu.id}`,
-        type: 'output',
-        connectable: false,
-        className: onu.status,
-        data: {
-          label: (
-            <>
-              <OnuItem {...onu} />
-            </>
-          ),
-        },
-        style: {
-          border: onu.status === 'active' ? '1px solid green' : '1px solid red',
-        },
-        position: { x: 0, y: 0 },
-      } as Node);
-    });
+      map.onus.forEach((onu) => {
+        elementsArray.push({
+          id: `${onu.id}`,
+          type: 'output',
+          connectable: false,
+          className: onu.status,
+          data: {
+            label: (
+              <>
+                <OnuItem {...onu} />
+              </>
+            ),
+          },
+          style: {
+            border:
+              onu.status === 'active' ? '1px solid green' : '1px solid red',
+          },
+          position: { x: 0, y: 0 },
+        } as Node);
+      });
 
-    map.olts.forEach((olt) => {
-      elementsArray.push({
-        id: `${olt.id}`,
-        type: 'input',
-        connectable: false,
-        className: olt.status,
-        data: {
-          label: (
-            <>
-              <OltItem {...olt} />
-            </>
-          ),
-        },
-        style: {
-          border: olt.status === 'active' ? '1px solid green' : '1px solid red',
-        },
-        position: { x: 200, y: 0 },
-      } as Node);
-    });
+      map.olts.forEach((olt) => {
+        elementsArray.push({
+          id: `${olt.id}`,
+          type: 'input',
+          connectable: false,
+          className: olt.status,
+          data: {
+            label: (
+              <>
+                <OltItem {...olt} />
+              </>
+            ),
+          },
+          style: {
+            border:
+              olt.status === 'active' ? '1px solid green' : '1px solid red',
+          },
+          position: { x: 200, y: 0 },
+        } as Node);
+      });
 
-    map.edges.forEach((edge) => {
-      elementsArray.push({
-        id: `e${edge.from}-${edge.to}`,
-        source: `${edge.from}`,
-        target: `${edge.to}`,
-        animated: true,
-        style: {
-          stroke: edge.status === 'active' ? 'green' : 'red',
-        },
-      } as Edge);
-    });
+      map.edges.forEach((edge) => {
+        elementsArray.push({
+          id: `e${edge.from}-${edge.to}`,
+          source: `${edge.from}`,
+          target: `${edge.to}`,
+          animated: true,
+          style: {
+            stroke: edge.status === 'active' ? 'green' : 'red',
+          },
+        } as Edge);
+      });
 
-    setElements(getLayoutedElements(elementsArray));
+      setElements(getLayoutedElements(elementsArray));
+    }
   };
 
   useEffect(() => {
@@ -125,17 +138,12 @@ const WorkflowPage = () => {
     setUser(userItem);
   }, []);
 
-  /* we need to create a websocket connection to the server.
-   * It will connect to the server, and wait until it gets a message
-   * then it treats the message */
-
   useEffect(() => {
-    // create a websocket connection to the server
     const ws = new WebSocket('ws://ac-vision/ws');
-    // listen for messages
+
     ws.onmessage = (message) => {
       updateNetwork();
-      console.log('Updated');
+      console.log(message);
     };
   }, []);
 
