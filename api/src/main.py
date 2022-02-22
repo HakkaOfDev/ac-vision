@@ -1,12 +1,13 @@
 import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from components.tools.log_listener import listener
 from components.redis.cache_updates import run_cache
 from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router
 from components.sql_app import models
 from components.sql_app.database import engine
+import threading
 
 app = FastAPI(
     docs_url="/api/docs",
@@ -36,6 +37,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+threading.Thread(target=listener).start()
 run_cache()
 
 # if __name__ == "__main__":
