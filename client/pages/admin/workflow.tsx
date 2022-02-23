@@ -165,10 +165,10 @@ const WorkflowPage = () => {
   useEffect(() => {
     const ws = new WebSocket('ws://ac-vision/ws');
 
-    ws.onmessage = (message) => {
+    ws.addEventListener('message', (event) => {
       updateNetwork();
-      console.log(message);
-    };
+      console.log(event.data);
+    });
   }, []);
 
   return (
