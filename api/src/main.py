@@ -43,7 +43,7 @@ app.add_middleware(
 
 if __name__ == "__main__":
     server.run_forever(threaded=True)
-    loglistener.run()
+    log_listener.run()
     run_cache()
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
