@@ -1,7 +1,7 @@
 from telnetlib import STATUS
 from fastapi import APIRouter, Depends, HTTPException
 
-from api.src.components.redis.cache_updates import update_cache
+from ..redis.cache_updates import update_cache
 
 from ..dependencies import get_current_user
 from ..handlers.map_handler import MapWorkflow
