@@ -25,8 +25,6 @@ services:
     build: ./workers/logs
     expose:
       - 514
-    ports:
-      - "6969:6969"
   database:
     image: postgres:14.1
     restart: always
@@ -55,6 +53,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
+      - worker
       - database
       - api
       - client
