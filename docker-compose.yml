@@ -15,6 +15,8 @@ services:
     depends_on:
       - database
       - redis
+    ports:
+      - "514:514"
   client:
     build: ./client
     container_name: client
