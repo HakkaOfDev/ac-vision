@@ -2,10 +2,8 @@ import OltItem from '@/components/devices/olt';
 import OnuItem from '@/components/devices/onu';
 import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
-import { User } from '@/types/User';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
@@ -20,10 +18,8 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 const WorkflowPage = () => {
-  const [user, setUser] = useState<User>();
   const [elements, setElements] = useState<Elements>([]);
   const toast = useToast();
-  const router = useRouter();
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -60,23 +56,8 @@ const WorkflowPage = () => {
   };
 
   const updateNetwork = async () => {
-    const req = await fetch('http://ac-vision/api/v1.0/ressources/map', {
-      headers: {
-        Authorization: 'Bearer ' + user?.token,
-      },
-    });
-    if (req.status === 401) {
-      toast({
-        title: 'An error occured',
-        description: 'Your session has expired.',
-        status: 'error',
-        duration: 1500,
-        onCloseComplete: () => {
-          localStorage.removeItem('user');
-          router.push('/');
-        },
-      });
-    } else if (req.status === 404) {
+    const req = await fetch('http://ac-vision/api/v1.0/ressources/map');
+    if (req.status === 404) {
       toast({
         title: 'An error occured',
         description: 'The cache is not updating, please wait few seconds.',
@@ -142,6 +123,11 @@ const WorkflowPage = () => {
       });
 
       setElements(getLayoutedElements(elementsArray));
+      toast({
+        description: 'Map updated with success !',
+        status: 'success',
+        duration: 1500,
+      });
     } else {
       toast({
         title: 'An error occured',
@@ -154,13 +140,8 @@ const WorkflowPage = () => {
 
   const onLoad = (reactFlowInstance) => {
     updateNetwork();
-    reactFlowInstance.fitView();
+    reactFlowInstance.fitView({ padding: 0.2, includeHiddenNodes: true });
   };
-
-  useEffect(() => {
-    const userItem: User = JSON.parse(localStorage.getItem('user'));
-    setUser(userItem);
-  }, []);
 
   useEffect(() => {
     const ws = new WebSocket('ws://ac-vision/ws');

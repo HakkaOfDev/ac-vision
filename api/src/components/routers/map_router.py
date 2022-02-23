@@ -3,12 +3,10 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..redis.cache_updates import update_cache
 
-from ..dependencies import get_current_user
 from ..handlers.map_handler import MapWorkflow
 
 router = APIRouter(prefix="/api/v1.0/ressources/map",
                    tags=["map"],
-                   dependencies=[Depends(get_current_user)],
                    responses={404: {"description": "Not found"}}
                    )
 
