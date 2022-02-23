@@ -17,7 +17,8 @@ server.set_fn_new_client(register_new_client)
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
 def listener():
-    print('listener on')
+    server.run_forever(threaded=True)
+    print('Listener on')
     port = 514
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(("0.0.0.0", port))
@@ -33,4 +34,4 @@ def listener():
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
-            send_message_to_all(json.dumps(onu_info))
+            server.send_message_to_all(json.dumps(onu_info))
