@@ -146,10 +146,22 @@ const WorkflowPage = () => {
   useEffect(() => {
     const ws = new WebSocket('ws://ac-vision/ws');
 
+    ws.addEventListener('open', (event) => {
+      console.log('Connected to the ws');
+    });
+
+    ws.addEventListener('error', (event) => {
+      console.log('An error occured');
+    });
+
     ws.addEventListener('message', (event) => {
       updateNetwork();
       console.log(event.data);
     });
+
+    ws.addEventListener('close', (event) => {
+      console.log('Connection to ws closed')
+    })
   }, []);
 
   return (
