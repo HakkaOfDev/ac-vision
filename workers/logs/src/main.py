@@ -3,6 +3,7 @@ import requests
 import logging
 import re
 import json
+import threading
 from websocket_server import WebsocketServer
 
 
@@ -34,4 +35,4 @@ def listen():
 
 if __name__ == '__main__':
     server.run_forever(threaded=True)
-    listen()
+    threading.Thread(target=listen).start()
