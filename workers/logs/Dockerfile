@@ -9,6 +9,7 @@ ENV PYTHONPATH="/app/src"
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install tcpdump
 
 COPY src/ .
 
