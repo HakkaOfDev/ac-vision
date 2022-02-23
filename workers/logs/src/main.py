@@ -13,7 +13,7 @@ server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
 server.set_fn_new_client(register_new_client)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(("0.0.0.0", 514))
+s.bind(("", 514))
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
 
