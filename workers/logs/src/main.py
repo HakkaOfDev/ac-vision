@@ -25,8 +25,6 @@ def listen():
         print(data)
         matches = re.search(REGEX, data)
         if matches:
-            requests.get('http://ac-vision/api/v1.0/ressources/map/update')
-            print('Cache updated')
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
