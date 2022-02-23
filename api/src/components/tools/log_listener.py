@@ -23,6 +23,7 @@ REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P
 def listener():
     print('Listener on')
     while True:
+        print('hello')
         data, addr = s.recvfrom(4048)
         data = data.decode('utf-8')
         print(data)
