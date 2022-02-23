@@ -17,6 +17,7 @@ server.set_fn_new_client(register_new_client)
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
 def listener():
+    print('listener on')
     port = 514
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(("", port))
