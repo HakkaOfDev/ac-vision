@@ -1,7 +1,7 @@
 import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import components.tools.log_listener
+import components.tools.log_listener as log_listener
 from components.tools.log_listener import server
 from components.redis.cache_updates import run_cache
 from components.dependencies import router
