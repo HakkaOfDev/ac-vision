@@ -25,7 +25,7 @@ services:
     restart: always
     build: ./workers/logs
     ports:
-      - "514:514"
+      - "514:514/udp"
     volumes:
       - ./workers/logs:/app
   database:
