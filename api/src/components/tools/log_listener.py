@@ -3,6 +3,7 @@ import socket
 from websocket_server import WebsocketServer
 import logging
 import re
+import json
 
 from components.redis.cache_updates import update_cache
 import time
@@ -30,4 +31,5 @@ def listener():
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            send_message_to_all(onu_info)
+            print(onu_info)
+            send_message_to_all(json.dumps(onu_info))
