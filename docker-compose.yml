@@ -27,7 +27,7 @@ services:
     restart: always
     build: ./workers/logs
     expose:
-      - 51
+      - 514
     volumes:
       - ./workers/logs:/app
   database:
