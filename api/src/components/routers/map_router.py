@@ -1,6 +1,8 @@
 from telnetlib import STATUS
 from fastapi import APIRouter, Depends, HTTPException
 
+from api.src.components.redis.cache_updates import update_cache
+
 from ..dependencies import get_current_user
 from ..handlers.map_handler import MapWorkflow
 
@@ -18,3 +20,8 @@ async def map():
     if map_workflow.get() is None:
         raise HTTPException(status_code=404, detail='An error occured, please contact an administrator.')
     return map_workflow.get()
+
+@router.get("/update")
+async def update():
+    update_cache()
+    return 'Cache updated'

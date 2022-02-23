@@ -1,0 +1,2 @@
+websocket-server==0.6.4
+requests==2.26.0

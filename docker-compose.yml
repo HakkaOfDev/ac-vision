@@ -20,6 +20,13 @@ services:
   client:
     build: ./client
     container_name: client
+  worker:
+    container_name: worker
+    build: ./workers/logs
+    expose:
+      - 514
+    ports:
+      - "6969:6969"
   database:
     image: postgres:14.1
     restart: always

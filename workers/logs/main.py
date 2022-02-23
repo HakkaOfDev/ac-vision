@@ -1,13 +1,10 @@
-#from ast import match_case
 import socket
-import threading
-from websocket_server import WebsocketServer
+import requests
 import logging
 import re
 import json
+from websocket_server import WebsocketServer
 
-from components.redis.cache_updates import update_cache
-import time
 
 def register_new_client(client, server):
     print("New client added !")
@@ -15,28 +12,26 @@ def register_new_client(client, server):
 server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
 server.set_fn_new_client(register_new_client)
 
-port = 514
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(("0.0.0.0", port))
+s.bind(("0.0.0.0", 514))
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
-def listener():
-    print('Listener on')
+
+def listen():
     while True:
-        print('hello')
-        data, addr = s.recvfrom(4048)
+        data = s.recv(4048)
         data = data.decode('utf-8')
         print(data)
         matches = re.search(REGEX, data)
         if matches:
-            update_cache()
-            print('cache updated')
+            requests.get('http://ac-vision/api/v1.0/ressources/map/update')
+            print('Cache updated')
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
             server.send_message_to_all(json.dumps(onu_info))
 
-def run():
-    threading.Thread(target=listener).start()
-
+if __name__ == '__main__':
+    server.run_forever(threaded=True)
+    listen()

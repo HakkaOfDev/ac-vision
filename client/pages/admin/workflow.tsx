@@ -51,7 +51,7 @@ const WorkflowPage = () => {
         el.targetPosition = Position.Top;
         el.sourcePosition = Position.Bottom;
         el.position = {
-          x: nodeWithPosition.x - width / 2 - 100,
+          x: nodeWithPosition.x - width / 2,
           y: nodeWithPosition.y - height / 2,
         };
       }
@@ -180,9 +180,9 @@ const WorkflowPage = () => {
           onLoad={onLoad}
           snapToGrid={true}
           snapGrid={[20, 20]}
-          defaultZoom={0.8}
-          minZoom={0.5}
-          maxZoom={2}
+          defaultZoom={0.9}
+          minZoom={0.1}
+          maxZoom={3}
           connectionLineType={ConnectionLineType.SmoothStep}
         >
           <MiniMap
