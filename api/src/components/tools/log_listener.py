@@ -10,7 +10,7 @@ from components.redis.cache_updates import update_cache
 import time
 
 def register_new_client(client, server):
-    print("New client added ! + " + client)
+    print("New client added ! + " + client.address)
 
 server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
 server.set_fn_new_client(register_new_client)
