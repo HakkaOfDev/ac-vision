@@ -20,7 +20,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 const WorkflowPage = () => {
   const [elements, setElements] = useState<Elements>([]);
-  const [socketUrl, setSocketUrl] = useState('wss://ac-vision/ws');
+  const [socketUrl, setSocketUrl] = useState('ws://ac-vision/ws');
   const toast = useToast();
   const { sendMessage, readyState } = useWebSocket(socketUrl, {
     onOpen: (event) => {
