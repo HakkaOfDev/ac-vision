@@ -143,11 +143,11 @@ const WorkflowPage = () => {
     reactFlowInstance.fitView({ padding: 0.2, includeHiddenNodes: true });
   };
 
+  const ws = new WebSocket('ws://ac-vision/ws');
   useEffect(() => {
-    const ws = new WebSocket('ws://ac-vision/ws');
-
     ws.addEventListener('open', (event) => {
       console.log('Connected to the ws');
+      ws.send('Connected with you');
     });
 
     ws.addEventListener('error', (event) => {
@@ -160,9 +160,13 @@ const WorkflowPage = () => {
     });
 
     ws.addEventListener('close', (event) => {
-      console.log('Connection to ws closed')
-    })
-  }, []);
+      console.log('Connection to ws closed');
+    });
+
+    window.addEventListener('close', (event) => {
+      ws.close();
+    });
+  }, [ws]);
 
   return (
     <PageLayout title='Workflow' description='See the map.'>
