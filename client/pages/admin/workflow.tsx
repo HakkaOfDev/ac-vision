@@ -4,7 +4,7 @@ import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactFlow, {
   Background,
   ConnectionLineType,
@@ -16,10 +16,32 @@ import ReactFlow, {
   Node,
   Position,
 } from 'react-flow-renderer';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 const WorkflowPage = () => {
   const [elements, setElements] = useState<Elements>([]);
+  const [socketUrl, setSocketUrl] = useState('wss://ac-vision/ws');
   const toast = useToast();
+  const { sendMessage, readyState } = useWebSocket(socketUrl, {
+    onOpen: (event) => {
+      console.log('Connected to the WS');
+    },
+    onMessage: (event) => {
+      updateNetwork();
+      fetch('http://ac-vision/api/v1.0/ressources/map/update');
+      console.log(event.data);
+    },
+    reconnectAttempts: 10,
+    reconnectInterval: 3000,
+  });
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+  }[readyState];
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -142,31 +164,6 @@ const WorkflowPage = () => {
     updateNetwork();
     reactFlowInstance.fitView({ padding: 0.2, includeHiddenNodes: true });
   };
-
-  const ws = new WebSocket('ws://ac-vision/ws');
-  useEffect(() => {
-    ws.addEventListener('open', (event) => {
-      console.log('Connected to the ws');
-      ws.send('Connected with you');
-    });
-
-    ws.addEventListener('error', (event) => {
-      console.log('An error occured');
-    });
-
-    ws.addEventListener('message', (event) => {
-      updateNetwork();
-      console.log(event.data);
-    });
-
-    ws.addEventListener('close', (event) => {
-      console.log('Connection to ws closed');
-    });
-
-    window.addEventListener('close', (event) => {
-      ws.close();
-    });
-  }, [ws]);
 
   return (
     <PageLayout title='Workflow' description='See the map.'>

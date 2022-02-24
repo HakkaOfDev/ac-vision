@@ -26,6 +26,7 @@
     "react-dom": "latest",
     "react-flow-renderer": "^9.7.4",
     "react-i18next": "^11.15.3",
+    "react-use-websocket": "^3.0.0",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
