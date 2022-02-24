@@ -17,12 +17,13 @@ server.set_fn_new_client(register_new_client)
 server.set_fn_message_received(on_message_received)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(('0.0.0.0', 514))
+s.bind(('', 514))
 
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
 
 def listen():
     while True:
+        print('listening...')
         data = s.recv(4048)
         data = data.decode('utf-8')
         print(data)

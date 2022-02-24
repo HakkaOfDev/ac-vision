@@ -30,7 +30,9 @@ const WorkflowPage = () => {
       updateNetwork();
       fetch('http://ac-vision/api/v1.0/ressources/map/update');
       console.log(event.data);
+      sendMessage('I love work with you');
     },
+    shouldReconnect: (closeEvent) => true,
     reconnectAttempts: 10,
     reconnectInterval: 3000,
   });
