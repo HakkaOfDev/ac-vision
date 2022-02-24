@@ -37,4 +37,4 @@ def listen():
 
 if __name__ == '__main__':
     server.run_forever(threaded=True)
-    listen()
+    threading.Thread(target=listen)
