@@ -30,17 +30,19 @@ class DasanWorkflow:
         for onu in onus_table:
             if int(onu.get('sleGponOnuInactiveTime').split(' ')[0]) < 604800:  # equivalent to 7 days
                 onu_obj = {
+                    "OnuId": (int(onu.get('sleGponOnuId'))),
                     "rxPower": (int(onu.get('sleGponOnuRxPower').split(' ')[0]) / 10, '')[
                         onu.get('sleGponOnuRxPower') is None],
                     "gponPort": onu.get('index').split('.')[0],
                     "macAddress": onu.get('sleGponOnuHwAddress').replace(' ', ':')[:-1],
                     "distance": (onu.get('sleGponOnuDistance').split(' ')[0], '')[onu.get('sleGponOnuRxPower') is None],
                     "profile": onu.get('sleGponOnuProfile'),
-                    "displayName": onu.get('sleGponOnuHostname'),
+                    "displayName": onu.get('sleGponOnuDescription'),
                     "serialNumber": onu.get('sleGponOnuSerial'),
                     "status": onu.get('sleGponOnuStatus'),
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
                         onu.get('sleGponOnuLinkUpTime') is None],
+                    "inactivetime": int(onu.get('sleGponOnuInactiveTime').split(' ')[0]),
                     "ipAddress": '',
                     "site": "IUT CHALONS"
                 }
@@ -50,3 +52,8 @@ class DasanWorkflow:
                         onu_obj['ipAddress'] = ip[37:]
                 onus.append(onu_obj)
         return onus
+
+
+    def set_onu_desc(self, onuid, description):
+        olt = SnmpUtils(self.ip)
+        olt.set(f'{OIDS.ONU_DESCRIPTION}.1.{onuid}', str, description)
