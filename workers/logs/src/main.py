@@ -22,19 +22,19 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
 
 async def listen(websocket, path):
-    print("Start listening..")
+    await print("Start listening..")
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
-        print('listening...')
+        await print('listening...')
         data = s.recv(4048)
         data = data.decode('utf-8')
-        print(data)
+        await print(data)
         matches = re.search(REGEX, data)
         if matches:
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            print(onu_info)
+            await print(onu_info)
             await websocket.send(json.dumps(onu_info))
             #server.send_message_to_all(json.dumps(onu_info))
         else:
