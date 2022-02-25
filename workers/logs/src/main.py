@@ -18,10 +18,11 @@ server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
 server.set_fn_new_client(register_new_client)
 server.set_fn_message_received(on_message_received)
 '''
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.bind(('', 514))
+
 async def listen(websocket, path):
     print("Start listening..")
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind(('', 514))
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
         print('listening...')
@@ -37,7 +38,7 @@ async def listen(websocket, path):
             await websocket.send(json.dumps(onu_info))
             #server.send_message_to_all(json.dumps(onu_info))
         else:
-            await websocket.send(json.dumps({"message": "Aucune données, matches not found"}))
+            await websocket.send(json.dumps({"message": "No matches found"}))
 
 
 if __name__ == '__main__':
