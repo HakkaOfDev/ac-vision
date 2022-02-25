@@ -36,6 +36,8 @@ async def listen(websocket, path):
             print(onu_info)
             await websocket.send(json.dumps(onu_info))
             #server.send_message_to_all(json.dumps(onu_info))
+        else:
+            await websocket.send(json.dumps({"message": "Aucune données, matches not found"}))
 
 
 if __name__ == '__main__':
