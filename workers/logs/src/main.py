@@ -41,10 +41,11 @@ async def listen(websocket, path):
             await websocket.broadcast(json.dumps({"message": "No matches found"}))
 
 
-if __name__ == '__main__':
+async def main():
     print("Running.")
-    start_server = websockets.serve(listen, "0.0.0.0", 6969)
-    asyncio.get_event_loop().run_until_complete(start_server)   
-    asyncio.get_event_loop().run_forever()
-    #server.run_forever(threaded=True)
-    #listen()
+    async with websockets.serve(listen, "0.0.0.0", 6969):
+        await asyncio.Future()  # run forever
+
+asyncio.run(main())
+#server.run_forever(threaded=True)
+#listen()
