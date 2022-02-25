@@ -28,7 +28,7 @@ async def listen(websocket, path):
         print('listening...')
         data = s.recv(4048)
         data = data.decode('utf-8')
-        asyncio.create_task(print(data))
+        print(data)
         matches = re.search(REGEX, data)
         if matches:
             onu_info = {"onu": matches.group("onu"),
