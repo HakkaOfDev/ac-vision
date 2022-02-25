@@ -18,13 +18,11 @@ server = WebsocketServer(host='0.0.0.0', port=6969, loglevel=logging.INFO)
 server.set_fn_new_client(register_new_client)
 server.set_fn_message_received(on_message_received)
 '''
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(('', 514))
-
-
-REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
-
 async def listen(websocket, path):
+    print("Start listening..")
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind(('', 514))
+    REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
         print('listening...')
         data = s.recv(4048)
@@ -38,15 +36,12 @@ async def listen(websocket, path):
             print(onu_info)
             await websocket.send(json.dumps(onu_info))
             #server.send_message_to_all(json.dumps(onu_info))
-            
-            
-start_server = websockets.serve(listen, "0.0.0.0", 6969)
-
 
 
 if __name__ == '__main__':
+    print("Running.")
+    start_server = websockets.serve(listen, "0.0.0.0", 6969)
     asyncio.get_event_loop().run_until_complete(start_server)   
-    print("Server websocket have boot")
     asyncio.get_event_loop().run_forever()
     #server.run_forever(threaded=True)
     #listen()
