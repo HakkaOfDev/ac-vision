@@ -22,23 +22,23 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
 
 async def listen(websocket, path):
-    await print("Start listening..")
+    print("Start listening..")
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
-        await print('listening...')
+        print('listening...')
         data = s.recv(4048)
         data = data.decode('utf-8')
-        await print(data)
+        asyncio.create_task(print(data))
         matches = re.search(REGEX, data)
         if matches:
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            await print(onu_info)
-            await websocket.send(json.dumps(onu_info))
+            print(onu_info)
+            await websocket.broadcast(json.dumps(onu_info))
             #server.send_message_to_all(json.dumps(onu_info))
         else:
-            await websocket.send(json.dumps({"message": "No matches found"}))
+            await websocket.broadcast(json.dumps({"message": "No matches found"}))
 
 
 if __name__ == '__main__':
