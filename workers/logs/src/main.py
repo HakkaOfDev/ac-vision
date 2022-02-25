@@ -45,7 +45,8 @@ start_server = websockets.serve(listen, "0.0.0.0", 6969)
 
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().run_until_complete(start_server)
+    asyncio.get_event_loop().run_until_complete(start_server)   
+    print("Server websocket have boot")
     asyncio.get_event_loop().run_forever()
     #server.run_forever(threaded=True)
     #listen()
