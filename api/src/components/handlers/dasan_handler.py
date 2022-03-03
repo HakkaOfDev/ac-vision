@@ -44,7 +44,7 @@ class DasanWorkflow:
                     "status": onu.get('sleGponOnuStatus'),
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
                         onu.get('sleGponOnuLinkUpTime') is None],
-                    "inactiveTime": int(onu.get('sleGponOnuInactiveTime').split(' ')[0]),
+                    "inactiveTime": (format_uptime(int(onu.get('sleGponOnuInactiveTime').split(' ')[0]), 4), '')[onu.get('sleGponOnuLinkUpTime') is None],
                     "ipAddress": '',
                     "site": "IUT CHALONS"
                 }
