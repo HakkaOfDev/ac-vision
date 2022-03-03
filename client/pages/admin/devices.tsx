@@ -4,13 +4,8 @@ import {
   HStack,
   Image,
   SkeletonCircle,
-  Tab,
   Table,
   TableCaption,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Tbody,
   Td,
   Text,
@@ -123,43 +118,32 @@ const DevicesPage = () => {
   return (
     <PageLayout title='Devices' description='Tables with devices'>
       <VStack spacing={4} w='100%' overflow='auto'>
-        <Tabs>
-          <TabList>
-            <Tab>Dasan</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Table variant='simple' overflowX='scroll'>
-                <TableCaption>Dasan Devices</TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>MODEL</Th>
-                    <Th>NAME</Th>
-                    <Th>MAC ADDRESS</Th>
-                    <Th>IP ADDRESS</Th>
-                    <Th>DISTANCE</Th>
-                    <Th>SIGNAL</Th>
-                    <Th>UPTIME</Th>
-                    <Th>STATUS</Th>
-                    <Th>GPON PORT</Th>
-                    <Th>SERIAL NUMBER</Th>
-                    <Th>TEMPERATURE</Th>
-                    <Th>PROFILE</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {devices.length !== 0 &&
-                    devices.map((device) => (
-                      <DeviceItem key={device.displayName} {...device} />
-                    ))}
-                </Tbody>
-              </Table>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <Button colorScheme='acvision' onClick={updateOnus}>
-          Update
-        </Button>
+        <Table variant='simple' overflowX='scroll' size='sm'>
+          <TableCaption>Dasan Devices</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>MODEL</Th>
+              <Th>NAME</Th>
+              <Th>MAC ADDRESS</Th>
+              <Th>IP ADDRESS</Th>
+              <Th>DISTANCE</Th>
+              <Th>SIGNAL</Th>
+              <Th>UPTIME</Th>
+              <Th>STATUS</Th>
+              <Th>GPON PORT</Th>
+              <Th>SERIAL NUMBER</Th>
+              <Th>TEMPERATURE</Th>
+              <Th>PROFILE</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {devices.length !== 0 &&
+              devices.map((device) => (
+                <DeviceItem key={device.displayName} {...device} />
+              ))}
+          </Tbody>
+        </Table>
+        <Button onClick={updateOnus}>Update</Button>
       </VStack>
     </PageLayout>
   );
