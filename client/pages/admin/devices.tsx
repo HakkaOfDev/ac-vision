@@ -72,17 +72,27 @@ const DeviceItem = ({
       <Td>{distance && <Text>{distance}m</Text>}</Td>
       <Td>
         {rxPower && (
-          <Text
-            color={rxPower < -25 ? 'red' : rxPower > -15 ? 'green' : 'yellow'}
+          <Button
+            variant='unstyled'
+            size='sm'
+            colorScheme={
+              rxPower < -25 ? 'red' : rxPower > -15 ? 'green' : 'yellow'
+            }
+            disabled
           >
             {rxPower} dBm
-          </Text>
+          </Button>
         )}
       </Td>
       <Td>
-        <Text color={isActive ? 'green' : 'red'}>
+        <Button
+          variant='unstyled'
+          size='sm'
+          colorScheme={isActive ? 'green' : 'red'}
+          disabled
+        >
           {isActive ? uptime : inactiveTime}
-        </Text>
+        </Button>
       </Td>
       <Td>
         <Button
