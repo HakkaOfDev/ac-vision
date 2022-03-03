@@ -30,6 +30,7 @@ const PopItem = ({ label, value }) => {
 
 const OnuItem = ({
   id,
+  onuId,
   displayName,
   model,
   serialNumber,
@@ -55,6 +56,7 @@ const OnuItem = ({
             w={50}
           />
           <Text>{displayName === '' ? serialNumber : displayName}</Text>
+          <Text fontSize='lg'>{onuId}</Text>
         </VStack>
       </PopoverTrigger>
       <PopoverContent>

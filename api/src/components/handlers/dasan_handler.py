@@ -11,6 +11,7 @@ class DasanWorkflow:
     def get_olt(self):
         olt = SnmpUtils(self.ip)
         return {
+            "model": "olt-dasan",
             "ipAddress": self.ip,
             "status": ("inactive", "active")[olt.is_online()],
             "uptime": (format_dasan_olt_uptime(olt.get(OIDS.SYSTEM_UPTIME.value)), '')[
@@ -30,7 +31,8 @@ class DasanWorkflow:
         for onu in onus_table:
             if int(onu.get('sleGponOnuInactiveTime').split(' ')[0]) < 604800:  # equivalent to 7 days
                 onu_obj = {
-                    "OnuId": (int(onu.get('sleGponOnuId'))),
+                    "onuId": (int(onu.get('sleGponOnuId'))),
+                    "model": "onu-dasan",
                     "rxPower": (int(onu.get('sleGponOnuRxPower').split(' ')[0]) / 10, '')[
                         onu.get('sleGponOnuRxPower') is None],
                     "gponPort": onu.get('index').split('.')[0],
@@ -42,7 +44,7 @@ class DasanWorkflow:
                     "status": onu.get('sleGponOnuStatus'),
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
                         onu.get('sleGponOnuLinkUpTime') is None],
-                    "inactivetime": int(onu.get('sleGponOnuInactiveTime').split(' ')[0]),
+                    "inactiveTime": int(onu.get('sleGponOnuInactiveTime').split(' ')[0]),
                     "ipAddress": '',
                     "site": "IUT CHALONS"
                 }

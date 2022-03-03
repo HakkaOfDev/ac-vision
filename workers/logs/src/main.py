@@ -43,9 +43,10 @@ async def listen(websocket, path):
 
 async def main():
     print("Running.")
-    async with websockets.serve(listen, "0.0.0.0", 6969):
+    async with websockets.serve("0.0.0.0", 6969):
         await asyncio.Future()  # run forever
 
 asyncio.run(main())
+asyncio.run(listen())
 #server.run_forever(threaded=True)
 #listen()

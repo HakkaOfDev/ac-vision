@@ -2,6 +2,7 @@ import { ElementId } from 'react-flow-renderer';
 
 export type Onu = {
   id: ElementId;
+  onuId: number;
   displayName: string;
   macAddress: string;
   ipAddress: string;
