@@ -2,10 +2,10 @@ import PageLayout from '@/components/page-layout';
 import {
   Box,
   Button,
+  Circle,
   Heading,
   HStack,
   Image,
-  SkeletonCircle,
   Table,
   Tbody,
   Td,
@@ -56,11 +56,7 @@ const DeviceItem = ({
     <Tr>
       <Td>
         <HStack spacing={2}>
-          <SkeletonCircle
-            size='4'
-            startColor={isActive ? 'green.300' : 'red.300'}
-            endColor={isActive ? 'green.500' : 'red.500'}
-          />
+          <Circle size='20px' bg={isActive ? 'green.300' : 'red.300'} />
           <Image src={`/assets/images/models/${model}.png`} h={16} />
         </HStack>
       </Td>
@@ -134,8 +130,8 @@ const DevicesPage = () => {
                 <Th>MAC ADDRESS</Th>
                 <Th>IP ADDRESS</Th>
                 <Th>DISTANCE</Th>
-                <Th __css={{width: '5rem'}}>SIGNAL</Th>
-                <Th __css={{width: '10rem'}}>UPTIME</Th>
+                <Th w={24}>SIGNAL</Th>
+                <Th w={24}>UPTIME</Th>
                 <Th>STATUS</Th>
                 <Th>GPON PORT</Th>
                 <Th>SERIAL NUMBER</Th>
