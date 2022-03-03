@@ -57,5 +57,6 @@ class DasanWorkflow:
 
 
     def set_onu_desc(self, onuid, description):
-        olt = SnmpUtils(self.ip)
+        community = "accom"
+        olt = SnmpUtils(self.ip, write_community= community)
         olt.set(f'{OIDS.ONU_DESCRIPTION}.1.{onuid}', str, description)
