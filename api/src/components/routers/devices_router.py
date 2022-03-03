@@ -13,5 +13,6 @@ async def devices():
     olt = rclient.json().get('olt-dasan')
     onus = rclient.json().get('onus-dasan')
     devices.append(olt)
-    devices.append(onus)
+    for onu in onus:
+        devices.append(onu)
     return devices

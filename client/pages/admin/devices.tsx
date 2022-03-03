@@ -93,6 +93,7 @@ const DeviceItem = ({
           variant='outline'
           rounded='full'
           colorScheme={isActive ? 'green' : 'red'}
+          disabled
         >
           {isActive ? 'Connected' : 'Disconnected'}
         </Button>
@@ -132,7 +133,7 @@ const DevicesPage = () => {
                 <TableCaption>Dasan Devices</TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>TYPE</Th>
+                    <Th>MODEL</Th>
                     <Th>NAME</Th>
                     <Th>MAC ADDRESS</Th>
                     <Th>IP ADDRESS</Th>
