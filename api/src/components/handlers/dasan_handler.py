@@ -1,6 +1,4 @@
 from re import S
-from fastapi import Depends
-from flask import session
 from ..tools.snmp.oids import OIDS
 from ..tools.snmp.snmp_utils import SnmpUtils
 from ..tools.time_utils import format_uptime, format_dasan_olt_uptime
