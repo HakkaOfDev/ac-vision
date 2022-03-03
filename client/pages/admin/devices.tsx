@@ -1,5 +1,6 @@
 import PageLayout from '@/components/page-layout';
 import {
+  Box,
   Button,
   HStack,
   Image,
@@ -55,8 +56,12 @@ const DeviceItem = ({
     <Tr>
       <Td>
         <HStack>
-          <SkeletonCircle size='10' startColor={isActive ? 'green' : 'red'} endColor={isActive ? 'darkgreen' : 'darkred'}/>
-          <Image src={`/assets/images/models/${model}.png`} h={32} />
+          <SkeletonCircle
+            size='6'
+            startColor={isActive ? 'green' : 'red'}
+            endColor={isActive ? 'darkgreen' : 'darkred'}
+          />
+          <Image src={`/assets/images/models/${model}.png`} h={16} />
         </HStack>
       </Td>
       <Td>
@@ -119,31 +124,33 @@ const DevicesPage = () => {
   return (
     <PageLayout title='Devices' description='Tables with devices'>
       <VStack spacing={4} w='100%' overflow='auto'>
-        <Table overflowX='scroll' size='sm'>
-          <TableCaption>Dasan Devices</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>TYPE</Th>
-              <Th>NAME</Th>
-              <Th>MAC ADDRESS</Th>
-              <Th>IP ADDRESS</Th>
-              <Th>DISTANCE</Th>
-              <Th>SIGNAL</Th>
-              <Th>UPTIME</Th>
-              <Th>STATUS</Th>
-              <Th>GPON PORT</Th>
-              <Th>SERIAL NUMBER</Th>
-              <Th>TEMPERATURE</Th>
-              <Th>PROFILE</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {devices.length !== 0 &&
-              devices.map((device) => (
-                <DeviceItem key={device.displayName} {...device} />
-              ))}
-          </Tbody>
-        </Table>
+        <Box w='100%' overflowX='scroll'>
+          <Table size='sm'>
+            <TableCaption>Dasan Devices</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>TYPE</Th>
+                <Th>NAME</Th>
+                <Th>MAC ADDRESS</Th>
+                <Th>IP ADDRESS</Th>
+                <Th>DISTANCE</Th>
+                <Th>SIGNAL</Th>
+                <Th>UPTIME</Th>
+                <Th>STATUS</Th>
+                <Th>GPON PORT</Th>
+                <Th>SERIAL NUMBER</Th>
+                <Th>TEMPERATURE</Th>
+                <Th>PROFILE</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {devices.length !== 0 &&
+                devices.map((device) => (
+                  <DeviceItem key={device.displayName} {...device} />
+                ))}
+            </Tbody>
+          </Table>
+        </Box>
         <Button onClick={updateOnus}>Update</Button>
       </VStack>
     </PageLayout>
