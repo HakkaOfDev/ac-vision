@@ -29,3 +29,7 @@ async def onus():
 @router.post("/desconu")
 async def nameonu(onu: schemas.Onusd, db: Session = Depends(fonction.get_db)):
     return fonction.set_onusd(db, onu=onu)
+
+@router.get("/desconu")
+async def getdesconu(onuid: int ,db: Session = Depends(fonction.get_db)):
+    return fonction.get_onusd(db, onuid)
