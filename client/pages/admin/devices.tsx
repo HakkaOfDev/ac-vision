@@ -2,11 +2,11 @@ import PageLayout from '@/components/page-layout';
 import {
   Box,
   Button,
+  Heading,
   HStack,
   Image,
   SkeletonCircle,
   Table,
-  TableCaption,
   Tbody,
   Td,
   Text,
@@ -55,7 +55,7 @@ const DeviceItem = ({
   return (
     <Tr>
       <Td>
-        <HStack>
+        <HStack spacing={2}>
           <SkeletonCircle
             size='4'
             startColor={isActive ? 'green.300' : 'red.300'}
@@ -123,10 +123,10 @@ const DevicesPage = () => {
 
   return (
     <PageLayout title='Devices' description='Tables with devices'>
-      <VStack spacing={4} w='100%' overflow='auto'>
+      <VStack spacing={4} w='100%' overflow='auto' py={4}>
+        <Heading>Devices</Heading>
         <Box w='100%' overflowX='scroll'>
-          <Table size='sm'>
-            <TableCaption>Dasan Devices</TableCaption>
+          <Table variant='simple' size='sm'>
             <Thead>
               <Tr>
                 <Th>TYPE</Th>
@@ -134,8 +134,8 @@ const DevicesPage = () => {
                 <Th>MAC ADDRESS</Th>
                 <Th>IP ADDRESS</Th>
                 <Th>DISTANCE</Th>
-                <Th w={24}>SIGNAL</Th>
-                <Th w={24}>UPTIME</Th>
+                <Th __css={{width: '5rem'}}>SIGNAL</Th>
+                <Th __css={{width: '10rem'}}>UPTIME</Th>
                 <Th>STATUS</Th>
                 <Th>GPON PORT</Th>
                 <Th>SERIAL NUMBER</Th>
