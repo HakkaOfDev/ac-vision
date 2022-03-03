@@ -55,8 +55,8 @@ const DeviceItem = ({
   return (
     <Tr>
       <Td>
-        <HStack spacing={2}>
-          <Circle size='20px' bg={isActive ? 'green.300' : 'red.300'} />
+        <HStack spacing={3}>
+          <Circle size='10px' bg={isActive ? 'green.300' : 'red.300'} />
           <Image src={`/assets/images/models/${model}.png`} h={16} />
         </HStack>
       </Td>
