@@ -25,7 +25,7 @@ type DeviceProps = {
   uptime: string;
   inactiveTime: string;
   status: string;
-  signal?: number;
+  rxPower?: number;
   distance?: number;
   gponPort?: number;
   serialNumber?: string;
@@ -42,7 +42,7 @@ const DeviceItem = ({
   inactiveTime,
   uptime,
   status,
-  signal,
+  rxPower,
   distance,
   gponPort,
   serialNumber,
@@ -70,11 +70,11 @@ const DeviceItem = ({
       </Td>
       <Td>{distance && <Text>{distance}m</Text>}</Td>
       <Td>
-        {signal && (
+        {rxPower && (
           <Text
-            color={signal < -25 ? 'red' : signal > -15 ? 'green' : 'yellow'}
+            color={rxPower < -25 ? 'red' : rxPower > -15 ? 'green' : 'yellow'}
           >
-            {signal} dBm
+            {rxPower} dBm
           </Text>
         )}
       </Td>
@@ -118,7 +118,7 @@ const DevicesPage = () => {
   return (
     <PageLayout title='Devices' description='Tables with devices'>
       <VStack spacing={4} w='100%' overflowX='scroll'>
-        <Table variant='simple' size='sm'>
+        <Table size='sm'>
           <TableCaption>Dasan Devices</TableCaption>
           <Thead>
             <Tr>
