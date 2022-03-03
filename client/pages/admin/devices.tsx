@@ -55,8 +55,8 @@ const DeviceItem = ({
     <Tr>
       <Td>
         <HStack>
-          <SkeletonCircle size='4' startColor={isActive ? 'green' : 'red'} />
-          <Image src={`/assets/images/models/${model}.png`} h={12} />
+          <SkeletonCircle size='10' startColor={isActive ? 'green' : 'red'} endColor={isActive ? 'darkgreen' : 'darkred'}/>
+          <Image src={`/assets/images/models/${model}.png`} h={32} />
         </HStack>
       </Td>
       <Td>
