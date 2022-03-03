@@ -73,12 +73,11 @@ const DeviceItem = ({
       <Td>
         {rxPower && (
           <Button
-            variant='unstyled'
+            variant='ghost'
             size='sm'
             colorScheme={
               rxPower < -25 ? 'red' : rxPower > -15 ? 'green' : 'yellow'
             }
-            disabled
           >
             {rxPower} dBm
           </Button>
@@ -86,10 +85,9 @@ const DeviceItem = ({
       </Td>
       <Td>
         <Button
-          variant='unstyled'
+          variant='ghost'
           size='sm'
           colorScheme={isActive ? 'green' : 'red'}
-          disabled
         >
           {isActive ? uptime : inactiveTime}
         </Button>
