@@ -13,6 +13,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -105,24 +106,46 @@ const DeviceItem = ({
       </Td>
       <Td>{gponPort && <Text>{gponPort}</Text>}</Td>
       <Td>{serialNumber && <Text>{serialNumber}</Text>}</Td>
-      <Td>{temperature && <Text>{temperature}°</Text>}</Td>
       <Td>{profile && <Text>{profile}</Text>}</Td>
+      <Td>{temperature && <Text>{temperature}°</Text>}</Td>
     </Tr>
   );
 };
 
 const DevicesPage = () => {
   const [devices, setDevices] = useState<DeviceProps[]>([]);
-
+  const toast = useToast();
   useEffect(() => {
-    updateOnus();
+    updateOnus(false);
   }, []);
 
-  const updateOnus = async () => {
+  const updateOnus = async (userInteraction: boolean) => {
     const req = await fetch('http://ac-vision/api/v1.0/ressources/devices');
-    const devicesList: DeviceProps[] = await req.json();
-    console.log(devicesList);
-    setDevices(devicesList);
+    if (req.status === 404) {
+      toast({
+        title: 'An error occured',
+        description: 'The cache is not updating, please wait few seconds.',
+        status: 'error',
+        duration: 2000,
+      });
+    } else if (req.status === 200) {
+      const devicesList: DeviceProps[] = await req.json();
+      setDevices(devicesList);
+      if (userInteraction) {
+        toast({
+          description: 'Devices were successfully updated.',
+          duration: 1500,
+          status: 'success',
+        });
+      }
+    } else {
+      toast({
+        title: 'An error occured',
+        description: 'Please contact an administrator.',
+        status: 'error',
+        duration: 2000,
+      });
+    }
   };
 
   return (
@@ -134,7 +157,7 @@ const DevicesPage = () => {
             <Thead>
               <Tr>
                 <Th>TYPE</Th>
-                <Th>NAME</Th>
+                <Th>DISPLAY NAME</Th>
                 <Th>MAC ADDRESS</Th>
                 <Th>IP ADDRESS</Th>
                 <Th>DISTANCE</Th>
@@ -143,8 +166,8 @@ const DevicesPage = () => {
                 <Th>STATUS</Th>
                 <Th>GPON PORT</Th>
                 <Th>SERIAL NUMBER</Th>
-                <Th>TEMPERATURE</Th>
                 <Th>PROFILE</Th>
+                <Th>TEMPERATURE</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -155,7 +178,7 @@ const DevicesPage = () => {
             </Tbody>
           </Table>
         </Box>
-        <Button onClick={updateOnus}>Update</Button>
+        <Button onClick={updateOnus(true)}>Update</Button>
       </VStack>
     </PageLayout>
   );
