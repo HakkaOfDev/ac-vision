@@ -106,7 +106,7 @@ const DeviceItem = ({
 };
 
 const DevicesPage = () => {
-  const [devices, setDevices] = useState<DeviceProps[]>();
+  const [devices, setDevices] = useState<DeviceProps[]>([]);
 
   useEffect(() => {
     updateOnus();
