@@ -24,8 +24,7 @@ class DasanWorkflow:
             "site": "IUT CHALONS"
         }
 
-    def get_onus(self):
-        db: Session = Depends(fonction.get_db)
+    def get_onus(self, db: Session = Depends(fonction.get_db)):
         olt = SnmpUtils(self.ip)
         onus_table = olt.get_table(OIDS.ONU_TABLE.value)
         onus_table.pop(-1)
