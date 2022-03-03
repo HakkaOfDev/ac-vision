@@ -87,6 +87,7 @@ const DeviceItem = ({
         <Button
           variant='outline'
           rounded='full'
+          size='sm'
           colorScheme={isActive ? 'green' : 'red'}
           disabled
         >
@@ -117,7 +118,7 @@ const DevicesPage = () => {
 
   return (
     <PageLayout title='Devices' description='Tables with devices'>
-      <VStack spacing={4} w='100%' overflowX='scroll'>
+      <VStack spacing={4} minW='100%' overflowX='scroll'>
         <Table size='sm'>
           <TableCaption>Dasan Devices</TableCaption>
           <Thead>
