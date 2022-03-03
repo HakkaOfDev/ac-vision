@@ -118,8 +118,8 @@ const DevicesPage = () => {
 
   return (
     <PageLayout title='Devices' description='Tables with devices'>
-      <VStack spacing={4} minW='100%' overflowX='scroll'>
-        <Table size='sm'>
+      <VStack spacing={4} w='100%'>
+        <Table w='100%' overflowX='scroll' size='sm'>
           <TableCaption>Dasan Devices</TableCaption>
           <Thead>
             <Tr>
