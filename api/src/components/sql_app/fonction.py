@@ -60,8 +60,8 @@ def get_db():
     finally:
         db.close()
         
-def get_onusd(db: Session, onuid=int):
-    return db.query(models.Onus).filter(models.Onus.onuid ==onuid).first()
+def get_onusd(db: Session, onuid: int):
+    return db.query(models.Onus).filter(models.Onus.onuid == onuid).first()
 
 
 def set_onusd(db: Session, onu: schemas.Onusd):
