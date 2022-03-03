@@ -115,12 +115,13 @@ const DevicesPage = () => {
   const updateOnus = async () => {
     const req = await fetch('http://ac-vision/api/v1.0/ressources/devices');
     const devicesList: DeviceProps[] = await req.json();
+    console.log(devicesList);
     setDevices(devicesList);
   };
 
   return (
     <PageLayout title='Devices' description='Tables with devices'>
-      <VStack spacing={4}>
+      <VStack spacing={4} w='100%' overflow='auto'>
         <Tabs>
           <TabList>
             <Tab>Dasan</Tab>
@@ -146,9 +147,10 @@ const DevicesPage = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {devices.map((device) => (
-                    <DeviceItem key={device.displayName} {...device} />
-                  ))}
+                  {devices.length !== 0 &&
+                    devices.map((device) => (
+                      <DeviceItem key={device.displayName} {...device} />
+                    ))}
                 </Tbody>
               </Table>
             </TabPanel>
