@@ -178,7 +178,7 @@ const DevicesPage = () => {
             </Tbody>
           </Table>
         </Box>
-        <Button onClick={updateOnus(true)}>Update</Button>
+        <Button onClick={() => updateOnus(true)}>Update</Button>
       </VStack>
     </PageLayout>
   );
