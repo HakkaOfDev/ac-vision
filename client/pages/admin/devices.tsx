@@ -117,12 +117,12 @@ const DevicesPage = () => {
 
   return (
     <PageLayout title='Devices' description='Tables with devices'>
-      <VStack spacing={4} w='100%' overflow='auto'>
-        <Table variant='simple' overflowX='scroll' size='sm'>
+      <VStack spacing={4} w='100%' overflowX='scroll'>
+        <Table variant='simple' size='sm'>
           <TableCaption>Dasan Devices</TableCaption>
           <Thead>
             <Tr>
-              <Th>MODEL</Th>
+              <Th>TYPE</Th>
               <Th>NAME</Th>
               <Th>MAC ADDRESS</Th>
               <Th>IP ADDRESS</Th>
