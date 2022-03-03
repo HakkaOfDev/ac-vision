@@ -65,7 +65,7 @@ def get_onusd(db: Session, onuid=int):
 
 
 def set_onusd(db: Session, onu: schemas.Onusd):
-    db_onu = models.Users(onuid=onu.onuid, description=onu.description)
+    db_onu = models.Onus(onuid=onu.onuid, description=onu.description)
     db.add(db_onu)
     db.commit()
     db.refresh(db_onu)
