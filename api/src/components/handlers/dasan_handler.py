@@ -39,7 +39,7 @@ class DasanWorkflow:
                     "macAddress": onu.get('sleGponOnuHwAddress').replace(' ', ':')[:-1],
                     "distance": (onu.get('sleGponOnuDistance').split(' ')[0], '')[onu.get('sleGponOnuRxPower') is None],
                     "profile": onu.get('sleGponOnuProfile'),
-                    "displayName": fonction.get_onusd(fonction.get_db(), int(onu.get('sleGponOnuId'))),
+                    "displayName": fonction.get_onusd(onuid=int(onu.get('sleGponOnuId'))),
                     "serialNumber": onu.get('sleGponOnuSerial'),
                     "status": onu.get('sleGponOnuStatus'),
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
