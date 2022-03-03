@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from ..dependencies import get_current_user
 from ..redis.redis_client import rclient
 from ..handlers.dasan_handler import DasanWorkflow
+from ..sql_app import fonction, schemas
+from sqlalchemy.orm import Session
 
 class Onudesc(BaseModel):
     onuid: int
@@ -25,7 +27,5 @@ async def onus():
     return rclient.json().get('onus-dasan')
 
 @router.post("/desconu")
-async def nameonu(onudesc: Onudesc):
-    dasan_workflow = DasanWorkflow('10.59.10.20')
-    dasan_workflow.set_onu_desc(onudesc.onuid, onudesc.desc)
-    return "Nom changé"
+async def nameonu(onu: schemas.Onusd, db: Session = Depends(fonction.get_db)):
+    return fonction.set_onusd(db, onu=onu)

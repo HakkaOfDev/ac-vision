@@ -12,3 +12,9 @@ class Users(Base):
     email = Column(VARCHAR(255), unique=True)
     password = Column(TEXT)
     role = Column(VARCHAR(255))
+
+
+class Onus(Base):
+        __tablename__ = "onus"
+        onuid = Column(Integer, primary_key=True, unique=True)
+        description = Column(VARCHAR(255))

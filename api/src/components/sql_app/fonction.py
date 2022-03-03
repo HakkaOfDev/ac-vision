@@ -59,3 +59,14 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+def get_onusd(db: Session, onuid=int):
+    return db.query(models.Onus).filter(models.Onus.onuid ==onuid).first()
+
+
+def set_onusd(db: Session, onu: schemas.Onusd):
+    db_onu = models.Users(onuid=onu.onuid, description=onu.description)
+    db.add(db_onu)
+    db.commit()
+    db.refresh(db_onu)
+    return db_onu

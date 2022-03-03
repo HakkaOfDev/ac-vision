@@ -1,7 +1,7 @@
 from ..tools.snmp.oids import OIDS
 from ..tools.snmp.snmp_utils import SnmpUtils
 from ..tools.time_utils import format_uptime, format_dasan_olt_uptime
-
+from ..sql_app import fonction
 
 class DasanWorkflow:
 
@@ -39,7 +39,7 @@ class DasanWorkflow:
                     "macAddress": onu.get('sleGponOnuHwAddress').replace(' ', ':')[:-1],
                     "distance": (onu.get('sleGponOnuDistance').split(' ')[0], '')[onu.get('sleGponOnuRxPower') is None],
                     "profile": onu.get('sleGponOnuProfile'),
-                    "displayName": onu.get('sleGponOnuDescription'),
+                    "displayName": fonction.get_onusd(fonction.get_db(), int(onu.get('sleGponOnuId'))),
                     "serialNumber": onu.get('sleGponOnuSerial'),
                     "status": onu.get('sleGponOnuStatus'),
                     "uptime": (format_uptime(int(onu.get('sleGponOnuLinkUpTime').split(' ')[0]), 4), '')[
@@ -54,9 +54,3 @@ class DasanWorkflow:
                         onu_obj['ipAddress'] = ip[37:]
                 onus.append(onu_obj)
         return onus
-
-
-    def set_onu_desc(self, onuid, description):
-        community = "private"
-        olt = SnmpUtils(self.ip, write_community = community)
-        olt.set(f'{OIDS.ONU_DESCRIPTION.value}.1.{onuid}', "s", description)

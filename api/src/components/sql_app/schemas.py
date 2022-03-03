@@ -19,3 +19,7 @@ class UserCreate(Users):
 
     class Config:
         orm_mode = True
+
+class Onusd(BaseModel):
+    onuid: int
+    description: str
