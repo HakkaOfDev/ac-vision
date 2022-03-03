@@ -58,8 +58,8 @@ const DeviceItem = ({
         <HStack>
           <SkeletonCircle
             size='4'
-            startColor={isActive ? 'green.500' : 'red.500'}
-            endColor={isActive ? 'darkgreen.500' : 'darkred.500'}
+            startColor={isActive ? 'green.300' : 'red.300'}
+            endColor={isActive ? 'green.500' : 'red.500'}
           />
           <Image src={`/assets/images/models/${model}.png`} h={16} />
         </HStack>
@@ -134,8 +134,8 @@ const DevicesPage = () => {
                 <Th>MAC ADDRESS</Th>
                 <Th>IP ADDRESS</Th>
                 <Th>DISTANCE</Th>
-                <Th width={12}>SIGNAL</Th>
-                <Th width={12}>UPTIME</Th>
+                <Th w={24}>SIGNAL</Th>
+                <Th w={24}>UPTIME</Th>
                 <Th>STATUS</Th>
                 <Th>GPON PORT</Th>
                 <Th>SERIAL NUMBER</Th>
