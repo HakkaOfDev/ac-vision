@@ -1,4 +1,3 @@
-from fastapi import Depends
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -61,7 +60,7 @@ def get_db():
     finally:
         db.close()
         
-def get_onusd(onuid: int, db: Session = Depends(get_db)):
+def get_onusd(db: Session, onuid: int):
     return db.query(models.Onus).filter(models.Onus.onuid == onuid).first()
 
 
