@@ -62,7 +62,7 @@ def get_db():
         
 def get_onusd(db: Session, onuid: int):
     desc = db.query(models.Onus).filter(models.Onus.onuid == onuid).first()
-    return (desc, "")[desc is None]
+    return (desc.description, "")[desc is None]
 
 def set_onusd(db: Session, onu: schemas.Onusd):
     db_onu = models.Onus(onuid=onu.onuid, description=onu.description)
