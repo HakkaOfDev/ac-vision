@@ -65,7 +65,7 @@ def get_onusd(db: Session, onuid: int):
     if desc == None:
         return ""
     else:
-        return ("", desc.description)[desc is None]
+        return desc.description
 
 def set_onusd(db: Session, onu: schemas.Onusd):
     db_onu = models.Onus(onuid=onu.onuid, description=onu.description)
