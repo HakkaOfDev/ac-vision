@@ -8,7 +8,7 @@ s.bind(('', 514))
 
 if __name__ == '__main__':
     sio = socketio.Client()
-    sio.connect('ws://ac-vision/ws/')
+    sio.connect('http://server:6969/')
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
         data = s.recv(4048)
