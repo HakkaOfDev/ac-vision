@@ -8,11 +8,12 @@ app = socketio.WSGIApp(sio)
 @sio.event
 def connect(sid, environ, auth):
     print('connect ', sid)
-    
-@sio.on('message_sended')
+
+
+@sio.on('ONU')
 def redictdata(sid, data):
     print(sid, " Send : ",data)
-    sio.emit(data)
+    sio.emit("ONU", data)
 
 
 @sio.event
