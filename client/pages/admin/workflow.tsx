@@ -4,7 +4,7 @@ import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
   ConnectionLineType,
@@ -16,34 +16,21 @@ import ReactFlow, {
   Node,
   Position,
 } from 'react-flow-renderer';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import socketIOClient from 'socket.io-client';
 
 const WorkflowPage = () => {
   const [elements, setElements] = useState<Elements>([]);
-  const [socketUrl, setSocketUrl] = useState('ws://ac-vision/ws');
+  const ENDPOINT = 'http://ac-vision/ws';
   const toast = useToast();
-  const { sendMessage, readyState } = useWebSocket(socketUrl, {
-    onOpen: (event) => {
-      console.log('Connected to the WS');
-    },
-    onMessage: (event) => {
-      updateNetwork();
-      fetch('http://ac-vision/api/v1.0/ressources/map/update');
-      console.log(event.data);
-      sendMessage('I love work with you');
-    },
-    shouldReconnect: (closeEvent) => true,
-    reconnectAttempts: 10,
-    reconnectInterval: 3000,
-  });
 
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState];
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on('ONU', (data) => {
+      console.log(data);
+      fetch('http://ac-vision/api/v1.0/ressources/map/update');
+      updateNetwork();
+    });
+  }, []);
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
