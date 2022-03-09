@@ -20,14 +20,22 @@ services:
     build: ./client
     container_name: client
     restart: always
-  worker:
-    container_name: worker
+  logger:
+    container_name: logger
     restart: always
     build: ./workers/logs
     ports:
       - "514:514/udp"
     volumes:
       - ./workers/logs:/app
+  server:
+    container_name: server
+    restart: always
+    build: ./workers/server
+    ports:
+      - "6969:6969"
+    volumes:
+      - ./workers/server:/app
   database:
     image: postgres:14.1
     restart: always
