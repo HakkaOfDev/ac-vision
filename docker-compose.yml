@@ -24,8 +24,8 @@ services:
     container_name: logger
     restart: always
     build: ./workers/logs
-    expose:
-      - "514"
+    ports:
+      - "514:514"
     depends_on:
       - proxy
     volumes:

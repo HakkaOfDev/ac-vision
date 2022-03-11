@@ -5,6 +5,7 @@ WORKDIR /app
 
 ENV PATH="${PATH}:/root/.local/bin"
 ENV PYTHONPATH="/app/src"
+ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt .
 RUN pip install --upgrade pip
@@ -13,4 +14,4 @@ RUN apt-get update && apt-get install -y tcpdump
 
 COPY src/ .
 
-CMD python3 -u src/main.py
+CMD python3 src/main.py

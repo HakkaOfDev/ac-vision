@@ -8,8 +8,8 @@ if __name__ == '__main__':
     print('Start')
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
     while True:
-        print('Listening..')
-        data = s.recv(4048)
+        print('Listening...')
+        data = s.recv(4096)
         data = data.decode('utf-8')
         print(data)
         matches = re.search(REGEX, data)
