@@ -2,7 +2,7 @@ import socket
 import re
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(('', 514))
+s.bind(('0.0.0.0', 514))
 
 if __name__ == '__main__':
     print('Start')
