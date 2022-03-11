@@ -20,11 +20,14 @@ import socketIOClient from 'socket.io-client';
 
 const WorkflowPage = () => {
   const [elements, setElements] = useState<Elements>([]);
-  const ENDPOINT = 'http://ac-vision/ws';
+  const ENDPOINT = 'http://ac-vision:6969';
   const toast = useToast();
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
+    socket.on("connection", (socket) => {
+      console.log('connected to the ws')
+    });
     socket.on('ONU', (data) => {
       console.log(data);
       fetch('http://ac-vision/api/v1.0/ressources/map/update');
