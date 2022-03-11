@@ -13,4 +13,4 @@ RUN apt-get update && apt-get install -y tcpdump
 
 COPY src/ .
 
-CMD python3 src/main.py
+CMD python3 -u src/main.py
