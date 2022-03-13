@@ -22,6 +22,7 @@ class Onus(Base):
         
 class Setting(Base):
     __tablename__ = "setting"
-    name = Column(VARCHAR(255), unique=True)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(VARCHAR(255))
     value = Column(VARCHAR(255))
 
