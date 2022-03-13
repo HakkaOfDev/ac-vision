@@ -19,6 +19,7 @@ class Onus(Base):
         onuid = Column(Integer, primary_key=True, unique=True)
         description = Column(VARCHAR(255))
         
+        
 class Setting(Base):
     __tablename__ = "setting"
     name = Column(VARCHAR(255), unique=True)
