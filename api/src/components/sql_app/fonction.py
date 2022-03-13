@@ -82,6 +82,7 @@ def get_oltip(db: Session):
 
 def set_oltip(db: Session, olt: schemas.olt_setting):
     olt = models.Olt(ip=olt.ip)
+    db.delete()
     db.add(olt)
     db.commit()
     db.refresh(olt)
