@@ -20,7 +20,7 @@ class Onus(Base):
         description = Column(VARCHAR(255))
         
 class Setting(Base):
-    __tablename__ = "olt"
+    __tablename__ = "setting"
     name = Column(VARCHAR(255), primary_key=True, unique=True),
     value = Column(VARCHAR(255))
 
