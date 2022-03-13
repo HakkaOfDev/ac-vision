@@ -17,6 +17,7 @@ def update_cache():
     dasan_workflow = DasanWorkflow('10.59.10.20')
     rclient.json().set('olt-dasan', Path.rootPath(), dasan_workflow.get_olt())
     rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
+    rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
 
     #ubiquiti_workflow = UbiquitiWorkflow('c4a201ea-ffba-4c25-8d71-161c06917464', getenv('API_UNMS_TOKEN'))
     #rclient.json().set('olt-ubiquiti', Path.rootPath(), ubiquiti_workflow.get_olt())

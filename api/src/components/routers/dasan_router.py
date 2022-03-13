@@ -33,3 +33,7 @@ async def nameonu(onu: schemas.Onusd, db: Session = Depends(fonction.get_db)):
 @router.get("/desconu")
 async def getdesconu(onuid: int ,db: Session = Depends(fonction.get_db)):
     return fonction.get_onusd(db, onuid).description
+
+@router.get("/onuactivity")
+async def getonuactivity():
+    return rclient.json().get('onus-activity')

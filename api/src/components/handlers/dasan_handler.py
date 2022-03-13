@@ -57,3 +57,20 @@ class DasanWorkflow:
                         onu_obj['ipAddress'] = ip[37:]
                 onus.append(onu_obj)
         return onus
+
+
+    def get_onus_active(self):
+        olt = SnmpUtils(self.ip)
+        onus_table = olt.get_table(OIDS.ONU_TABLE.value)
+        onus_table.pop(-1)
+        onu_active = 0
+        onu_inactive = 0
+        for onu in onus_table:
+            if int(onu.get('sleGponOnuInactiveTime').split(' ')[0]) < 604800:
+                if onu.get('sleGponOnuStatus') == "active":
+                    onu_active += 1
+                elif onu.get('sleGponOnuStatus') == "inactive":
+                    onu_inactive += 1
+        return {"active": onu_active,
+                "inactive": onu_inactive,
+                "total": onu_active+onu_inactive}
