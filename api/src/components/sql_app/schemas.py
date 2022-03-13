@@ -26,6 +26,6 @@ class Onusd(BaseModel):
     description: str
     
 
-class setting(BaseModel):
+class Setting(BaseModel):
     name: str
     value: str
