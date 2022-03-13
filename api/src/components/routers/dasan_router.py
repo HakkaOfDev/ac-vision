@@ -43,7 +43,7 @@ async def getonuactivity():
 
 
 @router.post("/ipolt")
-async def nameonu(olt: schemas.olt_setting, db: Session = Depends(fonction.get_db)):
+async def setipolt(olt: schemas.olt_setting, db: Session = Depends(fonction.get_db)):
     return fonction.set_oltip(db, olt=olt)
 
 

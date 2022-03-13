@@ -85,4 +85,4 @@ def set_oltip(db: Session, olt: schemas.olt_setting):
     db.add(olt)
     db.commit()
     db.refresh(olt)
-    return olt
+    return olt.ip
