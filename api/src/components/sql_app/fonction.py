@@ -79,9 +79,9 @@ def get_setting(db: Session, name: str):
     return db.query(models.Setting).filter(models.Setting.name == name).first()
 
 
-def set_setting(db: Session, set: schemas.setting):
-    setting = models.Setting(name=set.name, value=set.value)
-    db.add(setting)
+def set_setting(db: Session, setting: schemas.Setting):
+    set = models.Setting(name=setting.name, value=setting.value)
+    db.add(set)
     db.commit()
-    db.refresh(setting)
-    return setting
+    db.refresh(set)
+    return set
