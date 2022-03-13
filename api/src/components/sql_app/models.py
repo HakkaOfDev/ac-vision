@@ -21,6 +21,6 @@ class Onus(Base):
         
 class Setting(Base):
     __tablename__ = "setting"
-    name = Column(VARCHAR(255), unique=True),
+    name = Column(VARCHAR(255), unique=True)
     value = Column(VARCHAR(255))
 
