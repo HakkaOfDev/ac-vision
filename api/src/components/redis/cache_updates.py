@@ -13,13 +13,12 @@ from ..sql_app.fonction import get_oltip
 
 tl = Timeloop()
 
-#session = SessionLocal()
-#ip = get_oltip(session).ip
+
 
 @tl.job(interval=timedelta(seconds=15))
 def update_cache():
-
-    dasan_workflow = DasanWorkflow("10.59.20.10")
+    session = SessionLocal()
+    dasan_workflow = DasanWorkflow(get_oltip(session).ip)
     rclient.json().set('olt-dasan', Path.rootPath(), dasan_workflow.get_olt())
     rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
     rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
@@ -32,7 +31,8 @@ def update_cache():
 
 @tl.job(interval=timedelta(seconds=1))
 def update_cache():
-    dasan_workflow = DasanWorkflow("10.59.20.10")
+    session = SessionLocal()
+    dasan_workflow = DasanWorkflow(get_oltip(session).ip)
 
 def run_cache():
     tl.start(block=False)
