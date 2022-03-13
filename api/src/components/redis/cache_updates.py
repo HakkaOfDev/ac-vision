@@ -9,7 +9,7 @@ from ..handlers.dasan_handler import DasanWorkflow
 from ..handlers.rtstack_handler import get_rt_stack
 from ..handlers.ubiquiti_handler import UbiquitiWorkflow
 from ..sql_app.database import SessionLocal
-from ..sql_app.fonction import get_oltip
+from ..sql_app.fonction import get_setting
 
 tl = Timeloop()
 
