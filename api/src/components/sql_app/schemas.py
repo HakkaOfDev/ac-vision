@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
 
-from api.src.components.sql_app.database import Base
 
 
 class UsersBase(BaseModel):
@@ -29,4 +28,3 @@ class Onusd(BaseModel):
 
 class olt_setting(BaseModel):
     ip: str
-
