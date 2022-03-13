@@ -1,3 +1,4 @@
+from webbrowser import get
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -84,7 +85,11 @@ def get_setting(db: Session, name: str):
 
 
 def set_setting(db: Session, setting: schemas.Setting):
-    set = models.Setting(name=setting.name, value=setting.value)
+    if get_setting(db, setting.name):
+        set = db.query(models.Setting).filter(models.Setting.name == setting.name).first()
+        setattr(set, "value", setting.value)
+    else:
+        set = models.Setting(name=setting.name, value=setting.value)
     db.add(set)
     db.commit()
     db.refresh(set)

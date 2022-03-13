@@ -8,6 +8,8 @@ from .redis_client import rclient
 from ..handlers.dasan_handler import DasanWorkflow
 from ..handlers.rtstack_handler import get_rt_stack
 from ..handlers.ubiquiti_handler import UbiquitiWorkflow
+from ..sql_app.fonction import get_setting
+from ..sql_app.database import SessionLocal
 
 
 tl = Timeloop()
@@ -16,7 +18,8 @@ tl = Timeloop()
 
 @tl.job(interval=timedelta(seconds=15))
 def update_cache():
-    dasan_workflow = DasanWorkflow("10.59.10.20")
+    session = SessionLocal()
+    dasan_workflow = DasanWorkflow(get_setting(session, "ip_olt").value)
     rclient.json().set('olt-dasan', Path.rootPath(), dasan_workflow.get_olt())
     rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
     rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
@@ -29,7 +32,8 @@ def update_cache():
 
 @tl.job(interval=timedelta(seconds=1))
 def update_cache():
-    dasan_workflow = DasanWorkflow("10.59.10.20")
+    session = SessionLocal()
+    dasan_workflow = DasanWorkflow(get_setting(session, "ip_olt").value)
 
 def run_cache():
     tl.start(block=False)

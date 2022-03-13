@@ -43,10 +43,10 @@ async def getonuactivity():
 
 
 @router.post("/setting")
-async def setipolt(setting: schemas.Setting, db: Session = Depends(fonction.get_db)):
+async def set_setting(setting: schemas.Setting, db: Session = Depends(fonction.get_db)):
     return fonction.set_setting(db, setting=setting)
 
 
 @router.get("/setting")
-async def getoltip(name: str, db: Session = Depends(fonction.get_db)):
+async def get_setting(name: str, db: Session = Depends(fonction.get_db)):
     return fonction.get_setting(db, name)
