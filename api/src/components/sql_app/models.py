@@ -18,3 +18,8 @@ class Onus(Base):
         __tablename__ = "onus"
         onuid = Column(Integer, primary_key=True, unique=True)
         description = Column(VARCHAR(255))
+        
+class Olt(Base):
+    __tablename__ = "olt"
+    ip = Column(VARCHAR(255),primary_key=True, unique=True)
+

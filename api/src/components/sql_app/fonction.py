@@ -1,3 +1,4 @@
+from pyexpat import model
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -73,3 +74,15 @@ def set_onusd(db: Session, onu: schemas.Onusd):
     db.commit()
     db.refresh(db_onu)
     return db_onu
+
+
+def get_oltip(db: Session):
+    return db.query(models.Olt).first()
+
+
+def set_oltip(db: Session, olt: schemas.olt_setting):
+    olt = models.Olt(ip=olt.ip)
+    db.add(olt)
+    db.commit()
+    db.refresh(olt)
+    return olt

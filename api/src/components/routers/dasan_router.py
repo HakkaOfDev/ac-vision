@@ -26,14 +26,27 @@ async def olt():
 async def onus():
     return rclient.json().get('onus-dasan')
 
+
 @router.post("/desconu")
 async def nameonu(onu: schemas.Onusd, db: Session = Depends(fonction.get_db)):
     return fonction.set_onusd(db, onu=onu)
+
 
 @router.get("/desconu")
 async def getdesconu(onuid: int ,db: Session = Depends(fonction.get_db)):
     return fonction.get_onusd(db, onuid).description
 
+
 @router.get("/onuactivity")
 async def getonuactivity():
     return rclient.json().get('onus-activity')
+
+
+@router.post("/ipolt")
+async def nameonu(olt: schemas.olt_setting, db: Session = Depends(fonction.get_db)):
+    return fonction.set_oltip(db, olt=olt)
+
+
+@router.get("/ipolt")
+async def getoltip(db: Session = Depends(fonction.get_db)):
+    return fonction.get_oltip(db)

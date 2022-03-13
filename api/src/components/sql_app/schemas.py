@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional
 
+from api.src.components.sql_app.database import Base
+
 
 class UsersBase(BaseModel):
     email: str
@@ -23,3 +25,8 @@ class UserCreate(Users):
 class Onusd(BaseModel):
     onuid: int
     description: str
+    
+
+class olt_setting(BaseModel):
+    ip: str
+
