@@ -1,3 +1,4 @@
+from flask import session
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -68,7 +69,11 @@ def get_onusd(db: Session, onuid: int):
         return desc.description
 
 def set_onusd(db: Session, onu: schemas.Onusd):
-    db_onu = models.Onus(onuid=onu.onuid, description=onu.description)
+    if get_onusd(db, onu.onuid):
+        db_onu = db.query(models.Onus).filter(models.Onus.onuid == onu.onuid).first()
+        setattr(db_onu, "descrption", onu.description)
+    else:
+        db_onu = models.Onus(onuid=onu.onuid, description=onu.description)
     db.add(db_onu)
     db.commit()
     db.refresh(db_onu)
