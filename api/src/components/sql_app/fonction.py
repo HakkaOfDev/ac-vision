@@ -77,12 +77,12 @@ def set_onusd(db: Session, onu: schemas.Onusd):
 
 
 def get_oltip(db: Session):
-    return db.query(models.Olt).first()
+    return db.query(models.Olt)
 
 
 def set_oltip(db: Session, olt: schemas.olt_setting):
     olt = models.Olt(ip=olt.ip)
-    db.delete()
+    db.delete(olt)
     db.add(olt)
     db.commit()
     db.refresh(olt)
