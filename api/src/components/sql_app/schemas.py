@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, stricturl
 from typing import Optional
 
 
@@ -26,5 +26,6 @@ class Onusd(BaseModel):
     description: str
     
 
-class olt_setting(BaseModel):
-    ip: str
+class setting(BaseModel):
+    name: str
+    value: str

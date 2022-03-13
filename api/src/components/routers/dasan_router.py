@@ -34,7 +34,7 @@ async def nameonu(onu: schemas.Onusd, db: Session = Depends(fonction.get_db)):
 
 @router.get("/desconu")
 async def getdesconu(onuid: int ,db: Session = Depends(fonction.get_db)):
-    return fonction.get_onusd(db, onuid).description
+    return fonction.get_onusd(db, onuid)
 
 
 @router.get("/onuactivity")
@@ -42,11 +42,11 @@ async def getonuactivity():
     return rclient.json().get('onus-activity')
 
 
-@router.post("/ipolt")
-async def setipolt(olt: schemas.olt_setting, db: Session = Depends(fonction.get_db)):
-    return fonction.set_oltip(db, olt=olt)
+@router.post("/setting")
+async def setipolt(setting: schemas.setting, db: Session = Depends(fonction.get_db)):
+    return fonction.set_setting(db, setting=setting)
 
 
-@router.get("/ipolt")
-async def getoltip(db: Session = Depends(fonction.get_db)):
-    return fonction.get_oltip(db)
+@router.get("/setting")
+async def getoltip(name: str, db: Session = Depends(fonction.get_db)):
+    return fonction.get_setting(db, name)

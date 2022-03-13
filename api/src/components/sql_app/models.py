@@ -19,7 +19,8 @@ class Onus(Base):
         onuid = Column(Integer, primary_key=True, unique=True)
         description = Column(VARCHAR(255))
         
-class Olt(Base):
+class Setting(Base):
     __tablename__ = "olt"
-    ip = Column(VARCHAR(255),primary_key=True, unique=True)
+    name = Column(VARCHAR(255), primary_key=True, unique=True),
+    value = Column(VARCHAR(255))
 
