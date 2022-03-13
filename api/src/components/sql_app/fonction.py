@@ -1,4 +1,3 @@
-from pyexpat import model
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -77,11 +76,11 @@ def set_onusd(db: Session, onu: schemas.Onusd):
 
 
 def get_setting(db: Session, name: str):
-    return db.query(models.Setting).filter(models.Setting.name == name).first
+    return db.query(models.Setting).filter(models.Setting.name == name).first()
 
 
-def set_setting(db: Session, olt: schemas.setting):
-    setting = models.Setting(name=olt.name, value=olt.value)
+def set_setting(db: Session, set: schemas.setting):
+    setting = models.Setting(name=set.name, value=set.value)
     db.add(setting)
     db.commit()
     db.refresh(setting)
