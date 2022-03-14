@@ -9,6 +9,8 @@ class DasanWorkflow:
 
     def __init__(self, ip):
         self.ip = ip
+        self.outoctet = 0
+        self.inoctet = 0
 
     def get_olt(self):
         olt = SnmpUtils(self.ip)
@@ -74,3 +76,13 @@ class DasanWorkflow:
         return {"active": onu_active,
                 "inactive": onu_inactive,
                 "total": onu_active+onu_inactive}
+        
+        
+    def debit_gpon(self):
+        olt = SnmpUtils(self.ip)
+        
+        
+    def is_online(self):
+        olt = SnmpUtils(self.ip)
+        return olt.is_online()
+        
