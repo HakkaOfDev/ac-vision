@@ -25,9 +25,9 @@ def update_cache():
         rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
         rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
     else:
-        rclient.json().set('olt-dasan', Path.rootPath(), None)
-        rclient.json().set('onus-dasan', Path.rootPath(), None)
-        rclient.json().set('onus-activity', Path.rootPath(), None)
+        rclient.json().set('olt-dasan', Path.rootPath(), "None")
+        rclient.json().set('onus-dasan', Path.rootPath(), "None")
+        rclient.json().set('onus-activity', Path.rootPath(), "None")
 
 @tl.job(interval=timedelta(seconds=1))
 def update_cache():
