@@ -26,11 +26,11 @@ const WorkflowPage = () => {
   useEffect(() => {
     socket.on('connect', () => {
       console.log('connected to the server');
-      socket.on('ONU', (data) => {
-        console.log(data);
-        fetch('http://ac-vision/api/v1.0/ressources/map/update');
-        updateNetwork();
-      });
+    });
+    socket.on('ONU', (data) => {
+      console.log(data);
+      fetch('http://ac-vision/api/v1.0/ressources/map/update');
+      updateNetwork();
     });
   }, [socket]);
 

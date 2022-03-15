@@ -36,5 +36,5 @@ def disconnect(sid):
     print('disconnect ', sid)
 
 if __name__ == '__main__':
-    threading.Thread(target=listen)
+    threading.Thread(name="thread", target=listen)
     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 6969)), app)
