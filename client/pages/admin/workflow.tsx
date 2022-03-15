@@ -26,6 +26,7 @@ const WorkflowPage = () => {
   useEffect(() => {
     socket.on('connect', () => {
       console.log('connected to the server');
+      socket.emit('READY', 'Listen')
     });
     socket.on('ONU', (data) => {
       console.log(data);

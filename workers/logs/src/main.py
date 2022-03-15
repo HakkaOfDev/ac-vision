@@ -24,10 +24,14 @@ def listen():
                         "reason": matches.group("reason")}
             sio.emit('ONU', onu_info)
 
+@sio.on('READY')
+def ready(sid):
+    print('Ready to listening..')
+    asyncio.create_task(listen())
+
 @sio.event
 def connect(sid, environ, auth):
     print('connect ', sid)
-    asyncio.create_task(listen())
 
 @sio.event
 def disconnect(sid):
