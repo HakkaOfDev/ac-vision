@@ -24,7 +24,7 @@ const WorkflowPage = () => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    socket.on('connection', () => {
+    socket.on('connect', () => {
       console.log('connected to the server');
       socket.on('ONU', (data) => {
         console.log(data);
