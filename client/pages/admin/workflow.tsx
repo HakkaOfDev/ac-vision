@@ -24,9 +24,11 @@ const WorkflowPage = () => {
   const toast = useToast();
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const socket = socketIOClient(ENDPOINT, {
+      transports: ['websocket', 'polling', 'flashsocket'],
+    });
     socket.on('connection', (socket) => {
-      console.log('connected to the ws');
+      console.log('connected to the server');
     });
     socket.on('ONU', (data) => {
       console.log(data);
