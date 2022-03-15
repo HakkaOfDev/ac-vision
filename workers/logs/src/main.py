@@ -1,9 +1,8 @@
 import socket
 import re
 import socketio
-import asyncio
-import websockets
-import json
+import eventlet
+import threading
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -24,15 +23,18 @@ async def listen():
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
-            await websockets.send(json.dumps(onu_info))
+            sio.emit('ONU', onu_info)
         else:
             print('No matches found')
 
-start_server = websockets.serve(listen, "0.0.0.0", 6969)
+@sio.event
+def connect(sid, environ, auth):
+    print('connect ', sid)
 
-
+@sio.event
+def disconnect(sid):
+    print('disconnect ', sid)
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().run_until_complete(start_server)
-    print("Server websocket have boot")
-    asyncio.get_event_loop().run_forever()
+    listen()
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 6969)), app)
