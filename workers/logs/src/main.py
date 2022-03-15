@@ -23,7 +23,7 @@ async def listen():
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
-            sio.emit('ONU', onu_info)
+            await sio.emit('ONU', onu_info)
         else:
             print('No matches found')
 
