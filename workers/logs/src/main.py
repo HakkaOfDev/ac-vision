@@ -11,9 +11,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
 REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((Reason: )?(?P<reason>[\w\s\(\)]*)\)"
 
-@sio.event
-def connect(sid, environ, auth):
-    print('connect ', sid)
+async def listen():
     while True:
         print('Listening...')
         data,addr = s.recvfrom(4048)
@@ -25,9 +23,14 @@ def connect(sid, environ, auth):
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
-            sio.emit('ONU', onu_info)
+            await sio.emit('ONU', onu_info)
         else:
             print('No matches found')
+
+@sio.event
+def connect(sid, environ, auth):
+    print('connect ', sid)
+    listen()
 
 @sio.event
 def disconnect(sid):
