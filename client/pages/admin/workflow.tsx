@@ -4,7 +4,7 @@ import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
   ConnectionLineType,
@@ -23,19 +23,16 @@ const WorkflowPage = () => {
   const toast = useToast();
   const socket = useContext(SocketContext);
 
-  const updateOnRecieve = (data) => {
-    useCallback(() => {
-      fetch('http://ac-vision/api/v1.0/ressources/map/update');
-      updateNetwork();
-    }, []);
-  };
-
   useEffect(() => {
     socket.on('connection', () => {
       console.log('connected to the server');
     });
-    socket.on('ONU', (data) => updateOnRecieve(data));
-  }, [socket, updateOnRecieve]);
+    socket.on('ONU', (data) => {
+      console.log(data);
+      fetch('http://ac-vision/api/v1.0/ressources/map/update');
+      updateNetwork();
+    });
+  }, [socket]);
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
