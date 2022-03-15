@@ -26,6 +26,7 @@ services:
     build: ./workers/logs
     expose:
       - "514"
+      - "6969:6969"
     ports:
       - "6969:6969"
       - "514:514/udp"
