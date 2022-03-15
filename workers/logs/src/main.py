@@ -13,19 +13,15 @@ REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((Reason: )?
 
 async def listen():
     while True:
-        print('Listening...')
-        data,addr = s.recvfrom(4048)
+        data,addr = await s.recvfrom(4048)
         data = data.decode('utf-8')
-        print(data)
         matches = re.search(REGEX, data)
+        await print(data)
         if matches:
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            print(onu_info)
             await sio.emit('ONU', onu_info)
-        else:
-            print('No matches found')
 
 @sio.event
 def connect(sid, environ, auth):
