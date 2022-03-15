@@ -25,8 +25,8 @@ const WorkflowPage = () => {
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("connection", (socket) => {
-      console.log('connected to the ws')
+    socket.on('connection', (socket) => {
+      console.log('connected to the ws');
     });
     socket.on('ONU', (data) => {
       console.log(data);
@@ -162,6 +162,7 @@ const WorkflowPage = () => {
       <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
         <Heading>Workflow</Heading>
         <ReactFlow
+          style={{ width: '100%' }}
           elements={elements}
           onLoad={onLoad}
           snapToGrid={true}

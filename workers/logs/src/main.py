@@ -1,12 +1,15 @@
 import socket
 import re
+import socketio
+import eventlet
+import threading
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
 
-if __name__ == '__main__':
+def listen():
     print('Start')
-    REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \(Reason: (?P<reason>[\w\s\(\)]*)\)"
+    REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((Reason: )?(?P<reason>[\w\s\(\)]*)\)"
     while True:
         print('Listening...')
         data,addr = s.recvfrom(4048)
@@ -18,5 +21,21 @@ if __name__ == '__main__':
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
             print(onu_info)
+            sio.emit('ONU', onu_info)
         else:
             print('No matches found')
+
+sio = socketio.Server()
+app = socketio.WSGIApp(sio)
+
+@sio.event
+def connect(sid, environ, auth):
+    print('connect ', sid)
+
+@sio.event
+def disconnect(sid):
+    print('disconnect ', sid)
+    
+if __name__ == '__main__':
+    threading.Thread(target=listen)
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 6969)), app)
