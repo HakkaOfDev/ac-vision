@@ -25,8 +25,9 @@ def listen():
             sio.emit('ONU', onu_info)
 
 @sio.on('READY')
-def ready(sid):
+def ready(sid, data):
     print('Ready to listening..')
+    print(data)
     asyncio.create_task(listen())
 
 @sio.event
