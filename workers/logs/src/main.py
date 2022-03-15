@@ -25,7 +25,7 @@ def listen():
         else:
             print('No matches found')
 
-sio = socketio.Server()
+sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
 @sio.event
