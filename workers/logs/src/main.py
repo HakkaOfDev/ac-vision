@@ -25,10 +25,8 @@ def listen(serverSocket):
             serverSocket.emit('ONU', onu_info)
 
 @sio.on('READY')
-def ready(sid, data):
-    print('Ready to listening..')
-    print(data)
-    asyncio.create_task(listen(sio))
+async def ready(sid, data):
+    await asyncio.create_task(listen(sio))
 
 @sio.event
 def connect(sid, environ, auth):
