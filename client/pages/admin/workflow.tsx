@@ -4,7 +4,7 @@ import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
   ConnectionLineType,
@@ -16,26 +16,26 @@ import ReactFlow, {
   Node,
   Position,
 } from 'react-flow-renderer';
-import socketIOClient from 'socket.io-client';
+import { SocketContext } from 'src/socket';
 
 const WorkflowPage = () => {
   const [elements, setElements] = useState<Elements>([]);
-  const ENDPOINT = 'http://ac-vision:6969';
   const toast = useToast();
+  const socket = useContext(SocketContext);
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
-      transports: ['websocket', 'polling', 'flashsocket'],
-    });
-    socket.on('connection', (socket) => {
-      console.log('connected to the server');
-    });
-    socket.on('ONU', (data) => {
-      console.log(data);
+  const updateOnRecieve = (data) => {
+    useCallback(() => {
       fetch('http://ac-vision/api/v1.0/ressources/map/update');
       updateNetwork();
+    }, []);
+  };
+
+  useEffect(() => {
+    socket.on('connection', () => {
+      console.log('connected to the server');
     });
-  }, []);
+    socket.on('ONU', (data) => updateOnRecieve(data));
+  }, [socket, updateOnRecieve]);
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -160,43 +160,45 @@ const WorkflowPage = () => {
   };
 
   return (
-    <PageLayout title='Workflow' description='See the map.'>
-      <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
-        <Heading>Workflow</Heading>
-        <ReactFlow
-          style={{ width: '100%' }}
-          elements={elements}
-          onLoad={onLoad}
-          snapToGrid={true}
-          snapGrid={[20, 20]}
-          defaultZoom={0.9}
-          minZoom={0.1}
-          maxZoom={3}
-          connectionLineType={ConnectionLineType.SmoothStep}
-        >
-          <MiniMap
-            nodeStrokeColor={(n: Node) => {
-              if (n.className === 'active') {
-                return 'darkgreen';
-              } else {
-                return 'darkred';
-              }
-            }}
-            nodeColor={(n: Node) => {
-              if (n.className === 'active') {
-                return 'green';
-              } else {
-                return 'red';
-              }
-            }}
-            nodeStrokeWidth={3}
-          />
-          <Controls />
-          <Background color='#aaa' gap={16} />
-        </ReactFlow>
-        <Button onClick={updateNetwork}>Update</Button>
-      </VStack>
-    </PageLayout>
+    <SocketContext.Provider value={socket}>
+      <PageLayout title='Workflow' description='See the map.'>
+        <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
+          <Heading>Workflow</Heading>
+          <ReactFlow
+            style={{ width: '100%' }}
+            elements={elements}
+            onLoad={onLoad}
+            snapToGrid={true}
+            snapGrid={[20, 20]}
+            defaultZoom={0.9}
+            minZoom={0.1}
+            maxZoom={3}
+            connectionLineType={ConnectionLineType.SmoothStep}
+          >
+            <MiniMap
+              nodeStrokeColor={(n: Node) => {
+                if (n.className === 'active') {
+                  return 'darkgreen';
+                } else {
+                  return 'darkred';
+                }
+              }}
+              nodeColor={(n: Node) => {
+                if (n.className === 'active') {
+                  return 'green';
+                } else {
+                  return 'red';
+                }
+              }}
+              nodeStrokeWidth={3}
+            />
+            <Controls />
+            <Background color='#aaa' gap={16} />
+          </ReactFlow>
+          <Button onClick={updateNetwork}>Update</Button>
+        </VStack>
+      </PageLayout>
+    </SocketContext.Provider>
   );
 };
 
