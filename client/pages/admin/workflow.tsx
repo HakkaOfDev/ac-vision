@@ -32,7 +32,7 @@ const WorkflowPage = () => {
         updateNetwork();
       });
     });
-  }, [socket]);
+  }, []);
 
   const getLayoutedElements = (elem: Elements) => {
     const dagreGraph = new dagre.graphlib.Graph();
