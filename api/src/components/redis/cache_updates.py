@@ -30,10 +30,5 @@ def update_cache():
         rclient.json().set('onus-activity', Path.rootPath(), "None")
 
 
-'''@tl.job(interval=timedelta(seconds=1))
-def update_cache():
-    session = SessionLocal()
-    dasan_workflow = DasanWorkflow(get_setting(session, "ip_olt").value)'''
-
 def run_cache():
     tl.start(block=False)

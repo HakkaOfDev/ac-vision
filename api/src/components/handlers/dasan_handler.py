@@ -1,9 +1,11 @@
+from email.mime import base
 from re import S
 from ..tools.snmp.oids import OIDS
 from ..tools.snmp.snmp_utils import SnmpUtils
 from ..tools.time_utils import format_uptime, format_dasan_olt_uptime
 from ..sql_app import fonction
 from ..sql_app.database import SessionLocal
+
 
 class DasanWorkflow:
 
@@ -77,11 +79,7 @@ class DasanWorkflow:
                 "inactive": onu_inactive,
                 "total": onu_active+onu_inactive}
         
-        
-    def debit_gpon(self):
-        olt = SnmpUtils(self.ip)
-        
-        
+    
     def is_online(self):
         olt = SnmpUtils(self.ip)
         return olt.is_online()
