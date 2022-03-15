@@ -20,15 +20,14 @@ tl = Timeloop()
 def update_cache():
     session = SessionLocal()
     dasan_workflow = DasanWorkflow(get_setting(session, "ip_olt").value)
-    rclient.json().set('olt-dasan', Path.rootPath(), dasan_workflow.get_olt())
-    rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
-    rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
-
-    #ubiquiti_workflow = UbiquitiWorkflow('c4a201ea-ffba-4c25-8d71-161c06917464', getenv('API_UNMS_TOKEN'))
-    #rclient.json().set('olt-ubiquiti', Path.rootPath(), ubiquiti_workflow.get_olt())
-    #rclient.json().set('onus-ubiquiti', Path.rootPath(), ubiquiti_workflow.get_onus())
-
-    rclient.json().set('rt-stack', Path.rootPath(), get_rt_stack())
+    if dasan_workflow.is_online():
+        rclient.json().set('olt-dasan', Path.rootPath(), dasan_workflow.get_olt())
+        rclient.json().set('onus-dasan', Path.rootPath(), dasan_workflow.get_onus())
+        rclient.json().set('onus-activity', Path.rootPath(), dasan_workflow.get_onus_active())
+    else:
+        rclient.json().set('olt-dasan', Path.rootPath(), "None")
+        rclient.json().set('onus-dasan', Path.rootPath(), "None")
+        rclient.json().set('onus-activity', Path.rootPath(), "None")
 
 @tl.job(interval=timedelta(seconds=1))
 def update_cache():
