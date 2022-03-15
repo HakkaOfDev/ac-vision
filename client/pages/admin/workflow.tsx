@@ -27,7 +27,7 @@ const WorkflowPage = () => {
     socket.on('connect', () => {
       console.log('connected to the server');
     });
-    socket.on('ONU', (data) => {
+    socket.onAny((data) => {
       console.log(data);
       fetch('http://ac-vision/api/v1.0/ressources/map/update');
       updateNetwork();
