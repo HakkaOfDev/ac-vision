@@ -4,10 +4,12 @@ import socketio
 import eventlet
 import threading
 
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(('', 514))
+sio = socketio.Server(cors_allowed_origins='*')
+app = socketio.WSGIApp(sio)
 
 def listen():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind(('', 514))
     print('Start')
     REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((Reason: )?(?P<reason>[\w\s\(\)]*)\)"
     while True:
@@ -25,9 +27,6 @@ def listen():
         else:
             print('No matches found')
 
-sio = socketio.Server(cors_allowed_origins='*')
-app = socketio.WSGIApp(sio)
-
 @sio.event
 def connect(sid, environ, auth):
     print('connect ', sid)
@@ -35,7 +34,7 @@ def connect(sid, environ, auth):
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
-    
+
 if __name__ == '__main__':
     threading.Thread(target=listen)
     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 6969)), app)
