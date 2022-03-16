@@ -20,6 +20,8 @@ services:
     build: ./client
     container_name: client
     restart: always
+    depends_on:
+      - api
   logger:
     container_name: logger
     restart: always
