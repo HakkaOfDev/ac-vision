@@ -3,7 +3,7 @@ import re
 import socketio
 
 sio = socketio.Client()
-sio.connect('http://server:6969', transports=['websocket', 'polling', 'flashsocket'])
+sio.connect('http://server:6969',reconnection=True)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
