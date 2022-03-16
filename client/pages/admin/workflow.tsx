@@ -26,16 +26,18 @@ const WorkflowPage = () => {
 
   useEffect(() => {
     socket.on('connect', () => {
-      console.log('connected to the server');
+      console.log("You're connected to the server.");
     });
     socket.on('ONU', async (data:Notification) => {
       await fetch('http://ac-vision/api/v1.0/ressources/map/update');
       await updateNetwork(false);
       toast({
-        title: `ONU ${data.onuid} ${data.status}`,
+        title: `ONU ${data.onuid} ${data.status} on gponPort ${data.gponPort}`,
         description: data.reason ? `Reason: ${data.reason}, Date: ${data.date}` : undefined,
         status: data.status === 'ACTIVATION' ? 'success' : 'error',
-        duration: 10000
+        duration: 10000,
+        isClosable: true,
+        variant: 'top-accent'
       });
     });
   }, [socket]);
