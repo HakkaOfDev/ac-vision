@@ -5,6 +5,9 @@ import {
   Heading,
   HStack,
   Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
   Select,
   Text,
   useToast,
@@ -13,12 +16,6 @@ import {
 import { FaAngleDoubleRight } from '@react-icons/all-files/fa/FaAngleDoubleRight';
 import { useEffect, useState } from 'react';
 
-type SettingIp = {
-  id: number;
-  value: string;
-  name: string;
-};
-
 const SettingsPage = () => {
   const [newOltIp, setNewOltIp] = useState<string>('');
   const [onuId, setOnuId] = useState<string>('1');
@@ -26,22 +23,20 @@ const SettingsPage = () => {
   const [newOnuDisplayName, setNewOnuDisplayName] = useState<string>('default');
   const toast = useToast();
 
-  const getOltIp = async () => {
-    const req = await fetch(
-      'http://ac-vision/api/v1.0/ressources/dasan/setting/ip/'
-    );
-    const settingIp: SettingIp = await req.json();
-    return settingIp.value;
-  };
-
   const changeOltIp = async () => {
     const data = new FormData();
     data.append('name', 'ip_olt');
     data.append('value', newOltIp);
 
     const req = await fetch(
-      'http://ac-vision/api/v1.0/ressources/dasan/setting/',
-      { method: 'POST', body: data }
+      'http://ac-vision/api/v1.0/ressources/dasan/setting',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: data,
+      }
     );
     if (req.status == 200) {
       toast({
@@ -65,8 +60,14 @@ const SettingsPage = () => {
     data.append('description', newOnuDisplayName);
 
     const req = await fetch(
-      'http://ac-vision/api/v1.0/ressources/dasan/desconu/',
-      { method: 'POST', body: data }
+      'http://ac-vision/api/v1.0/ressources/dasan/desconu',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: data,
+      }
     );
     if (req.status == 200) {
       toast({
@@ -92,51 +93,69 @@ const SettingsPage = () => {
       const onusList: Onu[] = await req.json();
       setOnuIDsList(onusList.map(({ onuId }) => onuId));
     }
-    setOnuIdsListFromAPI()
+    setOnuIdsListFromAPI();
   }, []);
 
   return (
     <PageLayout title='Settings' description='Manage your app.'>
       <VStack spacing={4} justify='center'>
         <Heading>Settings</Heading>
-        <HStack boxShadow='lg' spacing={2}>
-          <Text>OLT IP</Text>
-          <Input
-            variant='outline'
-            placeholder={`${getOltIp}`}
-            onChange={(e) => setNewOltIp(e.target.value)}
-          />
-          <Button
-            rightIcon={<FaAngleDoubleRight />}
-            colorScheme='brand'
-            variant='solid'
-            onClick={changeOltIp}
-          ></Button>
+        <HStack boxShadow='lg' spacing={2} w='100%'>
+          <InputGroup>
+            <InputLeftAddon children='OLT IP' />
+            <Input
+              variant='outline'
+              placeholder='IP address'
+              onChange={(e) => setNewOltIp(e.target.value)}
+            />
+            <InputRightAddon
+              children={
+                <Button
+                  rightIcon={<FaAngleDoubleRight />}
+                  colorScheme='brand'
+                  variant='solid'
+                  onClick={changeOltIp}
+                ></Button>
+              }
+            />
+          </InputGroup>
         </HStack>
-        <HStack boxShadow='lg' spacing={2}>
-          <Text>ONU's NAME</Text>
-          <Select
-            variant='outline'
-            placeholder='Select an ONU id'
-            onChange={(e) => setOnuId(e.currentTarget.value)}
-          >
-            {onuIDsList.map((id) => (
-              <option key={id} value={id}>
-                {id}
-              </option>
-            ))}
-          </Select>
-          <Input
-            variant='outline'
-            placeholder='New onu display name'
-            onChange={(e) => setNewOnuDisplayName(e.target.value)}
-          />
-          <Button
-            rightIcon={<FaAngleDoubleRight />}
-            colorScheme='brand'
-            variant='solid'
-            onClick={changeOnuDisplayName}
-          ></Button>
+        <HStack boxShadow='lg' spacing={2} w='100%'>
+          <InputGroup>
+            <InputLeftAddon
+              children={
+                <HStack spacing={2}>
+                  <Text>ONU's NAME</Text>
+                  <Select
+                    variant='outline'
+                    placeholder='Select an ONU id'
+                    onChange={(e) => setOnuId(e.currentTarget.value)}
+                  >
+                    {onuIDsList.map((id) => (
+                      <option key={id} value={id}>
+                        {id}
+                      </option>
+                    ))}
+                  </Select>
+                </HStack>
+              }
+            />
+            <Input
+              variant='outline'
+              placeholder='New onu display name'
+              onChange={(e) => setNewOnuDisplayName(e.target.value)}
+            />
+            <InputRightAddon
+              children={
+                <Button
+                  rightIcon={<FaAngleDoubleRight />}
+                  colorScheme='brand'
+                  variant='solid'
+                  onClick={changeOnuDisplayName}
+                ></Button>
+              }
+            />
+          </InputGroup>
         </HStack>
       </VStack>
     </PageLayout>
