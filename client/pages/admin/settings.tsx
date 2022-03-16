@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 const SettingsPage = () => {
   const [newOltIp, setNewOltIp] = useState<string>('');
   const [onuId, setOnuId] = useState<string>('1');
-  const [onuIDsList, setOnuIDsList] = useState<number[]>([]);
+  const [onuIDsList, setOnuIDsList] = useState<string[]>([]);
   const [newOnuDisplayName, setNewOnuDisplayName] = useState<string>('default');
   const toast = useToast();
 
@@ -91,7 +91,7 @@ const SettingsPage = () => {
         'http://ac-vision/api/v1.0/ressources/dasan/onus'
       );
       const onusList: Onu[] = await req.json();
-      setOnuIDsList(onusList.map(({ onuId }) => onuId));
+      setOnuIDsList(onusList.map(({ onuId }) => `${onuId}`));
     }
     setOnuIdsListFromAPI();
   }, []);
@@ -129,7 +129,10 @@ const SettingsPage = () => {
                   <Select
                     variant='outline'
                     placeholder='Select an ONU id'
-                    onChange={(e) => setOnuId(e.currentTarget.value)}
+                    onChange={(e) => {
+                      console.log(e.currentTarget.value);
+                      setOnuId(e.currentTarget.value);
+                    }}
                   >
                     {onuIDsList.map((id) => (
                       <option key={id} value={id}>
