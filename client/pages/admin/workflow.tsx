@@ -2,6 +2,7 @@ import OltItem from '@/components/devices/olt';
 import OnuItem from '@/components/devices/onu';
 import PageLayout from '@/components/page-layout';
 import { Map } from '@/types/Map';
+import { Notification } from '@/types/Notifications';
 import { Button, Heading, useToast, VStack } from '@chakra-ui/react';
 import dagre from 'dagre';
 import { useContext, useEffect, useState } from 'react';
@@ -27,10 +28,15 @@ const WorkflowPage = () => {
     socket.on('connect', () => {
       console.log('connected to the server');
     });
-    socket.on('ONU', async (data) => {
+    socket.on('ONU', async (data:Notification) => {
       await fetch('http://ac-vision/api/v1.0/ressources/map/update');
-      console.log(data);
-      updateNetwork();
+      updateNetwork(false);
+      toast({
+        title: `ONU ${data.onuid} ${data.status}`,
+        description: data.reason ? `Reason: ${data.reason}, Date: ${data.date}` : undefined,
+        status: data.status === 'ACTIVATION' ? 'success' : 'error',
+        duration: 2000
+      })
     });
   }, [socket]);
 
@@ -68,7 +74,7 @@ const WorkflowPage = () => {
     });
   };
 
-  const updateNetwork = async () => {
+  const updateNetwork = async (userInteraction: boolean) => {
     const req = await fetch('http://ac-vision/api/v1.0/ressources/map');
     if (req.status === 404) {
       toast({
@@ -192,7 +198,7 @@ const WorkflowPage = () => {
             <Controls />
             <Background color='#aaa' gap={16} />
           </ReactFlow>
-          <Button onClick={updateNetwork}>Update</Button>
+          <Button onClick={() => updateNetwork(true)}>Update</Button>
         </VStack>
       </PageLayout>
     </SocketContext.Provider>
