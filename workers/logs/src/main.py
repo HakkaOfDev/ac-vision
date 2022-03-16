@@ -8,7 +8,7 @@ sio.connect('http://server:6969')
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
-REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((?:Reason:|SN:)\s(?P<reason>(.)*)\)"
+REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((?:Reason:|SN:)(\s)?(?P<reason>(.)*)\)"
 
 if __name__ == '__main__':
     while True:
