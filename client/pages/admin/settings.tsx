@@ -11,8 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { FaAngleDoubleRight } from '@react-icons/all-files/fa/FaAngleDoubleRight';
-import { GetStaticProps } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type SettingIp = {
   id: number;
@@ -20,13 +19,10 @@ type SettingIp = {
   name: string;
 };
 
-type Props = {
-  onusIdList: number[];
-};
-
-const SettingsPage = ({ onusIdList }: Props) => {
+const SettingsPage = () => {
   const [newOltIp, setNewOltIp] = useState<string>('');
   const [onuId, setOnuId] = useState<string>('1');
+  const [onuIDsList, setOnuIDsList] = useState<number[]>([]);
   const [newOnuDisplayName, setNewOnuDisplayName] = useState<string>('default');
   const toast = useToast();
 
@@ -88,6 +84,17 @@ const SettingsPage = ({ onusIdList }: Props) => {
     }
   };
 
+  useEffect(() => {
+    async function setOnuIdsListFromAPI() {
+      const req = await fetch(
+        'http://ac-vision/api/v1.0/ressources/dasan/onus'
+      );
+      const onusList: Onu[] = await req.json();
+      setOnuIDsList(onusList.map(({ onuId }) => onuId));
+    }
+    setOnuIdsListFromAPI()
+  }, []);
+
   return (
     <PageLayout title='Settings' description='Manage your app.'>
       <VStack spacing={4} justify='center'>
@@ -113,7 +120,7 @@ const SettingsPage = ({ onusIdList }: Props) => {
             placeholder='Select an ONU id'
             onChange={(e) => setOnuId(e.currentTarget.value)}
           >
-            {onusIdList.map((id) => (
+            {onuIDsList.map((id) => (
               <option key={id} value={id}>
                 {id}
               </option>
@@ -134,16 +141,6 @@ const SettingsPage = ({ onusIdList }: Props) => {
       </VStack>
     </PageLayout>
   );
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const req = await fetch('http://ac-vision/api/v1.0/ressources/dasan/onus');
-  const onusList: Onu[] = await req.json();
-  const props: Props = { onusIdList: onusList.map(({ onuId }) => onuId) };
-
-  return {
-    props,
-  };
 };
 
 export default SettingsPage;
