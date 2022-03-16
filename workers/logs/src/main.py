@@ -2,14 +2,13 @@ import socket
 import re
 import socketio
 from datetime import datetime
-import time
 
 sio = socketio.Client()
 sio.connect('http://server:6969')
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
-REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) (\(Reason: (?P<reason>[\w\s\(\)]*)\))?"
+REGEX = r"(?P<onu>ONU\([0-9],[0-9]*\)) (?P<status>(DE)?ACTIVATION) \((Reason: )?(?P<reason>[.\s]*)\)"
 
 if __name__ == '__main__':
     while True:
@@ -21,6 +20,6 @@ if __name__ == '__main__':
             onu_info = {"onuid": matches.group("onu").split(',')[:1],
                         "status": matches.group("status"),
                         "reason": matches.group("reason"),
-                        "date": time.strftime("%a, %d %b %Y %H:%M:%S", datetime.now())}
+                        "date": datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
             print(onu_info)
             sio.emit('ONU_INFO', onu_info)
