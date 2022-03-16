@@ -29,7 +29,7 @@ services:
     ports:
       - "514:514/udp"
     depends_on:
-      - proxy
+      - server
     volumes:
       - ./workers/logs:/app
   server:
@@ -40,8 +40,6 @@ services:
       - "6969"
     ports:
       - "6969:6969"
-    depends_on:
-      - proxy
     volumes:
       - ./workers/logs:/app
   database:
