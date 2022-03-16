@@ -5,7 +5,7 @@ import threading
 import asyncio
 
 sio = socketio.Client()
-sio.connect('http://ac-vision:6969')
+sio.connect('http://ac-vision:6969', transports=['websocket', 'polling', 'flashsocket'])
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(('', 514))
