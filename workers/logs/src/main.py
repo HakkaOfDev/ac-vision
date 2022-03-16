@@ -21,6 +21,6 @@ if __name__ == '__main__':
             onu_info = {"onuid": matches.group("onu").split(',')[:1],
                         "status": matches.group("status"),
                         "reason": matches.group("reason"),
-                        "date": time.sstrftime("%a, %d %b %Y %H:%M:%S", datetime.now())}
+                        "date": time.strftime("%a, %d %b %Y %H:%M:%S", datetime.now())}
             print(onu_info)
             sio.emit('ONU_INFO', onu_info)
