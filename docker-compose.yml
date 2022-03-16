@@ -26,10 +26,20 @@ services:
     build: ./workers/logs
     expose:
       - "514"
+    ports:
+      - "514:514/udp"
+    depends_on:
+      - proxy
+    volumes:
+      - ./workers/logs:/app
+  server:
+    container_name: server
+    restart: always
+    build: ./workers/server
+    expose:
       - "6969"
     ports:
       - "6969:6969"
-      - "514:514/udp"
     depends_on:
       - proxy
     volumes:
