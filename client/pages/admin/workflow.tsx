@@ -30,13 +30,13 @@ const WorkflowPage = () => {
     });
     socket.on('ONU', async (data:Notification) => {
       await fetch('http://ac-vision/api/v1.0/ressources/map/update');
-      updateNetwork(false);
+      await updateNetwork(false);
       toast({
         title: `ONU ${data.onuid} ${data.status}`,
         description: data.reason ? `Reason: ${data.reason}, Date: ${data.date}` : undefined,
         status: data.status === 'ACTIVATION' ? 'success' : 'error',
-        duration: 2000
-      })
+        duration: 10000
+      });
     });
   }, [socket]);
 
