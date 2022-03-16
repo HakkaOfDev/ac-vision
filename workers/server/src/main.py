@@ -1,9 +1,5 @@
-import socket
-import re
 import socketio
 import eventlet
-import threading
-import asyncio
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
