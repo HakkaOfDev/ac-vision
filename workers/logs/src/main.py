@@ -21,4 +21,4 @@ if __name__ == '__main__':
             onu_info = {"onu": matches.group("onu"),
                         "status": matches.group("status"),
                         "reason": matches.group("reason")}
-            sio.emit('ONU', onu_info)
+            sio.emit('ONU_INFO', onu_info)
