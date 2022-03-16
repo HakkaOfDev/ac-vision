@@ -158,7 +158,7 @@ const WorkflowPage = () => {
   };
 
   const onLoad = (reactFlowInstance) => {
-    updateNetwork();
+    updateNetwork(false);
     reactFlowInstance.fitView({ padding: 0.2, includeHiddenNodes: true });
   };
 
