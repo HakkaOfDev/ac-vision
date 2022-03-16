@@ -38,7 +38,7 @@ const SettingsPage = () => {
         body: data,
       }
     );
-    if (req.status == 200) {
+    if (req.status === 200) {
       toast({
         title: `OLT IP was changed to ${newOltIp}`,
         status: 'success',
@@ -69,7 +69,7 @@ const SettingsPage = () => {
         body: data,
       }
     );
-    if (req.status == 200) {
+    if (req.status === 200) {
       toast({
         title: `Display name for onu ${onuId} was changed to : ${newOnuDisplayName}`,
         status: 'success',
@@ -130,7 +130,6 @@ const SettingsPage = () => {
                     variant='outline'
                     placeholder='Select an ONU id'
                     onChange={(e) => {
-                      console.log(e.currentTarget.value);
                       setOnuId(e.currentTarget.value);
                     }}
                   >
