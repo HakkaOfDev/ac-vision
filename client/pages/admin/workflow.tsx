@@ -146,11 +146,13 @@ const WorkflowPage = () => {
       });
 
       setElements(getLayoutedElements(elementsArray));
-      toast({
-        description: 'Map updated with success !',
-        status: 'success',
-        duration: 1500,
-      });
+      if (userInteraction) {
+        toast({
+          description: 'Map updated with success !',
+          status: 'success',
+          duration: 1500,
+        });
+      }
     } else {
       toast({
         title: 'An error occured',
