@@ -9,7 +9,11 @@ import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DashboardPage = () => {
-  const [onusActivity, setOnusActivity] = useState<Activity>();
+  const [onusActivity, setOnusActivity] = useState<Activity>({
+    active: 0,
+    inactive: 0,
+    total: 0,
+  });
 
   useEffect(() => {
     async function getActivity() {
