@@ -17,11 +17,11 @@ if __name__ == '__main__':
         matches = re.search(REGEX, data)
         print(data)
         if matches:
-            onu_info = {"onuid": matches.group("onu").split(',')[-1][:-1],
-                        "gponPort": matches.group("onu").split(',')[0][-1],
-                        "status": matches.group("status"),
-                        "date": datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
+            onu_info = {"onuid": int(matches.group("onu").split(',')[-1][:-1]),
+                        "gponPort": int(matches.group("onu").split(',')[0][-1]),
+                        "status": str(matches.group("status")),
+                        "date": str(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))}
             if onu_info['status'] == 'DEACTIVATION':
-                onu_info["reason"] = matches.group("reason")
+                onu_info["reason"] = str(matches.group("reason"))
             print(onu_info)
             sio.emit('ONU_INFO', onu_info)
