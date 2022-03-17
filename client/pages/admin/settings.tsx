@@ -100,7 +100,8 @@ const SettingsPage = () => {
     <PageLayout title='Settings' description='Manage your app.'>
       <VStack spacing={4} justify='center' overflowX='auto' w='100%'>
         <Heading>Settings</Heading>
-        <HStack boxShadow='lg' spacing={2} w='100%'>
+        <VStack boxShadow='lg' spacing={2} w='100%'>
+        <Text fontSize='sm'>CHANGE OLT IP</Text>
           <InputGroup w='100%'>
             <InputLeftAddon children='OLT IP' />
             <Input
@@ -119,15 +120,15 @@ const SettingsPage = () => {
               }
             />
           </InputGroup>
-        </HStack>
+        </VStack>
         <VStack boxShadow='lg' spacing={2} w='100%'>
-          <Text fontSize='sm'>ONU's NAME</Text>
+          <Text fontSize='sm'>CHANGE ONU's NAME</Text>
           <InputGroup w='100%'>
             <InputLeftAddon
               children={
                   <Select
                     variant='outline'
-                    placeholder='ONU id'
+                    placeholder='ID'
                     onChange={(e) => {
                       setOnuId(e.currentTarget.value);
                     }}
@@ -142,7 +143,7 @@ const SettingsPage = () => {
             />
             <Input
               variant='outline'
-              placeholder='New onu display name'
+              placeholder='Name'
               onChange={(e) => setNewOnuDisplayName(e.target.value)}
             />
             <InputRightAddon
