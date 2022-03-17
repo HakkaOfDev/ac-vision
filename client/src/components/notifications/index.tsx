@@ -21,17 +21,18 @@ const NotificationCard = ({
       borderLeftStyle='solid'
       w='100%'
       borderRadius='lg'
+      alignItems='start'
     >
-      <Heading textAlign='left' fontSize='sm'>
+      <Heading fontSize='sm'>
         [{status}] ONU {onuid} on gponPort {gponPort}
       </Heading>
-      <HStack spacing={2} justify='start' w='100%'>
-        <Text fontSize='sm' textAlign='left'>
+      <HStack spacing={4} justify='start' w='100%'>
+        <Text fontSize='sm'>
           <strong>Date: </strong>
           {date}
         </Text>
         {reason && (
-          <Text fontSize='sm' textAlign='left'>
+          <Text fontSize='sm'>
             <strong>Reason: </strong>
             {reason}
           </Text>
