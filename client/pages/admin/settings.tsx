@@ -128,7 +128,7 @@ const SettingsPage = () => {
                   <Text>ONU's NAME</Text>
                   <Select
                     variant='outline'
-                    placeholder='Select an ONU id'
+                    placeholder='ONU id'
                     onChange={(e) => {
                       setOnuId(e.currentTarget.value);
                     }}
@@ -143,6 +143,7 @@ const SettingsPage = () => {
               }
             />
             <Input
+              w='16'
               variant='outline'
               placeholder='New onu display name'
               onChange={(e) => setNewOnuDisplayName(e.target.value)}
