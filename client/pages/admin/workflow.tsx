@@ -136,7 +136,7 @@ const WorkflowPage = () => {
           id: `e${edge.from}-${edge.to}`,
           source: `${edge.from}`,
           target: `${edge.to}`,
-          animated: true,
+          animated: edge.status === 'active' ? true : false,
           style: {
             stroke: edge.status === 'active' ? 'green' : 'red',
           },
@@ -175,9 +175,9 @@ const WorkflowPage = () => {
             onLoad={onLoad}
             snapToGrid={true}
             snapGrid={[20, 20]}
-            defaultZoom={0.9}
+            defaultZoom={0.4}
             minZoom={0.1}
-            maxZoom={3}
+            maxZoom={2}
             connectionLineType={ConnectionLineType.SmoothStep}
           >
             <MiniMap
