@@ -22,7 +22,7 @@ const NotificationCard = ({
       w='100%'
       borderRadius='lg'
     >
-      <Heading fontSize='sm'>
+      <Heading textAlign='left' fontSize='sm'>
         [{status}] ONU {onuid} on gponPort {gponPort}
       </Heading>
       <HStack spacing={2} justify='start' w='100%'>
