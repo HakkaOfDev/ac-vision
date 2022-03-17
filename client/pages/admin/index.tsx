@@ -2,11 +2,26 @@ import Notifications from '@/components/notifications';
 import PageLayout from '@/components/page-layout';
 import { Activity } from '@/types/Activity';
 import { Heading, Stack, VStack } from '@chakra-ui/react';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import {
+  ArcElement,
+  Chart as ChartJS,
+  Decimation,
+  DoughnutController,
+  Filler,
+  Legend,
+  Tooltip,
+} from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  DoughnutController,
+  Filler,
+  Decimation
+);
 
 const DashboardPage = () => {
   const [onusActivity, setOnusActivity] = useState<Activity>({
@@ -57,8 +72,10 @@ const DashboardPage = () => {
             justify='center'
             align='center'
           >
-            <Heading fontSize='lg' w='100%' textAlign='center'>ONU's Activity</Heading>
-            <Doughnut data={data} />
+            <Heading fontSize='lg' w='100%' textAlign='center'>
+              ONU's Activity
+            </Heading>
+            <Doughnut width='80%' data={data} />
           </VStack>
           <VStack
             w={{ base: '100%', lg: '50%' }}
@@ -66,7 +83,9 @@ const DashboardPage = () => {
             justify='center'
             align='center'
           >
-            <Heading fontSize='lg' w='100%' textAlign='center'>Notifications</Heading>
+            <Heading fontSize='lg' w='100%' textAlign='center'>
+              Notifications
+            </Heading>
             <Notifications spacing={1} overflowY='scroll' h='70vh' />
           </VStack>
         </Stack>
