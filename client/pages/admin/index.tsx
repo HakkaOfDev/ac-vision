@@ -2,11 +2,17 @@ import Notifications from '@/components/notifications';
 import PageLayout from '@/components/page-layout';
 import { Activity } from '@/types/Activity';
 import { Heading, Stack, VStack } from '@chakra-ui/react';
-import { BarElement, Chart as ChartJS, LinearScale, Tooltip } from 'chart.js';
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(LinearScale, BarElement, Tooltip);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 const DashboardPage = () => {
   const [onusActivity, setOnusActivity] = useState<Activity>({
