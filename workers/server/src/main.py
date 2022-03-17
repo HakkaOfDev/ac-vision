@@ -11,9 +11,7 @@ def connect(sid, environ, auth):
 
 @sio.on('ONU_INFO')
 def onu_balancer(sid, data):
-    print(data)
-    print(type(data))
-    requests.post('http://api:8000/api/v1.0/ressources/notification/new', data=data, headers={'Accept':'application/json'})
+    requests.post('http://api:8000/api/v1.0/ressources/notification/new', data=data, headers={'accept':'application/json', 'Content-Type': 'application/json'})
     sio.emit('ONU', data)
 
 @sio.event
