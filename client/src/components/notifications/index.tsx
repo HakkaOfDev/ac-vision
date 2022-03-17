@@ -52,7 +52,7 @@ const Notifications = ({...stackProps}: StackProps) => {
       setNotifications(notifs);
     }
     getNotifications();
-  }, [notifications]);
+  }, []);
 
   return (
     <VStack {...stackProps}>

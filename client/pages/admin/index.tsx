@@ -18,13 +18,13 @@ const DashboardPage = () => {
   useEffect(() => {
     async function getActivity() {
       const req = await fetch(
-        'http://ac-vision/api/v1.0/ressources/dasan/onusactivity'
+        'http://ac-vision/api/v1.0/ressources/dasan/onuactivity'
       );
       const activity: Activity = await req.json();
       setOnusActivity(activity);
     }
     getActivity();
-  }, [onusActivity]);
+  }, []);
 
   const data = {
     labels: ['active', 'inactive', 'total'],
