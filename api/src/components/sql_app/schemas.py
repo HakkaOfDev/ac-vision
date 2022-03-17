@@ -29,3 +29,11 @@ class Onusd(BaseModel):
 class Setting(BaseModel):
     name: str
     value: str
+
+
+class Notification(BaseModel):
+    onuid: int
+    gponPort: int
+    reason: Optional[str]
+    status: str
+    date: str

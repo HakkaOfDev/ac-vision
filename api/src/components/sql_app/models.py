@@ -1,3 +1,4 @@
+from email.policy import default
 from sqlalchemy import Column, Integer, VARCHAR, TEXT
 
 from .database import Base
@@ -26,3 +27,12 @@ class Setting(Base):
     name = Column(VARCHAR(255))
     value = Column(VARCHAR(255))
 
+
+class Notification(Base):
+    __tablename__ = "notification"
+    id: Column(Integer, primary_key=True, index=True)
+    onuid: Column(Integer)
+    gponPort: Column(Integer)
+    reason: Column(VARCHAR(255), nullable= True)
+    status: Column(VARCHAR(255))
+    date: Column(VARCHAR(255))

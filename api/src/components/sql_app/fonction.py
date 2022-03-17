@@ -8,6 +8,8 @@ from .database import SessionLocal
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
+
+#Fonctions for user router
 def authenticate_user(db: Session, login: str, password: str):
     user = get_user_by_login(db, login)
     if not user:
@@ -53,7 +55,7 @@ def delete_user(db: Session, login: str):
     db.delete(login)
     db.commit()
 
-
+#Fonction for all router to get the db
 def get_db():
     db = SessionLocal()
     try:
@@ -61,6 +63,7 @@ def get_db():
     finally:
         db.close()
         
+#Fonctions for dasan router onus description set and get        
 def get_onusd(db: Session, onuid: int):
     desc = db.query(models.Onus).filter(models.Onus.onuid == onuid).first()
     if desc == None:
@@ -79,7 +82,7 @@ def set_onusd(db: Session, onu: schemas.Onusd):
     db.refresh(db_onu)
     return db_onu
 
-
+#Fonctions for dasan router setting set and get 
 def get_setting(db: Session, name: str):
     return db.query(models.Setting).filter(models.Setting.name == name).first()
 
@@ -94,3 +97,16 @@ def set_setting(db: Session, setting: schemas.Setting):
     db.commit()
     db.refresh(set)
     return set
+
+#Fonctions for notification router
+def get_notification(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Notification).offset(skip).limit(limit).all()
+
+
+def post_notification(db: Session, notification: schemas.Notification):
+    db_notif = models.Notification(onuid=int(notification.onuid), gponport=int(notification.gponPort),
+                                   reason=notification.reason, status=notification.status, date=notification.date)
+    db.add(db_notif)
+    db.commit()
+    db.refresh(db_notif)
+    return db_notif
