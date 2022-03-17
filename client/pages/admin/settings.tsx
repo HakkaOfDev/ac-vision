@@ -101,7 +101,7 @@ const SettingsPage = () => {
       <VStack spacing={4} justify='center' overflowX='auto' w='100%'>
         <Heading>Settings</Heading>
         <HStack boxShadow='lg' spacing={2} w='100%'>
-          <InputGroup>
+          <InputGroup w='100%'>
             <InputLeftAddon children='OLT IP' />
             <Input
               variant='outline'
@@ -121,11 +121,10 @@ const SettingsPage = () => {
           </InputGroup>
         </HStack>
         <HStack boxShadow='lg' spacing={2} w='100%'>
-          <InputGroup>
+          <Text fontSize='sm'>ONU's NAME</Text>
+          <InputGroup w='100%'>
             <InputLeftAddon
               children={
-                <HStack spacing={2}>
-                  <Text>ONU's NAME</Text>
                   <Select
                     variant='outline'
                     placeholder='ONU id'
@@ -139,11 +138,9 @@ const SettingsPage = () => {
                       </option>
                     ))}
                   </Select>
-                </HStack>
               }
             />
             <Input
-              w='16'
               variant='outline'
               placeholder='New onu display name'
               onChange={(e) => setNewOnuDisplayName(e.target.value)}
