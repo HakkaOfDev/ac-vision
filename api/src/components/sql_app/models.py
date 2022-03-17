@@ -30,9 +30,9 @@ class Setting(Base):
 
 class Notification(Base):
     __tablename__ = "notification"
-    id  = Column(Integer, primary_key=True, index=True)
-    onuid   = Column(Integer)
-    gponPort    = Column(Integer)
-    reason  = Column(VARCHAR(255), nullable= True)
-    status  = Column(VARCHAR(255))
-    date    = Column(VARCHAR(255))
+    id = Column(Integer, primary_key=True, index=True)
+    onuid = Column(Integer)
+    gponPort = Column(Integer)
+    reason = Column(VARCHAR(255), nullable= True)
+    status = Column(VARCHAR(255))
+    date = Column(VARCHAR(255))
