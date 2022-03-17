@@ -14,7 +14,7 @@ const NotificationCard = ({
   return (
     <VStack
       spacing={1}
-      padding={1}
+      padding={2}
       bgColor={isRed ? 'red.300' : 'green.300'}
       borderLeftColor={isRed ? 'red.500' : 'green.500'}
       borderLeftWidth={3}
@@ -26,12 +26,12 @@ const NotificationCard = ({
         [{status}] ONU {onuid} on gponPort {gponPort}
       </Heading>
       <HStack spacing={2} justify='start' w='100%'>
-        <Text fontSize='sm'>
+        <Text fontSize='sm' textAlign='left'>
           <strong>Date: </strong>
           {date}
         </Text>
         {reason && (
-          <Text fontSize='sm'>
+          <Text fontSize='sm' textAlign='left'>
             <strong>Reason: </strong>
             {reason}
           </Text>

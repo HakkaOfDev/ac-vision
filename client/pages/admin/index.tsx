@@ -92,7 +92,7 @@ const DashboardPage = () => {
             <Heading fontSize='lg' w='100%' textAlign='center'>
               Notifications
             </Heading>
-            <Notifications spacing={1} overflowY='scroll' h='70vh' />
+            <Notifications spacing={1} overflowY='scroll' h='70vh' w='100%' />
           </VStack>
         </Stack>
       </VStack>
