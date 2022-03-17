@@ -1,7 +1,6 @@
 import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.src.components.routers import notification_router
 from components.redis.cache_updates import run_cache
 from components.dependencies import router
 from components.routers import users_router, ubiquiti_router, dasan_router, rtstack_router, map_router, devices_router, notification_router
