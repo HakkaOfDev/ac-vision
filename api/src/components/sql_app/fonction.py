@@ -105,7 +105,7 @@ def get_notification(db: Session, skip: int = 0, limit: int = 100):
 
 def post_notification(db: Session, notification: schemas.Notification):
     db_notif = models.Notification(onuid=int(notification.onuid), gponport=int(notification.gponPort),
-                                   reason=['', notification.reason](notification.reason is not None), status=notification.status, date=notification.date)
+                                   reason=('', notification.reason)[notification.reason is not None], status=notification.status, date=notification.date)
     db.add(db_notif)
     db.commit()
     db.refresh(db_notif)
