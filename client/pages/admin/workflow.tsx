@@ -33,7 +33,7 @@ const WorkflowPage = () => {
       await updateNetwork(false);
       toast({
         title: `ONU ${data.onuid} ${data.status} on gponPort ${data.gponPort}`,
-        description: data.reason ? `Reason: ${data.reason}, Date: ${data.date}` : undefined,
+        description: data.reason ? `Reason: ${data.reason}, Date: ${data.date}` : `Date: ${data.date}`,
         status: data.status === 'ACTIVATION' ? 'success' : 'error',
         duration: 10000,
         isClosable: true,

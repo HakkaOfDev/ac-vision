@@ -1,7 +1,8 @@
 export type Notification = {
+    id?: number
     onuid: number
     gponPort: number
-    reason: string
+    reason?: string
     status: string
-    date?: string
+    date: string
 }
