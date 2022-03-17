@@ -47,7 +47,7 @@ const Notifications = ({ ...stackProps }: StackProps) => {
   useEffect(() => {
     async function getNotifications() {
       const req = await fetch(
-        'http://ac-vision/api/v1.0/ressources/notification'
+        'http://ac-vision/api/v1.0/ressources/notification/'
       );
       const notifs: Notification[] = await req.json();
       setNotifications(notifs);
