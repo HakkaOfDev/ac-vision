@@ -98,7 +98,7 @@ const SettingsPage = () => {
 
   return (
     <PageLayout title='Settings' description='Manage your app.'>
-      <VStack spacing={4} justify='center'>
+      <VStack spacing={4} justify='center' overflowX='auto' w='100%'>
         <Heading>Settings</Heading>
         <HStack boxShadow='lg' spacing={2} w='100%'>
           <InputGroup>
@@ -114,7 +114,7 @@ const SettingsPage = () => {
                   rightIcon={<FaAngleDoubleRight />}
                   colorScheme='brand'
                   variant='solid'
-                  onClick={changeOltIp}
+                  onClick={() => changeOltIp()}
                 ></Button>
               }
             />
@@ -153,7 +153,7 @@ const SettingsPage = () => {
                   rightIcon={<FaAngleDoubleRight />}
                   colorScheme='brand'
                   variant='solid'
-                  onClick={changeOnuDisplayName}
+                  onClick={() => changeOnuDisplayName()}
                 ></Button>
               }
             />
