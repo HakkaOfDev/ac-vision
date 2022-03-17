@@ -120,7 +120,7 @@ const SettingsPage = () => {
             />
           </InputGroup>
         </HStack>
-        <HStack boxShadow='lg' spacing={2} w='100%'>
+        <VStack boxShadow='lg' spacing={2} w='100%'>
           <Text fontSize='sm'>ONU's NAME</Text>
           <InputGroup w='100%'>
             <InputLeftAddon
@@ -156,7 +156,7 @@ const SettingsPage = () => {
               }
             />
           </InputGroup>
-        </HStack>
+        </VStack>
       </VStack>
     </PageLayout>
   );
