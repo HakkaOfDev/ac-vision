@@ -3,24 +3,24 @@ import PageLayout from '@/components/page-layout';
 import { Activity } from '@/types/Activity';
 import { Heading, Stack, VStack } from '@chakra-ui/react';
 import {
-  ArcElement,
   Chart as ChartJS,
-  Decimation,
-  DoughnutController,
-  Filler,
-  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
+  Legend,
 } from 'chart.js';
 import { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
-  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
-  Legend,
-  DoughnutController,
-  Filler,
-  Decimation
+  Legend
 );
 
 const DashboardPage = () => {
@@ -42,7 +42,7 @@ const DashboardPage = () => {
   }, []);
 
   const data = {
-    labels: ['active', 'inactive', 'total'],
+    labels: ['ACTIVES', 'INACTIVES', 'TOTAL'],
     datasets: [
       {
         data: [onusActivity.active, onusActivity.inactive, onusActivity.total],
@@ -61,6 +61,15 @@ const DashboardPage = () => {
     ],
   };
 
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+    },
+  };
+
   return (
     <PageLayout title='Dashboard' description='See your stats.'>
       <VStack spacing={2} justify='center' w='100%'>
@@ -75,7 +84,7 @@ const DashboardPage = () => {
             <Heading fontSize='lg' w='100%' textAlign='center'>
               ONU's Activity
             </Heading>
-            <Doughnut width='80%' data={data} />
+            <Bar options={options} data={data} />
           </VStack>
           <VStack
             w={{ base: '100%', lg: '50%' }}
