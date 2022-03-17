@@ -48,16 +48,26 @@ const DashboardPage = () => {
 
   return (
     <PageLayout title='Dashboard' description='See your stats.'>
-      <VStack spacing={2} justify='center'>
+      <VStack spacing={2} justify='center' w='100%'>
         <Heading>Dashboard</Heading>
-        <Stack direction={{ base: 'column', lg: 'row' }} spacing={4}>
-          <VStack w={{ base: '100%', lg: '50%' }} spacing={4}>
-            <Heading>ONU's Activity</Heading>
+        <Stack direction={{ base: 'column', lg: 'row' }} spacing={4} w='100%'>
+          <VStack
+            w={{ base: '100%', lg: '50%' }}
+            spacing={4}
+            justify='center'
+            align='center'
+          >
+            <Heading fontSize='lg' w='100%' textAlign='center'>ONU's Activity</Heading>
             <Doughnut data={data} />
           </VStack>
-          <VStack w={{ base: '100%', lg: '50%' }} spacing={4}>
-            <Heading>Notifications</Heading>
-            <Notifications spacing={1} overflowY='scroll' h='75vh' />
+          <VStack
+            w={{ base: '100%', lg: '50%' }}
+            spacing={4}
+            justify='center'
+            align='center'
+          >
+            <Heading fontSize='lg' w='100%' textAlign='center'>Notifications</Heading>
+            <Notifications spacing={1} overflowY='scroll' h='70vh' />
           </VStack>
         </Stack>
       </VStack>

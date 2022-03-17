@@ -20,6 +20,7 @@ const NotificationCard = ({
       borderWidth={1}
       borderStart='solid'
       w='100%'
+      borderRadius='lg'
     >
       <Heading>
         [{status}] ONU {onuid} on gponPort {gponPort}
@@ -40,7 +41,7 @@ const NotificationCard = ({
   );
 };
 
-const Notifications = ({...stackProps}: StackProps) => {
+const Notifications = ({ ...stackProps }: StackProps) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
