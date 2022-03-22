@@ -17,3 +17,4 @@ async def get_notification(skip: int = 0, limit: int = 100, db: Session = Depend
 @router.post("/new")
 async def post_notification(notification: schemas.Notification, db: Session = Depends(fonction.get_db)):
     return fonction.post_notification(db, notification)
+
