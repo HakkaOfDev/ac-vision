@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import SessionLocal
 import pprint
+import operator
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -100,9 +101,9 @@ def set_setting(db: Session, setting: schemas.Setting):
     return set
 
 #Fonctions for notification router
-def get_notification(db: Session, skip: int = 0, limit: int = 100):
+def get_notification(db: Session, skip: int = 0, limit: int = 10):
     notification = db.query(models.Notification).offset(skip).limit(limit).all()
-    return pprint.pprint(sorted(notification, key=lambda x: x["id"], reverse=True))
+    return pprint.pprint(sorted(notification, key=operator.itemgetter('id'), reverse=True))
 
 def post_notification(db: Session, notification: schemas.Notification):
     db_notif = models.Notification(onuid=int(notification.onuid), gponPort=int(notification.gponPort),
