@@ -102,7 +102,7 @@ def set_setting(db: Session, setting: schemas.Setting):
 #Fonctions for notification router
 def get_notification(db: Session, skip: int = 0, limit: int = 100):
     notifications = db.query(models.Notification).offset(skip).limit(limit).all()
-    notifications.sort(key=lambda date: datetime.strptime(date, "%-m-%-d-%Y, %H:%M,%S"))
+    notifications.date.sort(key=lambda date: datetime.strptime(date, "%-m-%-d-%Y, %H:%M,%S"))
     return notifications
 
 def post_notification(db: Session, notification: schemas.Notification):

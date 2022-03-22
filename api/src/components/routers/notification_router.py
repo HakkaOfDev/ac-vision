@@ -18,3 +18,7 @@ async def get_notification(skip: int = 0, limit: int = 100, db: Session = Depend
 async def post_notification(notification: schemas.Notification, db: Session = Depends(fonction.get_db)):
     return fonction.post_notification(db, notification)
 
+
+@router.delete("/del")
+async def del_notification(id: str, db: Session = Depends(fonction.get_db)):
+    return fonction.del_notification(db, id)
