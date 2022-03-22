@@ -26,7 +26,24 @@ const WorkflowPage = () => {
 
   useEffect(() => {
     socket.on('connect', () => {
-      console.log("You're connected to the server.");
+      toast({
+        title: 'Connected to the server !',
+        description:
+          'We successfully reach the server, the dynamic refresh should be work.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    });
+    socket.on('error', () => {
+      toast({
+        title: 'An error occured',
+        description:
+          "We're not able to reach the server, please try to refresh the page. If problem persists, try to contact an administrator.",
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      });
     });
     socket.on('ONU', async (data: Notification) => {
       await fetch('http://ac-vision/api/v1.0/ressources/map/update');
@@ -37,9 +54,8 @@ const WorkflowPage = () => {
           ? `Reason: ${data.reason}, Date: ${data.date}`
           : `Date: ${data.date}`,
         status: data.status === 'ACTIVATION' ? 'success' : 'error',
-        duration: 10000,
+        duration: 5000,
         isClosable: true,
-        variant: 'top-accent',
       });
     });
   }, [socket]);
@@ -169,45 +185,43 @@ const WorkflowPage = () => {
   };
 
   return (
-    <SocketContext.Provider value={socket}>
-      <PageLayout title='Workflow' description='See the map.'>
-        <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
-          <Heading>Workflow</Heading>
-          <ReactFlow
-            style={{ width: '100%' }}
-            elements={elements}
-            onLoad={onLoad}
-            snapToGrid={true}
-            snapGrid={[20, 20]}
-            defaultZoom={0.3}
-            minZoom={0.1}
-            maxZoom={2}
-            connectionLineType={ConnectionLineType.SmoothStep}
-          >
-            <MiniMap
-              nodeStrokeColor={(n: Node) => {
-                if (n.className === 'active') {
-                  return 'darkgreen';
-                } else {
-                  return 'darkred';
-                }
-              }}
-              nodeColor={(n: Node) => {
-                if (n.className === 'active') {
-                  return 'green';
-                } else {
-                  return 'red';
-                }
-              }}
-              nodeStrokeWidth={3}
-            />
-            <Controls />
-            <Background color='#aaa' gap={16} />
-          </ReactFlow>
-          <Button onClick={() => updateNetwork(true)}>Update</Button>
-        </VStack>
-      </PageLayout>
-    </SocketContext.Provider>
+    <PageLayout title='Workflow' description='See the map.'>
+      <VStack w='100%' h='80vh' spacing={4} justify='center' p={4}>
+        <Heading>Workflow</Heading>
+        <ReactFlow
+          style={{ width: '100%' }}
+          elements={elements}
+          onLoad={onLoad}
+          snapToGrid={true}
+          snapGrid={[20, 20]}
+          defaultZoom={0.3}
+          minZoom={0.1}
+          maxZoom={2}
+          connectionLineType={ConnectionLineType.SmoothStep}
+        >
+          <MiniMap
+            nodeStrokeColor={(n: Node) => {
+              if (n.className === 'active') {
+                return 'darkgreen';
+              } else {
+                return 'darkred';
+              }
+            }}
+            nodeColor={(n: Node) => {
+              if (n.className === 'active') {
+                return 'green';
+              } else {
+                return 'red';
+              }
+            }}
+            nodeStrokeWidth={3}
+          />
+          <Controls />
+          <Background color='#aaa' gap={16} />
+        </ReactFlow>
+        <Button onClick={() => updateNetwork(true)}>Update</Button>
+      </VStack>
+    </PageLayout>
   );
 };
 

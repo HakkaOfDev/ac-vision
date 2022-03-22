@@ -14,6 +14,13 @@ import {
   IconButton,
   Image,
   Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -31,6 +38,7 @@ import { MdDashboard } from '@react-icons/all-files/md/MdDashboard';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactText, useEffect, useState } from 'react';
+import Notifications from '../notifications';
 import ThemeButton from '../theme-button';
 
 type LinkItem = {
@@ -224,12 +232,24 @@ const MobileNav = ({ user, onOpen, ...rest }: MobileProps) => {
       />
 
       <HStack spacing={{ base: '0', md: '3' }}>
-        <IconButton
-          size='lg'
-          variant='ghost'
-          aria-label='Open menu'
-          icon={<FiBell />}
-        />
+        <Popover>
+          <PopoverTrigger>
+            <IconButton
+              size='lg'
+              variant='ghost'
+              aria-label='Open menu'
+              icon={<FiBell />}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>Notifications</PopoverHeader>
+            <PopoverBody>
+              <Notifications />
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
         <ThemeButton />
         <Flex alignItems={'center'}>
           <HStack>
