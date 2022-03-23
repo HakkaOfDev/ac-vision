@@ -1,3 +1,4 @@
+import sys
 import urllib3
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,15 +27,9 @@ app.include_router(notification_router.router)
 models.Base.metadata.create_all(bind=engine)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-origins = [
-    "http://ac-vision",
-    "http://ac-vision.chalons.univ-reims.fr",
-    "*"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -43,4 +38,5 @@ app.add_middleware(
 
 if __name__ == "__main__":
     run_cache()
+    sys.setrecursionlimit(1500)
     uvicorn.run(app, host="0.0.0.0", port=8000)
