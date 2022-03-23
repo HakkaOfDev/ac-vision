@@ -3,7 +3,6 @@ import { Onu } from '@/types/Onu';
 import {
   Button,
   Heading,
-  HStack,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -65,6 +64,7 @@ const SettingsPage = () => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body: data,
       }
@@ -101,7 +101,7 @@ const SettingsPage = () => {
       <VStack spacing={4} justify='center' overflowX='auto' w='100%'>
         <Heading>Settings</Heading>
         <VStack boxShadow='lg' spacing={2} w='100%'>
-        <Text fontSize='sm'>CHANGE OLT IP</Text>
+          <Text fontSize='sm'>CHANGE OLT IP</Text>
           <InputGroup w='100%'>
             <InputLeftAddon children='OLT IP' />
             <Input
@@ -126,19 +126,19 @@ const SettingsPage = () => {
           <InputGroup w='100%'>
             <InputLeftAddon
               children={
-                  <Select
-                    variant='outline'
-                    placeholder='ID'
-                    onChange={(e) => {
-                      setOnuId(e.currentTarget.value);
-                    }}
-                  >
-                    {onuIDsList.map((id) => (
-                      <option key={id} value={id}>
-                        {id}
-                      </option>
-                    ))}
-                  </Select>
+                <Select
+                  variant='outline'
+                  placeholder='ID'
+                  onChange={(e) => {
+                    setOnuId(e.currentTarget.value);
+                  }}
+                >
+                  {onuIDsList.map((id) => (
+                    <option key={id} value={id}>
+                      {id}
+                    </option>
+                  ))}
+                </Select>
               }
             />
             <Input
