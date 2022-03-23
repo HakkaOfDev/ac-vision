@@ -102,7 +102,7 @@ def set_setting(db: Session, setting: schemas.Setting):
 
 #Fonctions for notification router
 def get_notification(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(models.Notification).order_by(desc(models.Notification.id)).offset(skip).limit(limit)
+    return db.query(models.Notification).order_by(desc(models.Notification.id)).offset(skip).limit(limit).all()
 
 def post_notification(db: Session, notification: schemas.Notification):
     db_notif = models.Notification(onuid=int(notification.onuid), gponPort=int(notification.gponPort),
