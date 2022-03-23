@@ -48,6 +48,7 @@ const WorkflowPage = () => {
     socket.on('ONU', async (data: Notification) => {
       await fetch('http://ac-vision/api/v1.0/ressources/map/update');
       await updateNetwork(false);
+      console.log('Data received');
       toast({
         title: `ONU ${data.onuid} ${data.status} on gponPort ${data.gponPort}`,
         description: data.reason

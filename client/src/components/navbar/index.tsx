@@ -33,6 +33,7 @@ import { FiBell } from '@react-icons/all-files/fi/FiBell';
 import { FiMenu } from '@react-icons/all-files/fi/FiMenu';
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings';
 import { GoSignOut } from '@react-icons/all-files/go/GoSignOut';
+import { TiDocumentText } from '@react-icons/all-files/ti/TiDocumentText';
 import { IconType } from '@react-icons/all-files/lib';
 import { MdDashboard } from '@react-icons/all-files/md/MdDashboard';
 import NextLink from 'next/link';
@@ -52,6 +53,7 @@ const linkItems: LinkItem[] = [
   { name: 'Workflow', icon: BiNetworkChart, href: '/admin/workflow' },
   { name: 'Devices', icon: CgViewComfortable, href: '/admin/devices' },
   { name: 'Settings', icon: FiSettings, href: '/admin/settings' },
+  { name: 'Documentation', icon: TiDocumentText, href: '/admin/documentation' },
 ];
 
 const SidebarWithHeader = ({ children }) => {
