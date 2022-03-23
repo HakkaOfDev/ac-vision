@@ -23,18 +23,15 @@ const SettingsPage = () => {
   const toast = useToast();
 
   const changeOltIp = async () => {
-    const data = new FormData();
-    data.append('name', 'ip_olt');
-    data.append('value', newOltIp);
-
     const req = await fetch(
       'http://ac-vision/api/v1.0/ressources/dasan/setting',
       {
         method: 'POST',
         headers: {
           Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: data,
+        body: JSON.stringify({ name: 'ip_olt', value: newOltIp }),
       }
     );
     if (req.status === 200) {
@@ -54,10 +51,6 @@ const SettingsPage = () => {
   };
 
   const changeOnuDisplayName = async () => {
-    const data = new FormData();
-    data.append('onuid', onuId);
-    data.append('description', newOnuDisplayName);
-
     const req = await fetch(
       'http://ac-vision/api/v1.0/ressources/dasan/desconu',
       {
@@ -66,7 +59,7 @@ const SettingsPage = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ onuid: +onuId, description: newOnuDisplayName }),
       }
     );
     if (req.status === 200) {
@@ -107,7 +100,7 @@ const SettingsPage = () => {
             <Input
               variant='outline'
               placeholder='IP address'
-              onChange={(e) => setNewOltIp(e.target.value)}
+              onChange={(e) => setNewOltIp(e.currentTarget.value)}
             />
             <InputRightAddon
               children={
@@ -130,7 +123,7 @@ const SettingsPage = () => {
                   variant='outline'
                   placeholder='ID'
                   onChange={(e) => {
-                    setOnuId(e.currentTarget.value);
+                    setOnuId(e.target.value);
                   }}
                 >
                   {onuIDsList.map((id) => (
@@ -144,7 +137,7 @@ const SettingsPage = () => {
             <Input
               variant='outline'
               placeholder='Name'
-              onChange={(e) => setNewOnuDisplayName(e.target.value)}
+              onChange={(e) => setNewOnuDisplayName(e.currentTarget.value)}
             />
             <InputRightAddon
               children={
