@@ -65,6 +65,9 @@ const DeviceItem = ({
         <Text>{displayName}</Text>
       </Td>
       <Td>
+        <Text>{onuId}</Text>
+      </Td>
+      <Td>
         <Text>{macAddress}</Text>
       </Td>
       <Td>
@@ -158,6 +161,7 @@ const DevicesPage = () => {
               <Tr>
                 <Th>TYPE</Th>
                 <Th>DISPLAY NAME</Th>
+                <Th>ID</Th>
                 <Th>MAC ADDRESS</Th>
                 <Th>IP ADDRESS</Th>
                 <Th>DISTANCE</Th>
