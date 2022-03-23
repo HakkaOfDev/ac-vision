@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/v1.0/ressources/notification",
 
 
 @router.get("/")
-async def get_notification(skip: int = 0, limit: int = 100, db: Session = Depends(fonction.get_db)):
+async def get_notification(skip: int = 0, limit: int = 10, db: Session = Depends(fonction.get_db)):
     return fonction.get_notification(db, skip, limit)
 
 
